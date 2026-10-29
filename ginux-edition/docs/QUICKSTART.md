@@ -8,6 +8,8 @@ Every command below ran during validation on 2026-10-28 and 2026-10-29 (Ubuntu 2
 git clone -b ginux-edition-0.2.0 https://github.com/ttracx/thoxos-ginux.git
 cd thoxos-ginux/ginux-edition
 make test
+make ci                                   # same checks, logged in build/local-ci/
+bash scripts/install-pre-push-hook.sh     # optional: the gate runs before every push (exercised by tests/test_local_ci.py)
 make demo-image
 ```
 

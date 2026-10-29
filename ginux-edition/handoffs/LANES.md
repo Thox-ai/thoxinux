@@ -9,7 +9,7 @@ The same repository holds a separate record from a ChatGPT/Codex session (root `
 | Lane | Task | Inputs | Exit evidence | Stop |
 |---|---|---|---|---|
 | Hermes | With Tommy's subscription: run `azure/publish-image.sh` for the desktop VHD, deploy `azure/azuredeploy.json` on Standard_D4s_v5 from one source IP, RDP in, switch the three looks, run `thoxos-ginux doctor` (KVM present) and `thoxos-ginux shell`; save the boot diagnostics screenshot | VHD and `.sha256` from the build, `docs/AZURE.md` | Image version ID, deployment output, screenshots, doctor output, add rows to `docs/VALIDATION.md` | Never open SSH or RDP to `*`; never put the admin password or AI key in the packet |
-| Codex | Review `azure/azuredeploy.json` and `publish-image.sh` against current Azure CLI and ARM API versions; port the template to Bicep with a compile check in CI | `azure/`, `tests/test_azure_image.py` | PR with `az bicep build` output | Never mark unrun work done; never invent a price, date or certification |
+| Codex | Review `azure/azuredeploy.json` and `publish-image.sh` against current Azure CLI and ARM API versions; port the template to Bicep with a compile check in `scripts/local-ci.sh` | `azure/`, `tests/test_azure_image.py` | PR with `az bicep build` output | Never mark unrun work done; never invent a price, date or certification |
 | Muse | Captions for `docs/previews/azure/*.png`, each labeled "QEMU capture over RDP, not Azure" | Captures, `docs/VALIDATION.md` V20 onward | `docs/previews/azure/CAPTIONS.md` | Never publish; a simulation label never becomes a physical or Azure claim |
 | Claude | Next named patches only: DEV_QUEUE item 10 (RDP screen lock) or 17 (GTK 4 and Qt themes) when Tommy schedules one | `docs/DESKTOP.md`, generator | Base and head SHA, `make test`, a bench run with captures | Never disable a guard (brand-lock scan, AA contrast check, VHD check) to pass |
 
@@ -18,7 +18,7 @@ The same repository holds a separate record from a ChatGPT/Codex session (root `
 | Clara Voss | Brand check of every Azure capture and the generated themes: `#05A451` only green, ThoxOS casing, chip mark geometry, no neon | Checklist result per capture | No public-copy changes without Sera |
 | Sera | Claim review of README, AZURE.md and the report: no Azure run claimed, AVD limits stated | Approved wording | No claim of an Azure deployment until Hermes's evidence exists |
 | Julian Hale | Mount the 0.2.0 report HTML at `/docs/thoxos-ginux` on the Developers site with the research-preview label | Live URL | Developers site only; not the public thox.ai site |
-| Nova | From a clean clone: `make test`, then the Azure desktop build and bench; return logs | Logs with exit codes and the VHD SHA-256 | Report failures as failures |
+| Nova | From a clean clone: `make ci-report FULL=1` (local CI, no GitHub Actions), then the Azure desktop build and bench; return logs | `thox/local-ci` status on the head, logs with exit codes, the VHD SHA-256 | Report failures as failures; never add a GitHub Actions workflow |
 | Samuel Reed | File `docs/AZURE.md` and `docs/DESKTOP.md` in the docs lane | Links that resolve | Keep `.agents/` out of user docs |
 | Kai | KnightHub desktop variant only when Tommy asks: write `DESKTOP=desktop` image to a spare USB SSD | Photo of the greeter, `lsblk` before and after | Never write Windows, system, protected or ambiguous storage, or the THOXOS-labeled SSD |
 | Sadie | Closeout email for 0.2.0 (sent by the Odette lane from the Sadie@thox.ai mailbox) | Sent Items record | No substitute mailbox |

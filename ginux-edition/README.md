@@ -3,7 +3,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Last commit](https://img.shields.io/github/last-commit/ttracx/thoxos-ginux/ginux-edition-0.2.0)](https://github.com/ttracx/thoxos-ginux/commits/ginux-edition-0.2.0)
 [![THOX.ai](https://img.shields.io/badge/THOX.ai-05A451)](https://thox.ai)
-[![CI](https://github.com/ttracx/thoxos-ginux/actions/workflows/ginux-edition-ci.yml/badge.svg?branch=ginux-edition-0.2.0)](https://github.com/ttracx/thoxos-ginux/actions/workflows/ginux-edition-ci.yml)
+[![Local CI](https://img.shields.io/github/checks-status/ttracx/thoxos-ginux/ginux-edition-0.2.0?label=local%20CI)](docs/DEVELOPMENT.md#continuous-integration)
 [![Stage: research preview](https://img.shields.io/badge/stage-research_preview-orange.svg)](docs/REVIEW.md)
 
 ThoxOS userspace on the Ginux kernel: Linux programs, no Linux kernel underneath. Ginux is Gregory Kurtzer's independent Rust kernel, built with an AI coding agent in 11 days. This edition patches it for portable QEMU hosts and a private, offline image source, gives it a ThoxOS identity (os-release, banner, `thox` CLI with `thox ask`), and ships it four ways: a Docker demo that runs anywhere, an external-SSD image that boots KnightHub, and two Azure images (ThoxOS Desktop over RDP, or headless) that run Ginux under nested KVM.

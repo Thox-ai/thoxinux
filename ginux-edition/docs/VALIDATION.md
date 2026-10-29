@@ -34,7 +34,7 @@ Run 2026-10-28 to 2026-10-29 (America/Chicago) by Odette Lark on an Ubuntu 24.04
 | V16 | Stale Ginux cache after a rebuild (REVIEW F12) | Verified | One volume, filled by the previous demo build: shell e2e failed after `/etc/issue` (`Linux init execution failed`). With the stamp fix the same volume was replaced (`persistent storage initialized (generation 1)`, `OCI cache miss; pulling image`) and `tests/e2e/shell_session.py` passed all five steps. A later `make demo` on the stamped volume reported `OCI cache hit (4 layers)` with no reset |
 | V17 | Browser console, shell session | Verified | `thoxos-g/demo:0.1.0 web` with `THOXOS_G_MODE=shell`, headless Chromium typing into ttyd: `grep PRETTY_NAME /etc/os-release`, `uname -srm` (`Ginux 6.12.0-ginux.0.1 x86_64`) and `thox status` ran; capture in `docs/previews/web-console-thoxos-shell.png`. Ginux printed its 60-second runtime diagnostic once while the shell waited for input (informational, REVIEW F13) |
 | V18 | Quick-start make targets | Verified | Under a pty: `make demo-shell` reached the `thoxos:~#` prompt; `make demo` reached `Welcome to ThoxOS 0.1.0 Ginux Edition!` and `ginux login:`; `make demo-web` answered 401 without the generated credential |
-| V19 | GitHub CI (`.github/workflows/ginux-edition-ci.yml`) | Blocked | Push and pull-request runs on `962703a` both ended `startup_failure` before any job started; this is the repository's first workflow. The cause is not visible from this runtime; the repository's Actions settings are the place to check. `make test` passes from a fresh clone of the branch (80 tests) |
+| V19 | GitHub CI (`.github/workflows/ginux-edition-ci.yml`) | Retired (D32); replaced by local CI, V36 | Push and pull-request runs on `962703a` both ended `startup_failure` before any job started; this is the repository's first workflow. The cause is not visible from this runtime; the repository's Actions settings are the place to check. `make test` passes from a fresh clone of the branch (80 tests) |
 
 ## Defects found and fixed during validation
 
@@ -81,6 +81,7 @@ Run 2026-10-29 (America/Chicago) by Odette Lark on the same build host (2 vCPU, 
 | V33 | Nested KVM for Ginux on Azure | Not run | Microsoft lists nested virtualization as supported on Dsv5; not measured |
 | V34 | Hosted model through the relay | Not run | No endpoint or key in this runtime (DEV_QUEUE item 5) |
 | V35 | Secure Boot / Trusted Launch | Not supported | Unsigned systemd-boot; images use standard security (DEV_QUEUE item 12) |
+| V36 | Local CI in place of GitHub Actions (D32) | Verified, status not posted | On `884aa35` in a clone of the branch: `make ci` passed (147 passed, 1 skipped, shellcheck clean, 8 s) and `make ci FULL=1` passed (full theme generation in `debian:trixie`, 41 s). The pre-push gate (blocks a red push, lets a green one through, skips pushes outside the module, leaves a foreign hook alone) and the status call ran in 10 tests against temporary repositories with `gh` stubbed. Posting the real `thox/local-ci` status from this cloud runtime was refused by its network proxy (HTTP 403), and installing the hook in this clone was not permitted here; both run from a THOX machine with `gh` signed in |
 
 ## Defects found and fixed during 0.2.0 validation
 
