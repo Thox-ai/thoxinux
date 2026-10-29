@@ -1,0 +1,35 @@
+[Unit]
+Description=ThoxOS Ginux Edition console on tty1 (Ginux kernel under KVM)
+Documentation=file:///usr/share/doc/thoxos-g/README.md
+After=thoxos-g-dns.service thoxos-g-registry.service systemd-user-sessions.service
+Wants=thoxos-g-dns.service thoxos-g-registry.service
+Conflicts=getty@tty1.service
+ConditionPathExists=/dev/tty1
+
+[Service]
+Type=simple
+User=thoxos
+Group=thoxos
+SupplementaryGroups=kvm tty
+Environment=TERM=linux LANG=C.UTF-8
+ExecStartPre=+/usr/bin/chvt 1
+ExecStart=/usr/bin/thoxos-g console
+StandardInput=tty-force
+StandardOutput=tty
+StandardError=journal
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=no
+Restart=always
+RestartSec=3
+KillMode=mixed
+TimeoutStopSec=20
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/thoxos-g/state
+ProtectHome=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

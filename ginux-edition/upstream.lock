@@ -1,0 +1,7 @@
+# ThoxOS Ginux Edition upstream pins. Every build reads these values; change
+# them only together with a re-run of the validation gate (docs/VALIDATION.md).
+GINUX_REPO=https://github.com/gmkurtzer/ginux.git
+GINUX_COMMIT=36503bda2d87465765e1b94e65f9d100f27ed5be
+# Rocky Linux 10 UBI init image, the exact digest upstream Ginux validated
+# systemd multi-user.target against (profiles/rocky-10-system-v0/image.env).
+ROCKY_BASE=docker.io/rockylinux/rockylinux:10-ubi-init@sha256:2ce9a2d1a810a47c72a86f79de7d54667bd922d2cec9880647ff6a9023f6fe8c

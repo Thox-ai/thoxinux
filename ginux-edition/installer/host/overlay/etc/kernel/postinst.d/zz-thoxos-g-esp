@@ -1,0 +1,3 @@
+#!/bin/sh
+# Keep the ESP copy of the host kernel and initrd current (ThoxOS Ginux Edition).
+exec /usr/lib/thoxos-g/esp-sync.sh

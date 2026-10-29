@@ -1,0 +1,9 @@
+.git
+.github
+docs
+tests
+installer/out
+build/*
+!build/userspace.tar
+**/__pycache__
+**/*.pyc

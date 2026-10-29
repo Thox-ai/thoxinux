@@ -1,0 +1,29 @@
+[Unit]
+Description=ThoxOS Ginux Edition read-only TLS registry (127.0.0.1:443)
+Documentation=file:///usr/share/doc/thoxos-g/README.md
+After=network.target
+
+[Service]
+Type=simple
+User=thoxos-registry
+Group=thoxos-registry
+ExecStart=/usr/local/bin/registry serve /etc/thoxos-g/registry.yml
+Restart=on-failure
+RestartSec=2
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadOnlyPaths=/var/lib/thoxos-g/registry
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+
+[Install]
+WantedBy=multi-user.target

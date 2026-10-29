@@ -54,3 +54,12 @@ A restored-source rebuild produced different EFI bytes; no byte-reproducible bui
 | Sadie | Finish factual Outlook copy delivery after source/archive verification | Verified sender, recipients, Sent Items and attached kit metadata | No substitute mailbox; unknown sends reconciled before retry |
 
 These are prepared assignments. External lanes have not supplied acknowledgements in this session.
+
+# Second record: ginux-edition (Claude runtime, Odette Lark)
+
+Added 2026-10-29 on branch `ginux-edition-0.1.0`. This section is additive; the record above is unchanged and keeps its own provenance.
+
+- Location: `ginux-edition/` (own README, docs, handoff at `ginux-edition/.agents/HANDOFF.md`, lane assignments at `ginux-edition/handoffs/LANES.md`).
+- Scope: Ginux review, patches 0001-0003, ThoxOS userspace served over OCI from a local TLS registry, Docker demo (run and gated), KnightHub SSD disk image and writers, QEMU USB-disk boot harness.
+- Comparison with the record above, including three items that need a ruling: `docs/RECONCILIATION_2026-10-28.md`.
+- Do not merge claims across the two records. A lane quoting either one names which.

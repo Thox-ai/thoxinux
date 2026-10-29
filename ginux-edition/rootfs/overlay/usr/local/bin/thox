@@ -1,0 +1,267 @@
+#!/usr/bin/python3
+"""thox: ThoxOS Ginux Edition userspace command.
+
+Subcommands
+-----------
+status   Print the ThoxOS identity, the running kernel, and the AI endpoint.
+ask      Send one prompt to the configured OpenAI-compatible endpoint
+         (KnightHub local model, Ollama, or any /v1/chat/completions server)
+         and print the reply.
+version  Print the ThoxOS version.
+
+Configuration comes from /etc/thoxos/ai.env, then the environment
+(THOX_AI_BASE_URL, THOX_AI_MODEL, THOX_AI_API_KEY, THOX_AI_TIMEOUT), so a user
+can override the image default per shell. Only the Python standard library is
+used, so the command works on the unmodified Rocky Linux 10 UBI userspace.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import platform
+import stat
+import sys
+import urllib.error
+import urllib.parse
+import urllib.request
+from dataclasses import dataclass
+from typing import Mapping, Optional, Sequence
+
+VERSION_FILE = "/usr/share/thoxos/VERSION"
+OS_RELEASE = "/etc/os-release"
+AI_ENV_FILE = "/etc/thoxos/ai.env"
+MAX_PROMPT_CHARS = 16_000
+MAX_RESPONSE_BYTES = 4 * 1024 * 1024
+DEFAULT_TIMEOUT_SECONDS = 120.0
+
+
+class ThoxError(Exception):
+    """A user-facing failure with a stable exit code."""
+
+    def __init__(self, message: str, exit_code: int = 1) -> None:
+        super().__init__(message)
+        self.exit_code = exit_code
+
+
+@dataclass(frozen=True)
+class AIConfig:
+    """Validated settings for the OpenAI-compatible endpoint."""
+
+    base_url: str
+    model: str
+    api_key: Optional[str]
+    timeout: float
+
+
+def read_key_value_file(path: str) -> dict[str, str]:
+    """Parse a shell-style KEY=VALUE file. Missing files yield an empty dict.
+
+    Quotes around values are stripped; comments and blank lines are ignored.
+    Lines that do not look like assignments are rejected rather than guessed.
+    """
+    values: dict[str, str] = {}
+    try:
+        with open(path, encoding="utf-8") as handle:
+            lines = handle.readlines()
+    except FileNotFoundError:
+        return values
+    except OSError as error:
+        raise ThoxError(f"cannot read {path}: {error.strerror}") from error
+    for number, raw in enumerate(lines, start=1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("export "):
+            line = line[len("export "):].strip()
+        key, separator, value = line.partition("=")
+        key = key.strip()
+        if not separator or not key.replace("_", "").isalnum():
+            raise ThoxError(f"{path}:{number}: expected KEY=VALUE")
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+            value = value[1:-1]
+        values[key] = value
+    return values
+
+
+def check_secret_file_permissions(path: str) -> None:
+    """Refuse an API key that lives in a group- or world-readable file."""
+    try:
+        mode = os.stat(path).st_mode
+    except FileNotFoundError:
+        return
+    if mode & (stat.S_IRWXG | stat.S_IRWXO):
+        raise ThoxError(
+            f"{path} holds THOX_AI_API_KEY but is readable by other users; "
+            f"run: chmod 600 {path}"
+        )
+
+
+def load_ai_config(
+    env: Mapping[str, str], env_file: str = AI_ENV_FILE
+) -> AIConfig:
+    """Merge the config file and environment, then validate every field."""
+    file_values = read_key_value_file(env_file)
+    if file_values.get("THOX_AI_API_KEY"):
+        check_secret_file_permissions(env_file)
+    merged = {**file_values, **{k: v for k, v in env.items() if k.startswith("THOX_AI_")}}
+
+    base_url = merged.get("THOX_AI_BASE_URL", "").strip().rstrip("/")
+    if not base_url:
+        raise ThoxError("THOX_AI_BASE_URL is not set (see /etc/thoxos/ai.env)", 2)
+    parsed = urllib.parse.urlparse(base_url)
+    if parsed.scheme not in ("http", "https") or not parsed.netloc:
+        raise ThoxError(f"THOX_AI_BASE_URL must be an http(s) URL, got {base_url!r}", 2)
+    if parsed.query or parsed.fragment:
+        raise ThoxError("THOX_AI_BASE_URL must not carry a query or fragment", 2)
+
+    model = merged.get("THOX_AI_MODEL", "").strip()
+    if not model:
+        raise ThoxError("THOX_AI_MODEL is not set (see /etc/thoxos/ai.env)", 2)
+
+    api_key = merged.get("THOX_AI_API_KEY", "").strip() or None
+
+    raw_timeout = merged.get("THOX_AI_TIMEOUT", "").strip()
+    try:
+        timeout = float(raw_timeout) if raw_timeout else DEFAULT_TIMEOUT_SECONDS
+    except ValueError as error:
+        raise ThoxError(f"THOX_AI_TIMEOUT must be a number, got {raw_timeout!r}", 2) from error
+    if not 1.0 <= timeout <= 3600.0:
+        raise ThoxError("THOX_AI_TIMEOUT must be between 1 and 3600 seconds", 2)
+
+    return AIConfig(base_url=base_url, model=model, api_key=api_key, timeout=timeout)
+
+
+def build_chat_request(config: AIConfig, prompt: str) -> urllib.request.Request:
+    """Build the POST /chat/completions request for one user prompt."""
+    body = json.dumps(
+        {
+            "model": config.model,
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are the ThoxOS assistant. Answer briefly and precisely.",
+                },
+                {"role": "user", "content": prompt},
+            ],
+            "stream": False,
+        }
+    ).encode("utf-8")
+    headers = {"Content-Type": "application/json", "User-Agent": "thox/" + read_version()}
+    if config.api_key:
+        headers["Authorization"] = f"Bearer {config.api_key}"
+    return urllib.request.Request(
+        config.base_url + "/chat/completions", data=body, headers=headers, method="POST"
+    )
+
+
+def parse_chat_response(payload: bytes) -> str:
+    """Extract the assistant text from an OpenAI-compatible response body."""
+    try:
+        document = json.loads(payload.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ThoxError("endpoint returned a response that is not JSON") from error
+    if not isinstance(document, dict):
+        raise ThoxError("endpoint returned an unexpected JSON shape")
+    if "error" in document:
+        detail = document["error"]
+        if isinstance(detail, dict):
+            detail = detail.get("message", detail)
+        raise ThoxError(f"endpoint error: {detail}")
+    choices = document.get("choices")
+    if not isinstance(choices, list) or not choices:
+        raise ThoxError("endpoint response has no choices")
+    message = choices[0].get("message") if isinstance(choices[0], dict) else None
+    content = message.get("content") if isinstance(message, dict) else None
+    if not isinstance(content, str):
+        raise ThoxError("endpoint response has no message content")
+    return content.strip()
+
+
+def ask(config: AIConfig, prompt: str) -> str:
+    """Send one prompt and return the reply text."""
+    prompt = prompt.strip()
+    if not prompt:
+        raise ThoxError("prompt is empty", 2)
+    if len(prompt) > MAX_PROMPT_CHARS:
+        raise ThoxError(f"prompt exceeds {MAX_PROMPT_CHARS} characters", 2)
+    request = build_chat_request(config, prompt)
+    try:
+        with urllib.request.urlopen(request, timeout=config.timeout) as response:
+            payload = response.read(MAX_RESPONSE_BYTES + 1)
+    except urllib.error.HTTPError as error:
+        body = error.read(4096).decode("utf-8", "replace").strip()
+        raise ThoxError(f"endpoint returned HTTP {error.code}: {body or error.reason}") from error
+    except urllib.error.URLError as error:
+        raise ThoxError(f"cannot reach {config.base_url}: {error.reason}") from error
+    except TimeoutError as error:
+        raise ThoxError(f"no reply from {config.base_url} within {config.timeout:g} s") from error
+    if len(payload) > MAX_RESPONSE_BYTES:
+        raise ThoxError("endpoint response exceeds 4 MiB")
+    return parse_chat_response(payload)
+
+
+def read_version() -> str:
+    """Return the ThoxOS version string, or 'unknown' outside a ThoxOS image."""
+    try:
+        with open(VERSION_FILE, encoding="utf-8") as handle:
+            return handle.read().strip() or "unknown"
+    except OSError:
+        return "unknown"
+
+
+def status_lines(env: Mapping[str, str], env_file: str = AI_ENV_FILE) -> list[str]:
+    """Collect the status report as display lines. Never raises for AI config."""
+    release = read_key_value_file(OS_RELEASE)
+    uname = platform.uname()
+    lines = [
+        f"os        {release.get('PRETTY_NAME', 'unknown')}",
+        f"base      {release.get('BASE_DISTRIBUTION', 'unknown')}",
+        f"kernel    {uname.system} {uname.release} ({uname.version})",
+        f"host      {uname.node}",
+        f"arch      {uname.machine}",
+    ]
+    try:
+        config = load_ai_config(env, env_file)
+        lines.append(f"ai        {config.model} at {config.base_url}")
+    except ThoxError as error:
+        lines.append(f"ai        not configured: {error}")
+    return lines
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="thox", description="ThoxOS Ginux Edition command")
+    commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("status", help="show identity, kernel and AI endpoint")
+    commands.add_parser("version", help="show the ThoxOS version")
+    ask_parser = commands.add_parser("ask", help="ask the configured model endpoint")
+    ask_parser.add_argument("--model", help="override THOX_AI_MODEL for this call")
+    ask_parser.add_argument("prompt", nargs="+", help="prompt text")
+    return parser
+
+
+def main(argv: Optional[Sequence[str]] = None, env: Optional[Mapping[str, str]] = None) -> int:
+    args = build_parser().parse_args(argv)
+    environment = dict(os.environ if env is None else env)
+    try:
+        if args.command == "version":
+            print(read_version())
+        elif args.command == "status":
+            print("\n".join(status_lines(environment)))
+        elif args.command == "ask":
+            if args.model:
+                environment["THOX_AI_MODEL"] = args.model
+            config = load_ai_config(environment)
+            print(ask(config, " ".join(args.prompt)))
+        return 0
+    except ThoxError as error:
+        print(f"thox: {error}", file=sys.stderr)
+        return error.exit_code
+    except KeyboardInterrupt:
+        return 130
+
+
+if __name__ == "__main__":
+    sys.exit(main())
