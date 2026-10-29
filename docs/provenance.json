@@ -1,0 +1,20 @@
+{
+  "template": "THOX Official Templates 1.0.0 / HTML documentation master",
+  "upstream_commit": "36503bda2d87465765e1b94e65f9d100f27ed5be",
+  "desktop_base_commit": "1385e9780fea4023f8e73b897ce8140d3dae3d96",
+  "validation_inputs": {
+    "build": "PASS: THOX EFI compiled. Ginux libraries: 53 tests; module guards: 10; SSD fixtures: 15. Freestanding Ginux host workspace test hit E0152. Linux host-image workspace/build/VM gate not run.",
+    "efi": "12,497,920 bytes; SHA-256 4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8.",
+    "boot": "PASS: base controller under QEMU TCG 8.2.2 / OVMF 2024.02 at 2 GiB. Banner, status, components, domain list, help and clean shutdown verified. Saved configuration generation 3 recovered in a separate boot with matching thoxconfig settings. Domain start FAILED in this test environment and remains unresolved.",
+    "docker": "Not run: the current authoring environment has no Docker executable or daemon.",
+    "hardware": "Not run: KnightHub is offline. No disk write, firmware change or reboot was performed."
+  },
+  "files": {
+    "html/template-source.html": "aab961e6b34956604ecdd23972385f7541b92c58d5b926a225c1f24f46b857ff",
+    "html/thox-report.css": "485f6e1f2c261534508f34b346198b9f22b832e5b847d8e68974ef7363834e24",
+    "html/thox-report.js": "d1bab39e9247e95c528403cf73e0416b4600af2613f62101da590d09d174a8e5",
+    "html/assets/thox-horizontal-dark.svg": "c4a696874cd0940bae8f39fe48ddba6d03d017029fff1299d1857bd4e3d98370",
+    "html/THOX_Ginux_Research_Guide.html": "f5560f2785e9c1c177e3a5a14c3c145beaecee61a660a2907f5e9d56b67862d3",
+    "THOX_Ginux_Research_Guide.pdf": "c392eb81592592a5a4080d939822f35921d5a70dac59daff0e875a8e8f0b9d05"
+  }
+}

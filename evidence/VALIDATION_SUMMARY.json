@@ -1,0 +1,185 @@
+{
+  "stage": "engineering-candidate",
+  "build": "passed",
+  "controller_boot": "passed",
+  "saved_configuration_recovery": "passed",
+  "linux_domain_execution": "failed; reproduced in THOX and pristine upstream under current QEMU environment",
+  "library_unit_tests": 53,
+  "packaging_guard_tests": 10,
+  "ssd_integration_tests": 15,
+  "docker_runtime": "not_run: no Docker executable/daemon",
+  "full_linux_host_image": "not_run: pipeline requires125GiB available; this workspace28GiB; Docker absent",
+  "kvm": "not_run",
+  "physical_knighthub": "not_run: offline",
+  "physical_disk_writes": 0,
+  "fresh_media_install": "blocked: generated Vibe layout and guarded Nicecore writer not matched; existing generic alternatives insufficient guards",
+  "release": "not_issued; draft candidate",
+  "records": {
+    "qemu-persistence": {
+      "test": "THOX patched Ginux saved configuration persistence",
+      "outcome": "passed",
+      "commands": [
+        "domain new thoxconfig",
+        "domain set thoxconfig image=embedded://minimal-system-v0 init=/sbin/init autostart=false",
+        "domain status thoxconfig"
+      ],
+      "elapsed_seconds": 2.17,
+      "qemu_exit_code": 0,
+      "guest_memory": "2G",
+      "vcpus": 1,
+      "acceleration": "tcg",
+      "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+      "log_sha256": "79e042e4f9d5cc2326f53a9391442a6becd2a318c08585a6cc3cc964726aeb5a",
+      "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+    },
+    "qemu-upstream-domain": {
+      "test": "Pristine upstream Ginux embedded domain lifecycle",
+      "outcome": "failed",
+      "commands": [
+        "domain new thoxdemo",
+        "domain set thoxdemo image=embedded://minimal-system-v0 init=/sbin/init memory-mib=128",
+        "Ginux panic"
+      ],
+      "elapsed_seconds": 2.01,
+      "qemu_exit_code": 0,
+      "guest_memory": "2G",
+      "vcpus": 1,
+      "acceleration": "tcg",
+      "efi_sha256": "524d2d83c8e2d086819def18820981093cb41b501546313f8903217d183a2645",
+      "log_sha256": "f13d72c87ae61b94cdc6c16e12b198c7ef96a69af7a62dedccf1876bbf17d1af",
+      "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with unmodified upstream EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+    },
+    "qemu-lifecycle": {
+      "test": "THOX patched Ginux embedded domain lifecycle",
+      "outcome": "failed",
+      "commands": [
+        "domain new thoxdemo",
+        "domain set thoxdemo image=embedded://minimal-system-v0 init=/sbin/init memory-mib=128",
+        "Ginux panic"
+      ],
+      "elapsed_seconds": 2.16,
+      "qemu_exit_code": 0,
+      "guest_memory": "2G",
+      "vcpus": 1,
+      "acceleration": "tcg",
+      "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+      "log_sha256": "1b3740918452b20f7a2bb1769cda83f53fb62be2fa1860e350b6b2e9d5667edb",
+      "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+    },
+    "qemu-2g-failure": {
+      "test": "THOX patched Ginux QEMU TCG console smoke",
+      "outcome": "failed",
+      "commands": [
+        "Ginux panic"
+      ],
+      "elapsed_seconds": 2.14,
+      "qemu_exit_code": 0,
+      "guest_memory": "2G",
+      "vcpus": 1,
+      "acceleration": "tcg",
+      "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+      "log_sha256": "cb5d6fe142b0a9bd5a0e16721a18c2e020d9c37eb59d68021a3a85c59d636716",
+      "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI"
+    },
+    "qemu-smoke": {
+      "test": "THOX patched Ginux QEMU TCG console smoke",
+      "outcome": "passed",
+      "commands": [
+        "status",
+        "components",
+        "domain list",
+        "help"
+      ],
+      "elapsed_seconds": 2.45,
+      "qemu_exit_code": 0,
+      "guest_memory": "2G",
+      "vcpus": 1,
+      "acceleration": "tcg",
+      "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+      "log_sha256": "daef98cccc05fbc2272d05328d8238b37c9624c08e09a53e5a3d64af88e6a272",
+      "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+    },
+    "qemu-4g-failure": {
+      "test": "THOX patched Ginux QEMU TCG console smoke",
+      "outcome": "failed",
+      "commands": [
+        "Ginux panic"
+      ],
+      "elapsed_seconds": 2.07,
+      "qemu_exit_code": 0,
+      "guest_memory": "4G",
+      "vcpus": 1,
+      "acceleration": "tcg",
+      "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+      "log_sha256": "4ba301a8c7401c1d42664b3e59a0956673066b0b7d47db6e59196e9ff470c813",
+      "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI"
+    },
+    "qemu-recovery": {
+      "test": "THOX patched Ginux saved configuration recovery",
+      "outcome": "passed",
+      "commands": [
+        "domain status thoxconfig"
+      ],
+      "elapsed_seconds": 2.23,
+      "qemu_exit_code": 0,
+      "guest_memory": "2G",
+      "vcpus": 1,
+      "acceleration": "tcg",
+      "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+      "log_sha256": "fdf63b26a4f9053587863672835534772b4df4e2a0509015a3a9f97153cd44f1",
+      "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+    },
+    "qemu-1g-failure": {
+      "test": "THOX patched Ginux QEMU TCG console smoke",
+      "outcome": "failed",
+      "commands": [
+        "Ginux panic"
+      ],
+      "elapsed_seconds": 2.11,
+      "qemu_exit_code": 0,
+      "guest_memory": "1G",
+      "vcpus": 1,
+      "acceleration": "tcg",
+      "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+      "log_sha256": "cb5d6fe142b0a9bd5a0e16721a18c2e020d9c37eb59d68021a3a85c59d636716",
+      "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI"
+    }
+  },
+  "delivered_payload_boot": {
+    "test": "THOX patched Ginux QEMU TCG console smoke",
+    "outcome": "passed",
+    "commands": [
+      "status",
+      "components",
+      "domain list",
+      "help"
+    ],
+    "elapsed_seconds": 2.17,
+    "qemu_exit_code": 0,
+    "guest_memory": "2G",
+    "vcpus": 1,
+    "acceleration": "tcg",
+    "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+    "log_sha256": "bcc5fb00ce3ce093e70263a39429f98532a13d2676e446e8dbf9ab93a463e84d",
+    "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+  },
+  "pristine_upstream_domain_comparison": {
+    "test": "Pristine upstream Ginux embedded domain lifecycle",
+    "outcome": "failed",
+    "commands": [
+      "domain new thoxdemo",
+      "domain set thoxdemo image=embedded://minimal-system-v0 init=/sbin/init memory-mib=128",
+      "Ginux panic"
+    ],
+    "elapsed_seconds": 2.01,
+    "qemu_exit_code": 0,
+    "guest_memory": "2G",
+    "vcpus": 1,
+    "acceleration": "tcg",
+    "efi_sha256": "524d2d83c8e2d086819def18820981093cb41b501546313f8903217d183a2645",
+    "log_sha256": "f13d72c87ae61b94cdc6c16e12b198c7ef96a69af7a62dedccf1876bbf17d1af",
+    "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with unmodified upstream EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+  },
+  "restored_source_rebuild_sha256": "24aefd5f2cdf7044c57817cff4e44ff2fd0ae4c09046427d2e5d98c198fbdd66",
+  "byte_reproducible_build": "not_claimed; regenerated source build produced different EFI bytes; original tested payload retained"
+}

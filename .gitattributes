@@ -1,0 +1,3 @@
+# Preserve authentic serial capture and artifact bytes across platforms.
+evidence/*.log -text
+*.pdf binary

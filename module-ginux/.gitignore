@@ -1,0 +1,8 @@
+.work/
+artifacts/*
+!artifacts/SHA256SUMS
+!artifacts/build-receipt.json
+!artifacts/GINUX_LICENSE
+!artifacts/GINUX_NOTICE
+state/
+__pycache__/

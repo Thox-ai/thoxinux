@@ -1,0 +1,17 @@
+{
+  "test": "THOX patched Ginux saved configuration persistence",
+  "outcome": "passed",
+  "commands": [
+    "domain new thoxconfig",
+    "domain set thoxconfig image=embedded://minimal-system-v0 init=/sbin/init autostart=false",
+    "domain status thoxconfig"
+  ],
+  "elapsed_seconds": 2.17,
+  "qemu_exit_code": 0,
+  "guest_memory": "2G",
+  "vcpus": 1,
+  "acceleration": "tcg",
+  "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+  "log_sha256": "79e042e4f9d5cc2326f53a9391442a6becd2a318c08585a6cc3cc964726aeb5a",
+  "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+}

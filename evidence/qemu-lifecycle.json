@@ -1,0 +1,17 @@
+{
+  "test": "THOX patched Ginux embedded domain lifecycle",
+  "outcome": "failed",
+  "commands": [
+    "domain new thoxdemo",
+    "domain set thoxdemo image=embedded://minimal-system-v0 init=/sbin/init memory-mib=128",
+    "Ginux panic"
+  ],
+  "elapsed_seconds": 2.16,
+  "qemu_exit_code": 0,
+  "guest_memory": "2G",
+  "vcpus": 1,
+  "acceleration": "tcg",
+  "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+  "log_sha256": "1b3740918452b20f7a2bb1769cda83f53fb62be2fa1860e350b6b2e9d5667edb",
+  "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+}

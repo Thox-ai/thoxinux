@@ -1,0 +1,11 @@
+ThoxOS Ginux Research Edition packaging
+Copyright 2026 THOX.ai LLC
+
+THOX.ai LLC modifications identify this build through a research banner and
+provide Docker/QEMU packaging, validation and a native host launcher.
+
+This package builds Ginux, Copyright 2026 Ginux contributors, licensed under
+Apache License, Version 2.0. It includes software developed by the Ginux
+contributors. Preserve upstream LICENSE and NOTICE with compiled artifacts.
+
+THOX trademarks are not licensed by the software license.

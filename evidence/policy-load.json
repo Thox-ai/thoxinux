@@ -1,0 +1,27 @@
+{
+  "runtime": "ChatGPT Codex current session",
+  "brain_commit": "f03e8d951dd12d7a4a916bd2ad51e4fa887b8332",
+  "handoffs_commit": "10febc7daff03665faa30c2d621ff7a32c8f0ad0",
+  "files": [
+    {
+      "path": "evidence/policy/thox-handoffs/THOX_Closeout_Agent_Handoffs_v1.1.md",
+      "sha256": "6f5a94fb8a197416722600197df6f31ec05fed9482ce3dc373620eebc4c79f00"
+    },
+    {
+      "path": "evidence/policy/thox-brain/docs/repository-standard-addendum-2026-10-06.md",
+      "sha256": "69cb890d278dbecf8c569db3a79c27c9f5a95e8872ff01b92d52bc263d07eb4e"
+    },
+    {
+      "path": "evidence/policy/thox-brain/docs/repository-standard-session-gate.md",
+      "sha256": "dbc23a41475482b77df3ceb09e6db43250027648a702c2410c19d6bde7f7f59c"
+    },
+    {
+      "path": "evidence/policy/thox-brain/docs/repository-standard.md",
+      "sha256": "0ee887e02b06ec1568b8a836cea37d6da9eaf97b6835b7bff0ef9ca8a3be0ce9"
+    },
+    {
+      "path": "evidence/policy/thox-handoffs/docs/SOLUTION_CLOSEOUT.md",
+      "sha256": "643a1c69d73fe733de6eb7c370ab9006109a8a31d18bd0b013218b97ff151aa6"
+    }
+  ]
+}

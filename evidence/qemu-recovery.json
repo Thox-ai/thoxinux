@@ -1,0 +1,15 @@
+{
+  "test": "THOX patched Ginux saved configuration recovery",
+  "outcome": "passed",
+  "commands": [
+    "domain status thoxconfig"
+  ],
+  "elapsed_seconds": 2.23,
+  "qemu_exit_code": 0,
+  "guest_memory": "2G",
+  "vcpus": 1,
+  "acceleration": "tcg",
+  "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+  "log_sha256": "fdf63b26a4f9053587863672835534772b4df4e2a0509015a3a9f97153cd44f1",
+  "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+}

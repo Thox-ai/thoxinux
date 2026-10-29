@@ -1,0 +1,15 @@
+test_dry_command_preserves_validated_hardware_and_creates_no_state (test_launcher.LauncherTests.test_dry_command_preserves_validated_hardware_and_creates_no_state) ... ok
+test_duplicate_checksum_rejected (test_launcher.LauncherTests.test_duplicate_checksum_rejected) ... ok
+test_high_memory_profile_rejected (test_launcher.LauncherTests.test_high_memory_profile_rejected) ... ok
+test_invalid_memory_rejected (test_launcher.LauncherTests.test_invalid_memory_rejected) ... ok
+test_manifest_traversal_rejected (test_launcher.LauncherTests.test_manifest_traversal_rejected) ... ok
+test_mismatched_firmware_configuration_rejected (test_launcher.LauncherTests.test_mismatched_firmware_configuration_rejected) ... ok
+test_missing_efi_checksum_rejected (test_launcher.LauncherTests.test_missing_efi_checksum_rejected) ... ok
+test_qemu_path_option_injection_rejected (test_launcher.LauncherTests.test_qemu_path_option_injection_rejected) ... ok
+test_tampered_efi_rejected_before_launch (test_launcher.LauncherTests.test_tampered_efi_rejected_before_launch) ... ok
+test_unknown_accelerator_rejected (test_launcher.LauncherTests.test_unknown_accelerator_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.075s
+
+OK

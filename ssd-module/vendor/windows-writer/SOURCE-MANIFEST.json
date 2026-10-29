@@ -1,0 +1,62 @@
+{
+  "repository": "ttracx/thoxos-desktop-debian",
+  "commit": "1385e9780fea4023f8e73b897ce8140d3dae3d96",
+  "source_directory": "ports/nicecore/external-ssd/windows",
+  "modified": false,
+  "files": [
+    {
+      "name": "Inspect-D-Drive.ps1",
+      "git_blob_sha": "f0faef8d9398f1f8a8be5f2b621b0f1329117741",
+      "sha256": "dbd5bda509b587c6553af062de763c914bab1388c7134f4b4af2e1f6c5056024",
+      "bytes": 9757
+    },
+    {
+      "name": "README.md",
+      "git_blob_sha": "c8c9ee801985dc24a5946a274f248a6a77404ac3",
+      "sha256": "930d6cdd8cdfc7dff874464b8d95c271f1424bfd7103da2dbad66a027f56870b",
+      "bytes": 11577
+    },
+    {
+      "name": "SOURCES.md",
+      "git_blob_sha": "06c7c9597f496cc941e61ce2001bd38cc6274124",
+      "sha256": "7bc598537fbb33319c0db31b1da3b761676942da7b750dcd7709958935e06031",
+      "bytes": 6547
+    },
+    {
+      "name": "Start-ThoxOS-SSD.cmd",
+      "git_blob_sha": "8500d23b160fbef59bfe514f9869c858acfd98f2",
+      "sha256": "25f0ff6b79b7e7c6e36aa42d3b2e6b059aa59e7c3ecb11b30e6bf4a0e08b3365",
+      "bytes": 918
+    },
+    {
+      "name": "Thox.ExternalSsd.psm1",
+      "git_blob_sha": "bb3ea0948a2953f68b72a6ff18ff5273d0d61293",
+      "sha256": "22bd7f47627a1160372e6d3ac84d192d273c2f775a7d2003ed319dedacfa6701",
+      "bytes": 35274
+    },
+    {
+      "name": "Thox.Image.cs",
+      "git_blob_sha": "b0149411bc1aec787b183faf1281b2075597531f",
+      "sha256": "f2e1500b68d5ee209f2fac3f1839d36cf1e53ee9ca4ee4e1320239ed5ba1b972",
+      "bytes": 19153
+    },
+    {
+      "name": "Thox.Ssd.Policy.psm1",
+      "git_blob_sha": "3cff2c6e14a3c8d49b838ea7053c3a9a909a840e",
+      "sha256": "3d9fbaf1587c2bab4fa70fd1947d4a4acd318d3857cdfec0734e766057491cae",
+      "bytes": 13969
+    },
+    {
+      "name": "Thox.WindowsStorage.cs",
+      "git_blob_sha": "4089c031506c3251728af19d7596f59a50e9c81f",
+      "sha256": "d8772e34851cd3f12ef12676bdf817e8c3804b209ef7c8c7497e02edc4916369",
+      "bytes": 30193
+    },
+    {
+      "name": "thox-external-ssd.ps1",
+      "git_blob_sha": "40ffac1664a96758d5d7b0db77b5482ee9e02796",
+      "sha256": "f185b726f43de6689749571bb1f1e4b3983e278f2d14a5da9b6228415631594f",
+      "bytes": 2796
+    }
+  ]
+}

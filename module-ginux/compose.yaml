@@ -1,0 +1,24 @@
+services:
+  ginux:
+    image: thoxos-ginux:0.1.0-candidate
+    build:
+      context: .
+      target: runtime
+    platform: linux/amd64
+    stdin_open: true
+    tty: true
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 4g
+    stop_grace_period: 10s
+    environment:
+      QEMU_ACCEL: tcg
+      GINUX_MEMORY: 2G
+    volumes:
+      - ginux-state:/data
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+volumes:
+  ginux-state:

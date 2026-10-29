@@ -1,0 +1,34 @@
+{
+  "recorded_at_utc": "2026-10-29T03:27:37.511665+00:00",
+  "source_sha256": {
+    "preflight.py": "9a51bc035fa37126d6f70c726d451e62c8b647c3a9c17ba50249fc83029cd3c4",
+    "install_host.py": "bbe67039a5793340d9925288c2e7c84430fe42b032b73fcd31a1fef9a419f0e0",
+    "build_external_ssd.py": "04327430e698e33809df906711964397920412cc977c11f578e99ca026c65b70",
+    "tests/test_host.py": "a0a91e5d0a83849df759770f2e61241a251a6b8d81b8d1f6344b8e9dfc13ca98",
+    "README.md": "4cadac7ed56940ebb5abfea095f532e0711fdc6ff3ed5a50de7e9f232e6e8cac",
+    "docs/EXTERNAL_SSD.md": "6c9ac1b1a7d8fdb04d863ea0e1bba69b76a5262d85f442bf3887369eb10050f0"
+  },
+  "checks": [
+    {
+      "command": "python3 -m unittest discover -s ssd-module/tests -v",
+      "exit_code": 0,
+      "tests_passed": 15,
+      "scope": "temporary artifact fixtures, read-only command stubs, actual disposable detached local clone with self-contained .git, original source preservation and unchanged vendored Git blobs"
+    },
+    {
+      "command": "python3 -m py_compile ssd-module/preflight.py ssd-module/install_host.py ssd-module/build_external_ssd.py",
+      "exit_code": 0
+    }
+  ],
+  "not_run": [
+    "native Linux system installation",
+    "real Vibe image build",
+    "native Windows writer APIs",
+    "physical media write",
+    "physical KnightHub boot",
+    "Secure Boot",
+    "NVIDIA hardware validation"
+  ],
+  "mutations": "ordinary source, fixtures and temporary staging only",
+  "source_provenance": "local clone with no hardlinks and its own .git inside Docker /src mount; no caller global credential files copied"
+}

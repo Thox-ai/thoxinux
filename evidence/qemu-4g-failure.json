@@ -1,0 +1,15 @@
+{
+  "test": "THOX patched Ginux QEMU TCG console smoke",
+  "outcome": "failed",
+  "commands": [
+    "Ginux panic"
+  ],
+  "elapsed_seconds": 2.07,
+  "qemu_exit_code": 0,
+  "guest_memory": "4G",
+  "vcpus": 1,
+  "acceleration": "tcg",
+  "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+  "log_sha256": "4ba301a8c7401c1d42664b3e59a0956673066b0b7d47db6e59196e9ff470c813",
+  "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI"
+}

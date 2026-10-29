@@ -1,0 +1,10 @@
+# Opt in on x86-64 Linux only. Set KVM_GID=$(stat -c %g /dev/kvm).
+# This exposes only /dev/kvm, not disks, home directories, or the Docker socket.
+services:
+  ginux:
+    environment:
+      QEMU_ACCEL: kvm
+    devices:
+      - /dev/kvm:/dev/kvm
+    group_add:
+      - "${KVM_GID:?Set KVM_GID to the group ID of /dev/kvm}"

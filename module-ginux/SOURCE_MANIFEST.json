@@ -1,0 +1,46 @@
+{
+  "edition": "ThoxOS Ginux Research Edition",
+  "version": "0.1.0-candidate",
+  "stage": "engineering-preview",
+  "upstream": {
+    "repository": "https://github.com/gmkurtzer/ginux",
+    "commit": "36503bda2d87465765e1b94e65f9d100f27ed5be",
+    "license": "Apache-2.0",
+    "cargo_lock_sha256": "c42e12dd6b7b31341fac62615c58c0fb346b2c420980b51dd41cac219dfba672"
+  },
+  "modification": {
+    "path": "control-plane/runtime/src/main.rs",
+    "purpose": "prepend THOX research banner; preserve upstream banner, prompt and ABI",
+    "patch": "patches/thox-banner.patch",
+    "sha256": "1319c086fe9bb0b6a185ac13fc412f686f6e4ff21ab4c0fe50fa260987651165"
+  },
+  "toolchain": {
+    "rust": "1.99.0",
+    "targets": [
+      "x86_64-unknown-uefi",
+      "x86_64-unknown-none"
+    ],
+    "docker_builder_base": "rust:1.99.0-bookworm",
+    "docker_runtime_base": "ubuntu:24.04",
+    "package_resolution": "base tags and distribution packages are not pinned to immutable digests"
+  },
+  "qemu_profile": {
+    "machine": "q35",
+    "vcpus": 1,
+    "guest_memory": "2G",
+    "maximum_guest_memory_mib": 2048,
+    "cpu_tcg": "max,+smep,+smap,+umip",
+    "cpu_kvm": "host,+smep,+smap,+umip",
+    "iommu": "intel-iommu,intremap=off,aw-bits=48",
+    "console": "serial stdio",
+    "inbound_ports": [],
+    "direct_host_disks": false,
+    "gpu_passthrough": false
+  },
+  "artifact_receipt": "artifacts/build-receipt.json",
+  "claim_limits": [
+    "Docker runtime not established by a native QEMU boot",
+    "KVM and KnightHub physical SSD boot require their own executed acceptance tests",
+    "Ginux GPU, CUDA, graphical desktop and native USB/NVMe are not established"
+  ]
+}

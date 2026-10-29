@@ -1,0 +1,4 @@
+module-ginux/artifacts/GINUX.EFI
+module-ginux/.work/
+**/__pycache__/
+*.pyc

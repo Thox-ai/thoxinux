@@ -1,0 +1,734 @@
+Booting x86-64 Ginux with QEMU/tcg using CPU max,+smep,+smap,+umip
+[2J[01;01H[=3h[2J[01;01H[2J[01;01H[=3h[2J[01;01H[2J[01;01H[=3h[2J[01;01HBdsDxe: loading Boot0001 "UEFI QEMU HARDDISK QM00011 " from PciRoot(0x0)/Pci(0x1F,0x2)/Sata(0x5,0xFFFF,0x0)
+BdsDxe: starting Boot0001 "UEFI QEMU HARDDISK QM00011 " from PciRoot(0x0)/Pci(0x1F,0x2)/Sata(0x5,0xFFFF,0x0)
+[2J[01;01HGinux booted
+ginux: booting
+ginux: memory protections ready
+ginux: memory manager ready
+ginux: boot devices ready
+ginux: control runtime ready
+ginux: platform, security, devices, and runtime ready
+ginux: persistent storage initialized (generation 1, 2040 data sectors)
+ginux: timing boot-to-controller: 288 ms
+
+ginux: launching embedded controller in ring 3
+
+ThoxOS Ginux Research Edition
+Engineering preview: QEMU guest; physical hardware unvalidated.
+Based on Ginux by Gregory M. Kurtzer and contributors.
+
+Ginux controller v0 (ring 3)
+Type 'help' for commands.
+ginux: Linux live sysinfo accounting validated
+ginux: Linux getrandom contract validated
+ginux: Linux resource-limit queries validated
+ginux: Linux process identity validated
+ginux: Linux timekeeping validated
+ginux: Linux runtime pipe accounting validated
+eth0: automatic DHCP configuration
+eth0: requesting DHCP lease
+eth0: DHCP configured 10.0.2.15/24 via 10.0.2.2 DNS 10.0.2.3
+ginux> 
+ginux>    
+ginux> status 
+controller: running (ring 3)
+domains: 0 configured
+integrity: sealed
+ginux> statuz s
+controller: running (ring 3)
+domains: 0 configured
+integrity: sealed
+ginux> statuz s
+controller: running (ring 3)
+domains: 0 configured
+integrity: sealed
+ginux> domain attach 
+Error: missing arguments
+Usage:
+  domain attach NAME
+ginux> help
+Ginux controller shell
+
+Usage:
+  ginux COMMAND
+
+Available Commands:
+  help [COMMAND...]
+      Show command help
+  status
+      Show controller and host state
+  components
+      Show embedded image components
+  ls [PATH]
+      List the embedded measured root or /proc
+  ps
+      Show live host processes
+  domain COMMAND
+      Manage runtime domains
+  network COMMAND
+      Manage network devices
+  test ENVIRONMENT
+      Test a userspace compatibility environment
+  shutdown
+      Shut down Ginux cleanly
+ginux> domain help
+Manage runtime domains
+
+Usage:
+  domain COMMAND
+
+Available Commands:
+  domain list
+      List all domains
+  domain new NAME
+      Create a domain configuration
+  domain set NAME FIELD=VALUE...
+      Set one or more domain fields
+  domain status NAME
+      Show detailed domain state and configuration
+  domain start NAME [--attach]
+      Start a configured domain, optionally attached
+  domain attach NAME
+      Attach to a running domain; Ctrl-] detaches
+  domain exec NAME [--interactive] COMMAND [ARG...]
+      Execute a command in a running domain
+  domain stop NAME
+      Stop a running domain
+  domain restart NAME
+      Restart a configured domain
+  domain fail NAME
+      Inject a contained domain failure
+ginux> domain set --help
+Set one or more domain fields
+
+Usage:
+  domain set NAME FIELD=VALUE...
+ginux> network help
+Manage network devices
+
+Usage:
+  network COMMAND
+
+Available Commands:
+  network new NAME type=virtual [uplink=DEVICE]
+      Create a virtual network device
+  network list
+      List network devices and their state
+  network status DEVICE
+      Show a network device configuration
+  network set DEVICE {dhcp|dns ADDRESS|static ADDRESS/PREFIX GATEWAY}
+      Configure a network device
+  network start DEVICE
+      Administratively start a network device
+  network stop DEVICE
+      Administratively stop a network device
+  network restart DEVICE
+      Restart a network device without losing its configuration
+  network ping DEVICE ADDRESS
+      Send one ICMP echo through a network device
+  network down DEVICE
+      Alias for network stop
+ginux> network set --help
+Configure a network device
+
+Usage:
+  network set DEVICE {dhcp|dns ADDRESS|static ADDRESS/PREFIX GATEWAY}
+ginux> test linux
+Linux userspace runtime conformance summary:
+Interfaces: 17 pass, 5 fail, 1 policy-exempt, 23 total
+Syscalls: 82 pass, 245 fail, 48 policy-exempt, 375 total
+Run 'test linux all' for every result.
+ginux> test linux all
+Linux userspace conformance results:
+NAME/IDENTIFIER                   TYPE       ID     RESULT
+syscall-entry                     interface  0      PASS
+elf64-loader                      interface  1      PASS
+initial-stack-and-auxv            interface  2      PASS
+dynamic-loader                    interface  3      PASS
+tls                               interface  4      PASS
+process-and-thread                interface  5      PASS
+signals                           interface  6      PASS
+memory-management                 interface  7      PASS
+descriptors-and-events            interface  8      PASS
+vfs-and-path-lookup               interface  9      PASS
+procfs                            interface  10     PASS
+devfs-and-terminal                interface  11     PASS
+tmpfs                             interface  12     PASS
+credentials-and-user-namespaces   interface  13     PASS
+clocks-and-timers                 interface  14     PASS
+ioctl-profile                     interface  15     PASS
+sysfs                             interface  16     FAIL
+mount-and-namespace-api           interface  17     FAIL
+socket-api                        interface  18     PASS
+cgroups                           interface  19     FAIL
+seccomp-audit-and-lsm             interface  20     FAIL
+vdso-and-vvar                     interface  21     FAIL
+linux-module-userspace-api        interface  22     POLICY-EXEMPT
+read                              syscall    0      FAIL
+write                             syscall    1      FAIL
+open                              syscall    2      FAIL
+close                             syscall    3      FAIL
+stat                              syscall    4      FAIL
+fstat                             syscall    5      FAIL
+lstat                             syscall    6      FAIL
+poll                              syscall    7      FAIL
+lseek                             syscall    8      FAIL
+mmap                              syscall    9      FAIL
+mprotect                          syscall    10     FAIL
+munmap                            syscall    11     FAIL
+brk                               syscall    12     FAIL
+rt_sigaction                      syscall    13     FAIL
+rt_sigprocmask                    syscall    14     FAIL
+rt_sigreturn                      syscall    15     FAIL
+ioctl                             syscall    16     FAIL
+pread64                           syscall    17     FAIL
+pwrite64                          syscall    18     FAIL
+readv                             syscall    19     FAIL
+writev                            syscall    20     FAIL
+access                            syscall    21     FAIL
+pipe                              syscall    22     FAIL
+select                            syscall    23     FAIL
+sched_yield                       syscall    24     PASS
+mremap                            syscall    25     FAIL
+msync                             syscall    26     FAIL
+mincore                           syscall    27     FAIL
+madvise                           syscall    28     FAIL
+shmget                            syscall    29     FAIL
+shmat                             syscall    30     FAIL
+shmctl                            syscall    31     FAIL
+dup                               syscall    32     FAIL
+dup2                              syscall    33     FAIL
+pause                             syscall    34     FAIL
+nanosleep                         syscall    35     FAIL
+getitimer                         syscall    36     FAIL
+alarm                             syscall    37     FAIL
+setitimer                         syscall    38     FAIL
+getpid                            syscall    39     PASS
+sendfile                          syscall    40     FAIL
+socket                            syscall    41     PASS
+connect                           syscall    42     FAIL
+accept                            syscall    43     FAIL
+sendto                            syscall    44     PASS
+recvfrom                          syscall    45     PASS
+sendmsg                           syscall    46     PASS
+recvmsg                           syscall    47     PASS
+shutdown                          syscall    48     FAIL
+bind                              syscall    49     PASS
+listen                            syscall    50     PASS
+getsockname                       syscall    51     PASS
+getpeername                       syscall    52     PASS
+socketpair                        syscall    53     PASS
+setsockopt                        syscall    54     PASS
+getsockopt                        syscall    55     PASS
+clone                             syscall    56     FAIL
+fork                              syscall    57     FAIL
+vfork                             syscall    58     FAIL
+execve                            syscall    59     FAIL
+exit                              syscall    60     FAIL
+wait4                             syscall    61     FAIL
+kill                              syscall    62     FAIL
+uname                             syscall    63     PASS
+semget                            syscall    64     FAIL
+semop                             syscall    65     FAIL
+semctl                            syscall    66     FAIL
+shmdt                             syscall    67     FAIL
+msgget                            syscall    68     FAIL
+msgsnd                            syscall    69     FAIL
+msgrcv                            syscall    70     FAIL
+msgctl                            syscall    71     FAIL
+fcntl                             syscall    72     FAIL
+flock                             syscall    73     FAIL
+fsync                             syscall    74     PASS
+fdatasync                         syscall    75     PASS
+truncate                          syscall    76     FAIL
+ftruncate                         syscall    77     FAIL
+getdents                          syscall    78     FAIL
+getcwd                            syscall    79     FAIL
+chdir                             syscall    80     FAIL
+fchdir                            syscall    81     FAIL
+rename                            syscall    82     FAIL
+mkdir                             syscall    83     FAIL
+rmdir                             syscall    84     FAIL
+creat                             syscall    85     FAIL
+link                              syscall    86     FAIL
+unlink                            syscall    87     FAIL
+symlink                           syscall    88     FAIL
+readlink                          syscall    89     FAIL
+chmod                             syscall    90     FAIL
+fchmod                            syscall    91     FAIL
+chown                             syscall    92     FAIL
+fchown                            syscall    93     FAIL
+lchown                            syscall    94     FAIL
+umask                             syscall    95     PASS
+gettimeofday                      syscall    96     PASS
+getrlimit                         syscall    97     PASS
+getrusage                         syscall    98     FAIL
+sysinfo                           syscall    99     FAIL
+times                             syscall    100    FAIL
+ptrace                            syscall    101    POLICY-EXEMPT
+getuid                            syscall    102    PASS
+syslog                            syscall    103    POLICY-EXEMPT
+getgid                            syscall    104    PASS
+setuid                            syscall    105    POLICY-EXEMPT
+setgid                            syscall    106    POLICY-EXEMPT
+geteuid                           syscall    107    PASS
+getegid                           syscall    108    PASS
+setpgid                           syscall    109    FAIL
+getppid                           syscall    110    PASS
+getpgrp                           syscall    111    PASS
+setsid                            syscall    112    FAIL
+setreuid                          syscall    113    POLICY-EXEMPT
+setregid                          syscall    114    POLICY-EXEMPT
+getgroups                         syscall    115    PASS
+setgroups                         syscall    116    FAIL
+setresuid                         syscall    117    POLICY-EXEMPT
+getresuid                         syscall    118    PASS
+setresgid                         syscall    119    POLICY-EXEMPT
+getresgid                         syscall    120    PASS
+getpgid                           syscall    121    PASS
+setfsuid                          syscall    122    POLICY-EXEMPT
+setfsgid                          syscall    123    POLICY-EXEMPT
+getsid                            syscall    124    PASS
+capget                            syscall    125    FAIL
+capset                            syscall    126    FAIL
+rt_sigpending                     syscall    127    FAIL
+rt_sigtimedwait                   syscall    128    FAIL
+rt_sigqueueinfo                   syscall    129    FAIL
+rt_sigsuspend                     syscall    130    FAIL
+sigaltstack                       syscall    131    FAIL
+utime                             syscall    132    FAIL
+mknod                             syscall    133    FAIL
+uselib                            syscall    134    PASS
+personality                       syscall    135    FAIL
+ustat                             syscall    136    PASS
+statfs                            syscall    137    FAIL
+fstatfs                           syscall    138    FAIL
+sysfs                             syscall    139    PASS
+getpriority                       syscall    140    FAIL
+setpriority                       syscall    141    FAIL
+sched_setparam                    syscall    142    PASS
+sched_getparam                    syscall    143    PASS
+sched_setscheduler                syscall    144    PASS
+sched_getscheduler                syscall    145    PASS
+sched_get_priority_max            syscall    146    PASS
+sched_get_priority_min            syscall    147    PASS
+sched_rr_get_interval             syscall    148    PASS
+mlock                             syscall    149    PASS
+munlock                           syscall    150    PASS
+mlockall                          syscall    151    PASS
+munlockall                        syscall    152    PASS
+vhangup                           syscall    153    POLICY-EXEMPT
+modify_ldt                        syscall    154    FAIL
+pivot_root                        syscall    155    POLICY-EXEMPT
+_sysctl                           syscall    156    PASS
+prctl                             syscall    157    FAIL
+arch_prctl                        syscall    158    FAIL
+adjtimex                          syscall    159    POLICY-EXEMPT
+setrlimit                         syscall    160    FAIL
+chroot                            syscall    161    POLICY-EXEMPT
+sync                              syscall    162    PASS
+acct                              syscall    163    POLICY-EXEMPT
+settimeofday                      syscall    164    POLICY-EXEMPT
+mount                             syscall    165    POLICY-EXEMPT
+umount2                           syscall    166    POLICY-EXEMPT
+swapon                            syscall    167    POLICY-EXEMPT
+swapoff                           syscall    168    POLICY-EXEMPT
+reboot                            syscall    169    POLICY-EXEMPT
+sethostname                       syscall    170    POLICY-EXEMPT
+setdomainname                     syscall    171    POLICY-EXEMPT
+iopl                              syscall    172    POLICY-EXEMPT
+ioperm                            syscall    173    POLICY-EXEMPT
+create_module                     syscall    174    PASS
+init_module                       syscall    175    POLICY-EXEMPT
+delete_module                     syscall    176    POLICY-EXEMPT
+get_kernel_syms                   syscall    177    PASS
+query_module                      syscall    178    PASS
+quotactl                          syscall    179    POLICY-EXEMPT
+nfsservctl                        syscall    180    PASS
+getpmsg                           syscall    181    PASS
+putpmsg                           syscall    182    PASS
+afs_syscall                       syscall    183    PASS
+tuxcall                           syscall    184    PASS
+security                          syscall    185    PASS
+gettid                            syscall    186    PASS
+readahead                         syscall    187    PASS
+setxattr                          syscall    188    FAIL
+lsetxattr                         syscall    189    FAIL
+fsetxattr                         syscall    190    FAIL
+getxattr                          syscall    191    FAIL
+lgetxattr                         syscall    192    FAIL
+fgetxattr                         syscall    193    FAIL
+listxattr                         syscall    194    FAIL
+llistxattr                        syscall    195    FAIL
+flistxattr                        syscall    196    FAIL
+removexattr                       syscall    197    FAIL
+lremovexattr                      syscall    198    FAIL
+fremovexattr                      syscall    199    FAIL
+tkill                             syscall    200    FAIL
+time                              syscall    201    PASS
+futex                             syscall    202    FAIL
+sched_setaffinity                 syscall    203    PASS
+sched_getaffinity                 syscall    204    PASS
+set_thread_area                   syscall    205    PASS
+io_setup                          syscall    206    FAIL
+io_destroy                        syscall    207    FAIL
+io_getevents                      syscall    208    FAIL
+io_submit                         syscall    209    FAIL
+io_cancel                         syscall    210    FAIL
+get_thread_area                   syscall    211    PASS
+lookup_dcookie                    syscall    212    PASS
+epoll_create                      syscall    213    FAIL
+epoll_ctl_old                     syscall    214    PASS
+epoll_wait_old                    syscall    215    PASS
+remap_file_pages                  syscall    216    FAIL
+getdents64                        syscall    217    FAIL
+set_tid_address                   syscall    218    PASS
+restart_syscall                   syscall    219    PASS
+semtimedop                        syscall    220    FAIL
+fadvise64                         syscall    221    PASS
+timer_create                      syscall    222    FAIL
+timer_settime                     syscall    223    FAIL
+timer_gettime                     syscall    224    FAIL
+timer_getoverrun                  syscall    225    FAIL
+timer_delete                      syscall    226    FAIL
+clock_settime                     syscall    227    POLICY-EXEMPT
+clock_gettime                     syscall    228    FAIL
+clock_getres                      syscall    229    FAIL
+clock_nanosleep                   syscall    230    FAIL
+exit_group                        syscall    231    FAIL
+epoll_wait                        syscall    232    FAIL
+epoll_ctl                         syscall    233    FAIL
+tgkill                            syscall    234    FAIL
+utimes                            syscall    235    FAIL
+vserver                           syscall    236    PASS
+mbind                             syscall    237    FAIL
+set_mempolicy                     syscall    238    FAIL
+get_mempolicy                     syscall    239    FAIL
+mq_open                           syscall    240    FAIL
+mq_unlink                         syscall    241    FAIL
+mq_timedsend                      syscall    242    FAIL
+mq_timedreceive                   syscall    243    FAIL
+mq_notify                         syscall    244    FAIL
+mq_getsetattr                     syscall    245    FAIL
+kexec_load                        syscall    246    POLICY-EXEMPT
+waitid                            syscall    247    FAIL
+add_key                           syscall    248    FAIL
+request_key                       syscall    249    FAIL
+keyctl                            syscall    250    FAIL
+ioprio_set                        syscall    251    FAIL
+ioprio_get                        syscall    252    FAIL
+inotify_init                      syscall    253    FAIL
+inotify_add_watch                 syscall    254    FAIL
+inotify_rm_watch                  syscall    255    FAIL
+migrate_pages                     syscall    256    FAIL
+openat                            syscall    257    FAIL
+mkdirat                           syscall    258    FAIL
+mknodat                           syscall    259    FAIL
+fchownat                          syscall    260    FAIL
+futimesat                         syscall    261    FAIL
+newfstatat                        syscall    262    FAIL
+unlinkat                          syscall    263    FAIL
+renameat                          syscall    264    FAIL
+linkat                            syscall    265    FAIL
+symlinkat                         syscall    266    FAIL
+readlinkat                        syscall    267    FAIL
+fchmodat                          syscall    268    FAIL
+faccessat                         syscall    269    FAIL
+pselect6                          syscall    270    FAIL
+ppoll                             syscall    271    FAIL
+unshare                           syscall    272    POLICY-EXEMPT
+set_robust_list                   syscall    273    FAIL
+get_robust_list                   syscall    274    PASS
+splice                            syscall    275    FAIL
+tee                               syscall    276    FAIL
+sync_file_range                   syscall    277    PASS
+vmsplice                          syscall    278    FAIL
+move_pages                        syscall    279    FAIL
+utimensat                         syscall    280    FAIL
+epoll_pwait                       syscall    281    FAIL
+signalfd                          syscall    282    FAIL
+timerfd_create                    syscall    283    FAIL
+eventfd                           syscall    284    FAIL
+fallocate                         syscall    285    FAIL
+timerfd_settime                   syscall    286    FAIL
+timerfd_gettime                   syscall    287    FAIL
+accept4                           syscall    288    FAIL
+signalfd4                         syscall    289    FAIL
+eventfd2                          syscall    290    FAIL
+epoll_create1                     syscall    291    FAIL
+dup3                              syscall    292    PASS
+pipe2                             syscall    293    FAIL
+inotify_init1                     syscall    294    FAIL
+preadv                            syscall    295    FAIL
+pwritev                           syscall    296    FAIL
+rt_tgsigqueueinfo                 syscall    297    FAIL
+perf_event_open                   syscall    298    POLICY-EXEMPT
+recvmmsg                          syscall    299    PASS
+fanotify_init                     syscall    300    FAIL
+fanotify_mark                     syscall    301    FAIL
+prlimit64                         syscall    302    FAIL
+name_to_handle_at                 syscall    303    FAIL
+open_by_handle_at                 syscall    304    FAIL
+clock_adjtime                     syscall    305    POLICY-EXEMPT
+syncfs                            syscall    306    PASS
+sendmmsg                          syscall    307    PASS
+setns                             syscall    308    POLICY-EXEMPT
+getcpu                            syscall    309    PASS
+process_vm_readv                  syscall    310    FAIL
+process_vm_writev                 syscall    311    FAIL
+kcmp                              syscall    312    FAIL
+finit_module                      syscall    313    POLICY-EXEMPT
+sched_setattr                     syscall    314    PASS
+sched_getattr                     syscall    315    PASS
+renameat2                         syscall    316    FAIL
+seccomp                           syscall    317    FAIL
+getrandom                         syscall    318    FAIL
+memfd_create                      syscall    319    FAIL
+kexec_file_load                   syscall    320    POLICY-EXEMPT
+bpf                               syscall    321    POLICY-EXEMPT
+execveat                          syscall    322    FAIL
+userfaultfd                       syscall    323    FAIL
+membarrier                        syscall    324    PASS
+mlock2                            syscall    325    PASS
+copy_file_range                   syscall    326    FAIL
+preadv2                           syscall    327    FAIL
+pwritev2                          syscall    328    FAIL
+pkey_mprotect                     syscall    329    FAIL
+pkey_alloc                        syscall    330    FAIL
+pkey_free                         syscall    331    FAIL
+statx                             syscall    332    FAIL
+io_pgetevents                     syscall    333    FAIL
+rseq                              syscall    334    FAIL
+uretprobe                         syscall    335    FAIL
+pidfd_send_signal                 syscall    424    FAIL
+io_uring_setup                    syscall    425    FAIL
+io_uring_enter                    syscall    426    FAIL
+io_uring_register                 syscall    427    FAIL
+open_tree                         syscall    428    POLICY-EXEMPT
+move_mount                        syscall    429    POLICY-EXEMPT
+fsopen                            syscall    430    POLICY-EXEMPT
+fsconfig                          syscall    431    POLICY-EXEMPT
+fsmount                           syscall    432    POLICY-EXEMPT
+fspick                            syscall    433    POLICY-EXEMPT
+pidfd_open                        syscall    434    FAIL
+clone3                            syscall    435    FAIL
+close_range                       syscall    436    PASS
+openat2                           syscall    437    FAIL
+pidfd_getfd                       syscall    438    FAIL
+faccessat2                        syscall    439    FAIL
+process_madvise                   syscall    440    FAIL
+epoll_pwait2                      syscall    441    FAIL
+mount_setattr                     syscall    442    POLICY-EXEMPT
+quotactl_fd                       syscall    443    POLICY-EXEMPT
+landlock_create_ruleset           syscall    444    POLICY-EXEMPT
+landlock_add_rule                 syscall    445    POLICY-EXEMPT
+landlock_restrict_self            syscall    446    POLICY-EXEMPT
+memfd_secret                      syscall    447    FAIL
+process_mrelease                  syscall    448    FAIL
+futex_waitv                       syscall    449    FAIL
+set_mempolicy_home_node           syscall    450    FAIL
+cachestat                         syscall    451    FAIL
+fchmodat2                         syscall    452    FAIL
+map_shadow_stack                  syscall    453    FAIL
+futex_wake                        syscall    454    FAIL
+futex_wait                        syscall    455    FAIL
+futex_requeue                     syscall    456    FAIL
+statmount                         syscall    457    FAIL
+listmount                         syscall    458    FAIL
+lsm_get_self_attr                 syscall    459    FAIL
+lsm_set_self_attr                 syscall    460    FAIL
+lsm_list_modules                  syscall    461    FAIL
+mseal                             syscall    462    FAIL
+Summary: 99 pass, 250 fail, 49 policy-exempt, 398 total
+PASS = verified; FAIL = incomplete or unsupported; POLICY-EXEMPT = deliberately denied.
+ginux> test linux syscall read
+Linux x86-64 syscall conformance ledger:
+NAME/IDENTIFIER                   TYPE       ID     RESULT
+read                              syscall    0      FAIL
+Summary: 0 pass, 1 fail, 0 policy-exempt, 1 total
+PASS = verified; FAIL = incomplete or unsupported; POLICY-EXEMPT = deliberately denied.
+ginux> test linux syscall accept
+Linux x86-64 syscall conformance ledger:
+NAME/IDENTIFIER                   TYPE       ID     RESULT
+accept                            syscall    43     FAIL
+Summary: 0 pass, 1 fail, 0 policy-exempt, 1 total
+PASS = verified; FAIL = incomplete or unsupported; POLICY-EXEMPT = deliberately denied.
+ginux> test linux syscall 9999
+Linux x86-64 syscall conformance ledger:
+NAME/IDENTIFIER                   TYPE       ID     RESULT
+9999                              syscall    -      FAIL
+Summary: 0 pass, 1 fail, 0 policy-exempt, 1 total
+PASS = verified; FAIL = incomplete or unsupported; POLICY-EXEMPT = deliberately denied.
+ginux>   status  
+controller: running (ring 3)
+domains: 0 configured
+integrity: sealed
+ginux> components
+GINUX.EFI component catalog v0:
+- kernel: active, ring 0
+- controller: active, ring 3
+- boot modules: embedded, sealed
+ginux> ls
+dev/
+etc/
+proc/
+sys/
+tmp/
+var/
+init
+bin/
+sbin/
+ginux> ls /etc
+hostname
+os-release
+motd
+ginux-system-profile
+ginux> ls /proc
+1/
+ginux> ls /proc/1
+status
+ginux> ps
+PID    PPID   STATE  NAME
+1      0      R      controller
+ginux> domain list
+NAME            STATE       PERSONALITY  INIT                  CPU  MEM-MIB  AUTO   NETWORKS          IMAGE
+ginux> network list
+DEVICE  DOMAIN   CONNECTED  STATE  CONFIGURATION  ADDRESS          GATEWAY          DNS
+eth0    control  yes        up     configured     10.0.2.15/24     10.0.2.2         10.0.2.3
+lo      control  yes        up     configured     127.0.0.1/8      -                -
+ginux> network new gnet0 type=virtual
+gnet0: virtual network created; uplink eth0
+ginux> network new gnet1 type=virtual uplink=gnet0
+gnet1: virtual network created; uplink gnet0
+ginux> network list
+DEVICE  DOMAIN   CONNECTED  STATE  CONFIGURATION  ADDRESS          GATEWAY          DNS
+eth0    control  yes        up     configured     10.0.2.15/24     10.0.2.2         10.0.2.3
+lo      control  yes        up     configured     127.0.0.1/8      -                -
+gnet0   -        yes        up     virtual        -                eth0             -
+gnet1   -        yes        up     virtual        -                gnet0            -
+ginux> network status gnet0
+DEVICE  DOMAIN   CONNECTED  STATE  CONFIGURATION  ADDRESS          GATEWAY          DNS             GENERATION
+gnet0   -        yes        up     virtual        -                eth0             -               -
+ginux> network stop gnet0
+gnet0: stopped
+ginux> network status gnet0
+DEVICE  DOMAIN   CONNECTED  STATE  CONFIGURATION  ADDRESS          GATEWAY          DNS             GENERATION
+gnet0   -        yes        down   virtual        -                eth0             -               -
+ginux> network start gnet0
+gnet0: started
+ginux> network restart gnet1
+gnet1: restarted
+ginux> network status eth0
+DEVICE  DOMAIN   CONNECTED  STATE  CONFIGURATION  ADDRESS          GATEWAY          DNS             GENERATION
+eth0    control  yes        up     configured     10.0.2.15/24     10.0.2.2         10.0.2.3        2
+ginux> network status lo
+DEVICE  DOMAIN   CONNECTED  STATE  CONFIGURATION  ADDRESS          GATEWAY          DNS             GENERATION
+lo      control  yes        up     configured     127.0.0.1/8      -                -                0
+ginux> network status eth9
+network: device not found
+ginux> network ping lo 127.0.0.1
+PING 127.0.0.1
+64 bytes from 127.0.0.1: icmp_seq=1 ttl=64
+ginux> network set lo dns 10.0.2.3
+network: loopback is automatic and immutable
+ginux> network set eth0 static 10.0.2.15/99 10.0.2.2
+network: invalid address or prefix
+ginux> network set eth0 static 10.0.2.15/24 10.0.2.2
+eth0: static network configured
+ginux> network set eth0 dns 10.0.2.3
+eth0: DNS configured
+ginux> network status eth0
+DEVICE  DOMAIN   CONNECTED  STATE  CONFIGURATION  ADDRESS          GATEWAY          DNS             GENERATION
+eth0    control  yes        up     configured     10.0.2.15/24     10.0.2.2         10.0.2.3        2
+ginux> network ping eth0 10.0.2.15
+PING 10.0.2.15
+64 bytes from 10.0.2.15: icmp_seq=1 ttl=64
+ginux> network ping eth0 10.0.2.2
+PING 10.0.2.2
+64 bytes from 10.0.2.2: icmp_seq=1 ttl=64
+ginux> network ping eth0 10.0.2.2
+PING 10.0.2.2
+64 bytes from 10.0.2.2: icmp_seq=1 ttl=64
+ginux> network stop eth0
+eth0: stopped
+ginux> network status eth0
+DEVICE  DOMAIN   CONNECTED  STATE  CONFIGURATION  ADDRESS          GATEWAY          DNS             GENERATION
+eth0    control  yes        down   configured     10.0.2.15/24     10.0.2.2         10.0.2.3        3
+ginux> network start eth0
+eth0: started
+ginux> network restart eth0
+eth0: restarted
+ginux> network ping eth0 10.0.2.2
+PING 10.0.2.2
+64 bytes from 10.0.2.2: icmp_seq=1 ttl=64
+ginux> network down eth0
+eth0: stopped
+ginux> network set eth0 dhcp
+eth0: requesting DHCP lease
+eth0: DHCP configured 10.0.2.15/24 via 10.0.2.2 DNS 10.0.2.3
+ginux> network status eth0
+DEVICE  DOMAIN   CONNECTED  STATE  CONFIGURATION  ADDRESS          GATEWAY          DNS             GENERATION
+eth0    control  yes        up     configured     10.0.2.15/24     10.0.2.2         10.0.2.3        8
+ginux> network ping eth0 10.0.2.2
+PING 10.0.2.2
+64 bytes from 10.0.2.2: icmp_seq=1 ttl=64
+ginux> network stop eth0
+eth0: stopped
+ginux> domain status default
+domain: not found
+ginux> domain new demo
+demo: created (image required)
+ginux> domain new demo
+domain: create rejected
+ginux> domain new rocky
+rocky: created (image required)
+ginux> domain set rocky image=rockylinux/rockylinux:10 init=/bin/sh
+rocky: settings accepted; configured
+ginux> domain list
+NAME            STATE       PERSONALITY  INIT                  CPU  MEM-MIB  AUTO   NETWORKS          IMAGE
+demo            created     linux        /sbin/init            1    128      false  host(shared)      -
+rocky           configured  linux        /bin/sh               1    128      false  host(shared)      docker.io/rockylinux/rockylinux:10
+ginux> domain start
+Error: missing arguments
+Usage:
+  domain start NAME [--attach]
+ginux> domain set demo cpu=1 cpu=1
+domain: duplicate setting
+ginux> domain set demo personality=linux image=alpine@sha256:d56c381f961d307a21b3ca004cf1e3910f106644aefb1f43e654c8a56c4fd395 init=/bin/sh
+demo: settings accepted; configured
+ginux> domain list
+NAME            STATE       PERSONALITY  INIT                  CPU  MEM-MIB  AUTO   NETWORKS          IMAGE
+demo            configured  linux        /bin/sh               1    128      false  host(shared)      docker.io/library/alpine@sha256:d56c381f961d307a21b3ca004cf1e3910f106644aefb1f43e654c8a56c4fd395
+rocky           configured  linux        /bin/sh               1    128      false  host(shared)      docker.io/rockylinux/rockylinux:10
+ginux> domain set demo personality=linux image=rockylinux/rockylinux:10
+demo: settings accepted; configured
+ginux> domain list
+NAME            STATE       PERSONALITY  INIT                  CPU  MEM-MIB  AUTO   NETWORKS          IMAGE
+demo            configured  linux        /bin/sh               1    128      false  host(shared)      docker.io/rockylinux/rockylinux:10
+rocky           configured  linux        /bin/sh               1    128      false  host(shared)      docker.io/rockylinux/rockylinux:10
+ginux> domain set demo personality=linux image=embedded://minimal-system-v0 init=/sbin/init cpu=1 memory-mib=1048576 autostart=true network=gnet0 network=gnet1
+demo: settings accepted; configured
+ginux> domain set demo autostart=false
+demo: setting accepted; configured
+ginux> domain set demo cpu 1
+demo: setting accepted; configured
+ginux> domain list
+NAME            STATE       PERSONALITY  INIT                  CPU  MEM-MIB  AUTO   NETWORKS          IMAGE
+demo            configured  linux        /sbin/init            1    1048576  false  gnet0,gnet1       embedded://minimal-system-v0
+rocky           configured  linux        /bin/sh               1    128      false  host(shared)      docker.io/rockylinux/rockylinux:10
+ginux> network list
+DEVICE  DOMAIN   CONNECTED  STATE  CONFIGURATION  ADDRESS          GATEWAY          DNS
+eth0    control  yes        down   configured     10.0.2.15/24     10.0.2.2         10.0.2.3
+lo      control  yes        up     configured     127.0.0.1/8      -                -
+gnet0   demo     yes        up     virtual        -                eth0             -
+gnet1   demo     yes        up     virtual        -                gnet0            -
+ginux> status
+controller: running (ring 3)
+domains: 2 configured
+integrity: sealed
+ginux> domain start demo
+ginux: minimal system init execution failed
+GINUX_KERNEL_PANIC
+qemu-system-x86_64: terminating on signal 15 from pid 5 (/bin/bash)
+Controller console test failed: QEMU did not shut down within 75 seconds.
+tests/qemu/controller-console.sh: line 45: printf: write error: Broken pipe

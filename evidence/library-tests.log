@@ -1,0 +1,175 @@
+   Compiling digest v0.11.3
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling sha2 v0.11.0
+   Compiling ginux-volume-format v0.1.0 (/workspace/scratch/8fd65eeca383/gin-build/crates/volume-format)
+   Compiling ginux-image-store v0.1.0 (/workspace/scratch/8fd65eeca383/gin-build/crates/image-store)
+   Compiling ginux-volume-service v0.1.0 (/workspace/scratch/8fd65eeca383/gin-build/crates/volume-service)
+   Compiling syn v2.0.119
+   Compiling serde_derive v1.0.228
+   Compiling serde v1.0.228
+   Compiling serde-json-core v0.7.0
+   Compiling ginux-oci v0.1.0 (/workspace/scratch/8fd65eeca383/gin-build/crates/oci)
+   Compiling ginux-oci-cache v0.1.0 (/workspace/scratch/8fd65eeca383/gin-build/crates/oci-cache)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.03s
+     Running unittests src/lib.rs (target/debug/deps/ginux_command-5836b65ad6ea13eb)
+
+running 6 tests
+test tests::completes_root_and_nested_command_names ... ok
+test tests::generates_help_from_the_command_tree ... ok
+test tests::parses_nested_commands_and_normalizes_whitespace ... ok
+test tests::parses_multiple_domain_settings ... ok
+test tests::reports_scope_and_arity_errors ... ok
+test tests::resolves_root_and_nested_help ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ginux_image_store-bed0d901fd8d7875)
+
+running 5 tests
+test tests::digest_failure_aborts_and_releases_quota ... ok
+test tests::publishes_only_complete_verified_objects ... ok
+test tests::quota_and_stale_handles_are_enforced ... ok
+test tests::removing_a_published_object_releases_its_slot_and_quota ... ok
+test tests::staging_handles_round_trip_without_ambient_authority ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ginux_native_abi-2e5618047abff7f6)
+
+running 9 tests
+test tests::control_descriptor_v4_layout_and_validation_are_frozen ... ok
+test tests::control_discovery_requires_v4_and_required_features ... ok
+test tests::layout_and_header_are_frozen ... ok
+test tests::c_binding_tracks_the_canonical_contract ... ok
+test tests::linux_control_ioctl_layout_is_frozen ... ok
+test tests::network_bootstrap_layout_and_validation_are_frozen ... ok
+test tests::protocol_bootstrap_layout_and_validation_are_frozen ... ok
+test tests::rejects_header_and_reserved_field_changes ... ok
+test tests::lifecycle_binding_tracks_the_canonical_contract ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ginux_oci-98d27033782eb92f)
+
+running 8 tests
+test tests::accepts_sha256_selectors_and_rejects_ambiguous_references ... ok
+test tests::canonicalizes_docker_hub_and_explicit_registry_references ... ok
+test tests::parses_registry_authentication_contract ... ok
+test tests::registry_parsers_reject_wrong_platform_and_bad_digests ... ok
+test tests::applies_later_layer_replacements_and_whiteouts ... ok
+test tests::indexes_regular_file_symlink_and_hardlink ... ok
+test tests::rejects_traversal_corruption_and_trailing_data ... ok
+test tests::selects_required_platform_and_parses_manifest ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ginux_oci_cache-cda9701dcefad301)
+
+running 2 tests
+test tests::corruption_is_rejected ... ok
+test tests::round_trip_preserves_multiple_images_and_shared_layers ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ginux_protocol_state-9e7b5c25c25d229a)
+
+running 9 tests
+test tests::learns_refreshes_and_rejects_conflict_without_mutation ... ok
+test tests::constructs_exact_icmp_echo_reply ... ok
+test tests::does_not_mutate_rejected_echo_request ... ok
+test tests::rejects_icmp_type_code_and_checksum_changes ... ok
+test tests::parses_exact_arp_reply ... ok
+test tests::rejects_ipv4_checksum_fragment_and_endpoint_changes ... ok
+test tests::rejects_malformed_or_misdirected_replies ... ok
+test tests::validates_exact_unfragmented_ipv4_icmp_header ... ok
+test tests::validates_icmp_echo_request_fields_and_checksum ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ginux_runtime_memory-4b1759a8c0ca9fed)
+
+running 3 tests
+test tests::allocation_failure_does_not_publish_a_partial_link ... ok
+test tests::failed_multi_page_growth_restores_existing_chain ... ok
+test tests::grows_metadata_without_a_fixed_mapping_limit ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ginux_volume_format-8ec70f433c3788aa)
+
+running 4 tests
+test tests::host_volume_header_rejects_small_mismatched_and_trailing_layouts ... ok
+test tests::host_volume_header_round_trips_exact_geometry ... ok
+test tests::rejects_invalid_inputs_and_corruption ... ok
+test tests::prepared_is_not_committed_and_committed_round_trips ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ginux_volume_service-7cdac71ced3a82d1)
+
+running 7 tests
+test tests::foreign_nonzero_media_fails_closed ... ok
+test tests::corrupt_local_config_is_rejected_without_modification ... ok
+test tests::host_volume_rejects_geometry_changes_and_foreign_records ... ok
+test tests::host_volume_initializes_recovers_and_migrates_transactionally ... ok
+test tests::final_flush_is_the_commit_point ... ok
+test tests::local_config_commits_large_payloads_and_recovers_newest_generation ... ok
+test tests::oci_catalog_is_independent_and_transactional ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ginux_command
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ginux_image_store
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ginux_native_abi
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ginux_oci
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ginux_oci_cache
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ginux_protocol_state
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ginux_runtime_memory
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ginux_volume_format
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ginux_volume_service
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

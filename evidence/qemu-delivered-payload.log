@@ -1,0 +1,75 @@
+Booting x86-64 Ginux with QEMU/tcg using CPU max,+smep,+smap,+umip
+[2J[01;01H[=3h[2J[01;01H[2J[01;01H[=3h[2J[01;01H[2J[01;01H[=3h[2J[01;01HBdsDxe: loading Boot0001 "UEFI QEMU HARDDISK QM00011 " from PciRoot(0x0)/Pci(0x1F,0x2)/Sata(0x5,0xFFFF,0x0)
+BdsDxe: starting Boot0001 "UEFI QEMU HARDDISK QM00011 " from PciRoot(0x0)/Pci(0x1F,0x2)/Sata(0x5,0xFFFF,0x0)
+[2J[01;01HGinux booted
+ginux: booting
+ginux: memory protections ready
+ginux: memory manager ready
+ginux: boot devices ready
+ginux: control runtime ready
+ginux: platform, security, devices, and runtime ready
+ginux: persistent storage recovered (generation 1, 134217720 data sectors)
+ginux: local configuration recovered (generation 3)
+ginux: timing boot-to-controller: 261 ms
+
+ginux: launching embedded controller in ring 3
+
+ThoxOS Ginux Research Edition
+Engineering preview: QEMU guest; physical hardware unvalidated.
+Based on Ginux by Gregory M. Kurtzer and contributors.
+
+Ginux controller v0 (ring 3)
+Type 'help' for commands.
+ginux: Linux live sysinfo accounting validated
+ginux: Linux getrandom contract validated
+ginux: Linux resource-limit queries validated
+ginux: Linux process identity validated
+ginux: Linux timekeeping validated
+ginux: Linux runtime pipe accounting validated
+eth0: automatic DHCP configuration
+eth0: requesting DHCP lease
+eth0: DHCP configured 10.0.2.15/24 via 10.0.2.2 DNS 10.0.2.3
+ginux> status
+controller: running (ring 3)
+domains: 2 configured
+integrity: sealed
+ginux> components
+GINUX.EFI component catalog v0:
+- kernel: active, ring 0
+- controller: active, ring 3
+- boot modules: embedded, sealed
+ginux> domain list
+NAME            STATE       PERSONALITY  INIT                  CPU  MEM-MIB  AUTO   NETWORKS          IMAGE
+thoxdemo        configured  linux        /sbin/init            1    128      false  host(shared)      embedded://minimal-system-v0
+thoxconfig      configured  linux        /sbin/init            1    128      false  host(shared)      embedded://minimal-system-v0
+ginux> help
+Ginux controller shell
+
+Usage:
+  ginux COMMAND
+
+Available Commands:
+  help [COMMAND...]
+      Show command help
+  status
+      Show controller and host state
+  components
+      Show embedded image components
+  ls [PATH]
+      List the embedded measured root or /proc
+  ps
+      Show live host processes
+  domain COMMAND
+      Manage runtime domains
+  network COMMAND
+      Manage network devices
+  test ENVIRONMENT
+      Test a userspace compatibility environment
+  shutdown
+      Shut down Ginux cleanly
+ginux> shutdown
+Shutting down Ginux.
+ginux: local configuration committed (generation 3)
+
+ginux: controller requested clean shutdown
+GINUX_KERNEL_OK

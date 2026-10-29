@@ -1,0 +1,18 @@
+{
+  "test": "THOX patched Ginux QEMU TCG console smoke",
+  "outcome": "passed",
+  "commands": [
+    "status",
+    "components",
+    "domain list",
+    "help"
+  ],
+  "elapsed_seconds": 2.45,
+  "qemu_exit_code": 0,
+  "guest_memory": "2G",
+  "vcpus": 1,
+  "acceleration": "tcg",
+  "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+  "log_sha256": "daef98cccc05fbc2272d05328d8238b37c9624c08e09a53e5a3d64af88e6a272",
+  "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with THOX-patched EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+}

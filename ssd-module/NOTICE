@@ -1,0 +1,7 @@
+ThoxOS Ginux host integration
+Copyright 2026 THOX.ai LLC
+
+The original host integration code is licensed under Apache-2.0.
+Ginux is a separate upstream work by Gregory M. Kurtzer and contributors.
+Its original LICENSE and NOTICE are preserved in the supplied artifact bundle.
+Existing THOX host images and disk writers retain their own component licenses.

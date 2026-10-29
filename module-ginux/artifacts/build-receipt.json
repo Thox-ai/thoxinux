@@ -1,0 +1,18 @@
+{
+  "edition": "ThoxOS Ginux Research Edition",
+  "stage": "engineering-preview",
+  "built_at_utc": "2026-10-29T03:20:30.561237+00:00",
+  "upstream_repository": "https://github.com/gmkurtzer/ginux",
+  "upstream_commit": "36503bda2d87465765e1b94e65f9d100f27ed5be",
+  "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "banner_patch_sha256": "1319c086fe9bb0b6a185ac13fc412f686f6e4ff21ab4c0fe50fa260987651165",
+  "cargo_lock_sha256": "c42e12dd6b7b31341fac62615c58c0fb346b2c420980b51dd41cac219dfba672",
+  "efi_sha256": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+  "efi_size_bytes": 12497920,
+  "artifacts": {
+    "GINUX.EFI": "4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8",
+    "GINUX_LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "GINUX_NOTICE": "65efae7eeef0e462670e5e80a2a122f2f5910559f2c73e9e88c53d45414f1bcf"
+  },
+  "physical_hardware_test": "not_run"
+}

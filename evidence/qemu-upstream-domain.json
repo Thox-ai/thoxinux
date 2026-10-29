@@ -1,0 +1,17 @@
+{
+  "test": "Pristine upstream Ginux embedded domain lifecycle",
+  "outcome": "failed",
+  "commands": [
+    "domain new thoxdemo",
+    "domain set thoxdemo image=embedded://minimal-system-v0 init=/sbin/init memory-mib=128",
+    "Ginux panic"
+  ],
+  "elapsed_seconds": 2.01,
+  "qemu_exit_code": 0,
+  "guest_memory": "2G",
+  "vcpus": 1,
+  "acceleration": "tcg",
+  "efi_sha256": "524d2d83c8e2d086819def18820981093cb41b501546313f8903217d183a2645",
+  "log_sha256": "f13d72c87ae61b94cdc6c16e12b198c7ef96a69af7a62dedccf1876bbf17d1af",
+  "limits": "QEMU from extracted Ubuntu packages; not Docker or physical KnightHub; upstream QEMU launcher with unmodified upstream EFI and explicit aw-bits=48 required for Ginux IOMMU48bit contract"
+}
