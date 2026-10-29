@@ -1,0 +1,9 @@
+build azure desktop rc=1 seconds=92
+build azure headless rc=0 seconds=47
+build knighthub headless rc=0 seconds=37
+--- restart 22:00
+build azure desktop (retry after freeing disk) rc=0 seconds=117
+bench desktop rc=0 seconds=1243
+bench headless rc=0 seconds=919
+bench ssd rc=0 seconds=135
+ALLDONE

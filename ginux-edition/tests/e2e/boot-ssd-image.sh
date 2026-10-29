@@ -6,7 +6,7 @@
 # forwarding to the console and no serial getty, then runs
 # tests/e2e/boot_ssd_image.py inside the demo image.
 #
-# Usage: tests/e2e/boot-ssd-image.sh build/ssd/thoxos-ginux-knighthub-0.1.0.img OUT_DIR
+# Usage: tests/e2e/boot-ssd-image.sh build/ssd/thoxos-ginux-knighthub-0.2.0.img OUT_DIR
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -20,7 +20,7 @@ test_disk="$out/ssd-test.img"
 cp --sparse=always "$image" "$test_disk"
 truncate -s 12G "$test_disk"
 
-docker run --rm -v "$out:/out" thoxos-g/disk-tools:1 bash -euc '
+docker run --rm -v "$out:/out" thoxos-g/disk-tools:2 bash -euc '
     export MTOOLS_SKIP_CHECK=1
     mcopy -i /out/ssd-test.img@@1M ::/loader/entries/thoxos-g.conf /tmp/entry.conf
     sed -i "s/ quiet loglevel=3 / systemd.show_status=1 systemd.journald.forward_to_console=1 systemd.mask=serial-getty@ttyS0.service /; s/console=tty1/console=tty1 console=ttyS0,115200/" /tmp/entry.conf

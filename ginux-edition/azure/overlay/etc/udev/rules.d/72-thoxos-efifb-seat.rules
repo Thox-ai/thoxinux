@@ -1,0 +1,6 @@
+# The Azure cloud kernel has no DRM drivers, so logind only treats a
+# framebuffer as a graphical seat when udev tags it master-of-seat. systemd's
+# hwdb already tags the Hyper-V framebuffer (hyperv_fb, the Azure Gen2 console).
+# This tags the UEFI framebuffer the same way, so the console greeter also
+# starts when the image boots under other UEFI hypervisors (QEMU, Proxmox).
+SUBSYSTEM=="graphics", KERNEL=="fb[0-9]", DRIVERS=="efi-framebuffer", TAG+="master-of-seat"

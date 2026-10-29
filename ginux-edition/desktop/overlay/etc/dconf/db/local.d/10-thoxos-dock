@@ -1,0 +1,12 @@
+# ThoxOS Desktop dock defaults (TXF 5.2: floating dock, tile 46). thoxos-look
+# changes theme and position per look.
+[net/launchpad/plank/docks/dock1]
+theme='ThoxOS-Dark'
+icon-size=46
+position='bottom'
+alignment='center'
+hide-mode='none'
+zoom-enabled=false
+show-dock-item=false
+lock-items=false
+dock-items=['thoxos-ginux-shell.dockitem', 'thunar.dockitem', 'xfce4-terminal.dockitem', 'thoxos-ask.dockitem', 'firefox-esr.dockitem', 'thoxos-looks.dockitem', 'thoxos-about.dockitem']

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=ThoxOS Looks
+Comment=Switch between TXF Slate, Porcelain and Console Pro
+Exec=xfce4-terminal --title="ThoxOS Looks" --hide-menubar --geometry=86x16 -x thoxos-looks-menu
+Icon=thoxos-looks
+Categories=Settings;DesktopSettings;X-ThoxOS;
+Terminal=false
+StartupNotify=true

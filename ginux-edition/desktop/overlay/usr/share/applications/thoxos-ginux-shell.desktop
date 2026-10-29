@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=ThoxOS on Ginux
+Comment=ThoxOS shell on the Ginux kernel (your own VM)
+Exec=xfce4-terminal --title="ThoxOS on Ginux" --hide-menubar --geometry=112x34 -x thoxos-ginux shell
+Icon=thoxos-ginux
+Categories=System;X-ThoxOS;
+Terminal=false
+StartupNotify=true

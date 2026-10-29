@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=About this system
+Comment=ThoxOS Desktop identity, kernel, Ginux runtime and AI route
+Exec=xfce4-terminal --title="About this system" --hide-menubar --geometry=100x24 -x thoxos-hold fastfetch
+Icon=thoxos-about
+Categories=System;X-ThoxOS;
+Terminal=false
+StartupNotify=true

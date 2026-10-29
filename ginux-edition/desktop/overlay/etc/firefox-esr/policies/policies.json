@@ -1,0 +1,14 @@
+{
+  "policies": {
+    "Homepage": { "URL": "file:///usr/share/thox/start/index.html", "StartPage": "homepage", "Locked": false },
+    "NewTabPage": false,
+    "DisableTelemetry": true,
+    "DisableFirefoxStudies": true,
+    "DisablePocket": true,
+    "DontCheckDefaultBrowser": true,
+    "NoDefaultBookmarks": true,
+    "OverrideFirstRunPage": "",
+    "OverridePostUpdatePage": "",
+    "UserMessaging": { "WhatsNew": false, "ExtensionRecommendations": false, "FeatureRecommendations": false, "SkipOnboarding": true }
+  }
+}
