@@ -33,6 +33,7 @@ This module is the second runtime record in `ttracx/thoxos-ginux`. The first rec
 - Target disk for the SSD image needs Tommy's ruling: the THOXOS-labeled 500 GB SSD carries ThoxOS Vibe; the installer refuses it without `--erase-existing-thoxos`.
 - Getty login inside the Ginux domain does not reach a password prompt (VALIDATION.md, V9). Interactive use goes through the shell domain (`thox-shell`, V12) until upstream adds console line discipline.
 - Windows writer not run on Windows.
+- GitHub CI runs end `startup_failure` before any job (VALIDATION V19); check the repository's Actions settings.
 
 ## Compliance
 | Section | State |
