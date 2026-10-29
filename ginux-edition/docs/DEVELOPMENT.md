@@ -107,7 +107,7 @@ CI runs on a developer or build machine, not on GitHub Actions (cost; DECISIONS 
 | `make ci FULL=1`, `make ci-report FULL=1` | Adds the full desktop theme generation test in a Debian 13 container with the real fonts and icon theme |
 | `scripts/install-pre-push-hook.sh` | Makes `git push` run the gate first when the push changes `ginux-edition/`; a red result stops the push (`--no-verify` skips it, `--remove` uninstalls) |
 
-Flow: install the hook once, push (the gate runs), then `make ci-report` so the pushed commit shows its check on the pull request. The heavy gates stay manual and are recorded in VALIDATION.md: `make selftest`, `tests/e2e/boot-ssd-image.sh` and `tests/e2e/boot-azure-image.sh`.
+Flow: install the hook once, push (the gate runs), then `make ci-report` so the pushed commit shows its check on the pull request. Posting needs `gh` signed in with write access to the repository's commit statuses; sandboxed agent runtimes whose proxy blocks that API run `make ci` and leave the posting to a THOX machine. The heavy gates stay manual and are recorded in VALIDATION.md: `make selftest`, `tests/e2e/boot-ssd-image.sh` and `tests/e2e/boot-azure-image.sh`.
 
 ## Conventions
 

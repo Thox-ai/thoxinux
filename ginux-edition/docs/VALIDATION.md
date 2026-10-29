@@ -81,6 +81,7 @@ Run 2026-10-29 (America/Chicago) by Odette Lark on the same build host (2 vCPU, 
 | V33 | Nested KVM for Ginux on Azure | Not run | Microsoft lists nested virtualization as supported on Dsv5; not measured |
 | V34 | Hosted model through the relay | Not run | No endpoint or key in this runtime (DEV_QUEUE item 5) |
 | V35 | Secure Boot / Trusted Launch | Not supported | Unsigned systemd-boot; images use standard security (DEV_QUEUE item 12) |
+| V36 | Local CI in place of GitHub Actions (D32) | Verified, status not posted | On `884aa35` in a clone of the branch: `make ci` passed (147 passed, 1 skipped, shellcheck clean, 8 s) and `make ci FULL=1` passed (full theme generation in `debian:trixie`, 41 s). The pre-push gate (blocks a red push, lets a green one through, skips pushes outside the module, leaves a foreign hook alone) and the status call ran in 10 tests against temporary repositories with `gh` stubbed. Posting the real `thox/local-ci` status from this cloud runtime was refused by its network proxy (HTTP 403), and installing the hook in this clone was not permitted here; both run from a THOX machine with `gh` signed in |
 
 ## Defects found and fixed during 0.2.0 validation
 
