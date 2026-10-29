@@ -43,7 +43,7 @@ On Windows use `installer/Install-ThoxOSGinux.ps1` or Rufus in DD mode. Full ste
 | `docker/` | Demo image and entrypoint |
 | `installer/` | KnightHub host root, disk assembly, Linux and Windows writers |
 | `tests/` | Unit tests, fake QEMU, end-to-end boot scripts |
-| `docs/` | Review, guides, decisions, validation, queue, previews |
+| `docs/` | Review, guides, decisions, validation, queue, previews, closeout report (`docs/report/`: Word, PDF, content source) |
 
 ## Documentation
 
@@ -56,6 +56,7 @@ On Windows use `installer/Install-ThoxOSGinux.ps1` or Rufus in DD mode. Full ste
 | [docs/VALIDATION.md](docs/VALIDATION.md) | What ran, with evidence; what did not |
 | [docs/DECISIONS.md](docs/DECISIONS.md), [docs/DEV_QUEUE.md](docs/DEV_QUEUE.md) | Decision log and prioritized queue |
 | [ecosystem_map.md](ecosystem_map.md) | Where this sits in THOX |
+| [docs/report/](docs/report/), [HTML preview](docs/previews/thoxos-ginux-edition-report.html) | Closeout report in the THOX template (Word, PDF, HTML) |
 
 ## Releases
 
