@@ -1,3 +1,5 @@
-# Preserve authentic serial capture and artifact bytes across platforms.
-evidence/*.log -text
+# Preserve captured serial bytes and the exact context in source patches.
+*.log -text -whitespace
+*.patch -text -whitespace
 *.pdf binary
+*.png binary

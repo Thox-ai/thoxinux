@@ -1,0 +1,18 @@
+{
+  "subscription_id": "00000000-0000-0000-0000-000000000000",
+  "resource_group": "rg-thox-ginux-research",
+  "location": "eastus",
+  "vm_name": "thox-ginux-azure",
+  "admin_username": "thoxadmin",
+  "ssh_public_key_path": "~/.ssh/id_ed25519.pub",
+  "storage_account": "thoxartifacts",
+  "storage_resource_group": "rg-thox-artifacts",
+  "container": "private-releases",
+  "image_version": "",
+  "enable_private_ssh": false,
+  "enable_bastion": false,
+  "bastion_subnet_prefix": "10.42.0.0/26",
+  "admin_source_cidr": "10.42.0.0/24",
+  "vnet_address_prefix": "10.42.0.0/16",
+  "subnet_address_prefix": "10.42.1.0/24"
+}

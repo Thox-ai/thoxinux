@@ -1,0 +1,23 @@
+test_checksum_traversal_refuses (test_host.HostTests.test_checksum_traversal_refuses) ... ok
+test_corrupted_artifact_refuses (test_host.HostTests.test_corrupted_artifact_refuses) ... ok
+test_encrypted_root_finds_usb_disk (test_host.HostTests.test_encrypted_root_finds_usb_disk) ... ok
+test_existing_install_is_preserved (test_host.HostTests.test_existing_install_is_preserved) ... ok
+test_image_package_overlay_is_additive_and_requires_unique_marker (test_host.HostTests.test_image_package_overlay_is_additive_and_requires_unique_marker) ... ok
+test_isolated_build_checkout_gets_payload_without_changing_source (test_host.HostTests.test_isolated_build_checkout_gets_payload_without_changing_source) ... Cloning into '/tmp/tmpsjyi171d/worktree'...
+done.
+HEAD is now at 1fad900 isolated fixture only
+ok
+test_read_only_preflight_with_command_stubs (test_host.HostTests.test_read_only_preflight_with_command_stubs) ... ok
+test_rewritten_checksums_cannot_override_pinned_receipt (test_host.HostTests.test_rewritten_checksums_cannot_override_pinned_receipt) ... ok
+test_stage_installs_readable_files_without_launch_or_packages (test_host.HostTests.test_stage_installs_readable_files_without_launch_or_packages) ... ok
+test_stage_refuses_system_actions (test_host.HostTests.test_stage_refuses_system_actions) ... ok
+test_symlink_payload_refuses (test_host.HostTests.test_symlink_payload_refuses) ... ok
+test_symlinked_destination_parent_refuses (test_host.HostTests.test_symlinked_destination_parent_refuses) ... ok
+test_unknown_root_does_not_qualify (test_host.HostTests.test_unknown_root_does_not_qualify) ... ok
+test_vendored_writer_matches_original_git_blobs (test_host.HostTests.test_vendored_writer_matches_original_git_blobs) ... ok
+test_wrong_receipt_refuses_before_creating_target (test_host.HostTests.test_wrong_receipt_refuses_before_creating_target) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.136s
+
+OK

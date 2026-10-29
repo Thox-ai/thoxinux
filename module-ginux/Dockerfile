@@ -26,8 +26,8 @@ COPY --from=build /out/ /
 
 FROM ubuntu:24.04 AS runtime
 LABEL org.opencontainers.image.title="ThoxOS Ginux Research Edition" \
-      org.opencontainers.image.version="0.1.0-candidate" \
-      org.opencontainers.image.source="https://github.com/gmkurtzer/ginux" \
+      org.opencontainers.image.version="0.2.0-azure-candidate" \
+      org.opencontainers.image.source="https://github.com/ttracx/thoxos-ginux" \
       ai.thox.ginux.upstream-commit="36503bda2d87465765e1b94e65f9d100f27ed5be" \
       ai.thox.ginux.hardware-status="QEMU guest; physical hardware unvalidated"
 RUN apt-get update && apt-get install -y --no-install-recommends \

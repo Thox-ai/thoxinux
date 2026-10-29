@@ -1,0 +1,68 @@
+{
+  "schema": "thox.ginux.email-series.v1",
+  "sender": "Sadie@thox.ai",
+  "to": [
+    "tommy@thox.ai",
+    "craig@thox.ai"
+  ],
+  "state": "five_sent_items_copies_and_attachment_inventories_verified",
+  "messages": [
+    {
+      "subject": "[THOX Report] 1/5 | Introducing ThoxOS Ginux Azure Compute Edition",
+      "id": "AAMkAGZjYzI4MmMxLTdiZDEtNDQ4My04NWZjLTU5ODJiNzYxMzA4ZgBGAAAAAAAVP2-pBe4YQ4aVOlTs7HxEBwCgBVISO7K5RL3FaFWoyls0AAAAAAEJAACgBVISO7K5RL3FaFWoyls0AAAS8MsOAAA=",
+      "url": "https://outlook.office365.com/owa/?ItemID=AAMkAGZjYzI4MmMxLTdiZDEtNDQ4My04NWZjLTU5ODJiNzYxMzA4ZgBGAAAAAAAVP2%2FpBe4YQ4aVOlTs7HxEBwCgBVISO7K5RL3FaFWoyls0AAAAAAEJAACgBVISO7K5RL3FaFWoyls0AAAS8MsOAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "recipients": [
+        "craig@thox.ai",
+        "tommy@thox.ai"
+      ],
+      "attachment": "THOX_Ginux_Azure_Compute_Kit_0.2.0.zip",
+      "graph_reported_size": 1896271
+    },
+    {
+      "subject": "[THOX Report] 2/5 | ThoxOS Ginux film, visual preview and captions",
+      "id": "AAMkAGZjYzI4MmMxLTdiZDEtNDQ4My04NWZjLTU5ODJiNzYxMzA4ZgBGAAAAAAAVP2-pBe4YQ4aVOlTs7HxEBwCgBVISO7K5RL3FaFWoyls0AAAAAAEJAACgBVISO7K5RL3FaFWoyls0AAAS8MsPAAA=",
+      "url": "https://outlook.office365.com/owa/?ItemID=AAMkAGZjYzI4MmMxLTdiZDEtNDQ4My04NWZjLTU5ODJiNzYxMzA4ZgBGAAAAAAAVP2%2FpBe4YQ4aVOlTs7HxEBwCgBVISO7K5RL3FaFWoyls0AAAAAAEJAACgBVISO7K5RL3FaFWoyls0AAAS8MsPAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "recipients": [
+        "craig@thox.ai",
+        "tommy@thox.ai"
+      ],
+      "attachment": "THOX_Ginux_Email_Review.zip",
+      "graph_reported_size": 1529593
+    },
+    {
+      "subject": "[THOX Report] 3/5 | Authentic ThoxOS Ginux boot and recovery recordings",
+      "id": "AAMkAGZjYzI4MmMxLTdiZDEtNDQ4My04NWZjLTU5ODJiNzYxMzA4ZgBGAAAAAAAVP2-pBe4YQ4aVOlTs7HxEBwCgBVISO7K5RL3FaFWoyls0AAAAAAEJAACgBVISO7K5RL3FaFWoyls0AAAS8MsQAAA=",
+      "url": "https://outlook.office365.com/owa/?ItemID=AAMkAGZjYzI4MmMxLTdiZDEtNDQ4My04NWZjLTU5ODJiNzYxMzA4ZgBGAAAAAAAVP2%2FpBe4YQ4aVOlTs7HxEBwCgBVISO7K5RL3FaFWoyls0AAAAAAEJAACgBVISO7K5RL3FaFWoyls0AAAS8MsQAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "recipients": [
+        "craig@thox.ai",
+        "tommy@thox.ai"
+      ],
+      "attachment": "THOX_Ginux_Screen_Recordings_Email.zip",
+      "graph_reported_size": 1614840
+    },
+    {
+      "subject": "[THOX Report] 4/5 | ThoxOS Ginux engineer usage scenario",
+      "id": "AAMkAGZjYzI4MmMxLTdiZDEtNDQ4My04NWZjLTU5ODJiNzYxMzA4ZgBGAAAAAAAVP2-pBe4YQ4aVOlTs7HxEBwCgBVISO7K5RL3FaFWoyls0AAAAAAEJAACgBVISO7K5RL3FaFWoyls0AAAS8MsRAAA=",
+      "url": "https://outlook.office365.com/owa/?ItemID=AAMkAGZjYzI4MmMxLTdiZDEtNDQ4My04NWZjLTU5ODJiNzYxMzA4ZgBGAAAAAAAVP2%2FpBe4YQ4aVOlTs7HxEBwCgBVISO7K5RL3FaFWoyls0AAAAAAEJAACgBVISO7K5RL3FaFWoyls0AAAS8MsRAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "recipients": [
+        "craig@thox.ai",
+        "tommy@thox.ai"
+      ],
+      "attachment": "THOX_Ginux_Engineer_Usage_Scenario.mp4",
+      "graph_reported_size": 2290132
+    },
+    {
+      "subject": "[THOX Report] 5/5 | ThoxOS Ginux team usage scenario",
+      "id": "AAMkAGZjYzI4MmMxLTdiZDEtNDQ4My04NWZjLTU5ODJiNzYxMzA4ZgBGAAAAAAAVP2-pBe4YQ4aVOlTs7HxEBwCgBVISO7K5RL3FaFWoyls0AAAAAAEJAACgBVISO7K5RL3FaFWoyls0AAAS8MsSAAA=",
+      "url": "https://outlook.office365.com/owa/?ItemID=AAMkAGZjYzI4MmMxLTdiZDEtNDQ4My04NWZjLTU5ODJiNzYxMzA4ZgBGAAAAAAAVP2%2FpBe4YQ4aVOlTs7HxEBwCgBVISO7K5RL3FaFWoyls0AAAAAAEJAACgBVISO7K5RL3FaFWoyls0AAAS8MsSAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "recipients": [
+        "craig@thox.ai",
+        "tommy@thox.ai"
+      ],
+      "attachment": "THOX_Ginux_Team_Usage_Scenario.mp4",
+      "graph_reported_size": 2494770
+    }
+  ],
+  "scope": "Sent Items and metadata verified; no recipient-read acknowledgement claimed",
+  "superseded_draft": "Earlier unsent media review draft is superseded by this explicitly authorized five-email series"
+}

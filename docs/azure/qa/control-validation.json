@@ -1,0 +1,5 @@
+{
+  "scope": "isolated control fixture; not a browser layout or print-CSS test",
+  "theme_toggle": "passed both directions with ARIA state",
+  "print_control": "passed window.print dispatch"
+}

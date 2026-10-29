@@ -1,0 +1,14 @@
+{
+  "schema": "thox.ginux.host-install.v1",
+  "build_receipt_sha256": "c4ac916269f053a689801af6a9214b6613090a35bd0a247eeb3e2d10d6ccf31b",
+  "artifacts": {
+    "GINUX.EFI": "3ebcc9043ef9dc8b7e75abc15b113a5810c8d39c0ad47143476a41caed24d5ba",
+    "build-receipt.json": "c4ac916269f053a689801af6a9214b6613090a35bd0a247eeb3e2d10d6ccf31b",
+    "GINUX_LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "GINUX_NOTICE": "65efae7eeef0e462670e5e80a2a122f2f5910559f2c73e9e88c53d45414f1bcf"
+  },
+  "launcher_sha256": "c7694116061f7ea5b3d9f4eda416d9eca1410d7568d6560edf2e4617708e91c8",
+  "physical_write": false,
+  "vm_started": false,
+  "staging_only": true
+}

@@ -1,3 +1,7 @@
+# Current Azure Compute lane
+
+Read [AZURE_HANDOFF.md](AZURE_HANDOFF.md) for the current kernel, Azure variant and evidence. The remaining content is the preserved Oct28 predecessor record.
+
 # Standalone repository migration
 
 Owning standalone repository: `ttracx/thoxos-ginux`, private. GitHub repository ID1437922846; owner and push permission were verified after Tommy supplied the new URL. Requested by Tommy after the original module review. The following original handoff is retained as historical source provenance and operational limits. The standalone root now contains `module-ginux/`, `ssd-module/`, `docs/`, `evidence/` and `.agents/`. References to `ports/ginux/` below identify the predecessor module location. Repository creation is verified. The initial remote import must receive an exact branch-head and file-blob readback before marking the push verified. Local prepared source history ended at `944314da2114c41335265a53852eb9b09c0e21b2`; connected GitHub API import creates its own remote commit chain. Preserve this mapping rather than claiming the local and remote commit IDs match.

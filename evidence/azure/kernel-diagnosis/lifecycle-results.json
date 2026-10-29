@@ -1,0 +1,12 @@
+[
+  {
+    "boot": "cold",
+    "result": "passed",
+    "commands": 17
+  },
+  {
+    "boot": "recovered",
+    "result": "passed",
+    "commands": 5
+  }
+]

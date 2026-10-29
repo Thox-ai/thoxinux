@@ -1,6 +1,6 @@
 {
   "edition": "ThoxOS Ginux Research Edition",
-  "version": "0.1.0-candidate",
+  "version": "0.2.0-azure-candidate",
   "stage": "engineering-preview",
   "upstream": {
     "repository": "https://github.com/gmkurtzer/ginux",
@@ -9,10 +9,20 @@
     "cargo_lock_sha256": "c42e12dd6b7b31341fac62615c58c0fb346b2c420980b51dd41cac219dfba672"
   },
   "modification": {
-    "path": "control-plane/runtime/src/main.rs",
-    "purpose": "prepend THOX research banner; preserve upstream banner, prompt and ABI",
-    "patch": "patches/thox-banner.patch",
-    "sha256": "1319c086fe9bb0b6a185ac13fc412f686f6e4ff21ab4c0fe50fa260987651165"
+    "patch_series": "patches/series",
+    "purpose": "THOX research/Azure build banners; Linux initial-stack layout, local TCP lifetime, embedded fixture, operator console and authorized restart lifecycle corrections",
+    "reviewed_paths": [
+      "control-plane/runtime/src/main.rs",
+      "Makefile",
+      "kernel/src/lib.rs",
+      "kernel/src/address_space.rs",
+      "kernel/src/linux_stack.rs",
+      "kernel/linux-probe.S",
+      "kernel/src/linux_socket.rs",
+      "kernel/linux-system-init.S",
+      "kernel/src/arch/x86_64/cpu.rs"
+    ],
+    "guards": "No capability, namespace, ELF, W^X, frame, guard-page or IOMMU checks removed"
   },
   "toolchain": {
     "rust": "1.99.0",
@@ -41,6 +51,23 @@
   "claim_limits": [
     "Docker runtime not established by a native QEMU boot",
     "KVM and KnightHub physical SSD boot require their own executed acceptance tests",
-    "Ginux GPU, CUDA, graphical desktop and native USB/NVMe are not established"
-  ]
+    "Ginux GPU, CUDA, graphical desktop and native USB/NVMe are not established",
+    "Live Azure server validation, deployment, host acceptance and Compute Gallery capture not run; require explicit Azure subscription and identity",
+    "Embedded minimal-system-v0 acceptance does not establish arbitrary distribution or graphical desktop compatibility"
+  ],
+  "variant": "THOX Azure Compute Edition",
+  "source_patches": {
+    "thox-banner.patch": "1319c086fe9bb0b6a185ac13fc412f686f6e4ff21ab4c0fe50fa260987651165",
+    "thox-azure-profile.patch": "3f5aa56339619ced5c4784c65724a848c1e1df3bc97799ce524032d791b6be84",
+    "thox-kernel-startup.patch": "ca19175faaec9e1037b82fc2bfa28dda1c2d6887548bab254af3059ac392afa0"
+  },
+  "azure_profile": {
+    "host": "Ubuntu 24.04 Gen2",
+    "size": "Standard_D4s_v5",
+    "host_security": "TrustedLaunch; Secure Boot and vTPM",
+    "guest_acceleration": "TCG",
+    "network": "private VM NIC; explicit NAT; optional Bastion",
+    "native_ginux_hyper_v": "not_supported_by_this_package",
+    "avd_session_host": "not_supported"
+  }
 }

@@ -1,0 +1,35 @@
+test_arm_checked_in_file_matches_generator (test_azure.AzureTests.test_arm_checked_in_file_matches_generator) ... ok
+test_arm_keeps_vm_private_and_explicit_outbound (test_azure.AzureTests.test_arm_keeps_vm_private_and_explicit_outbound) ... ok
+test_arm_trusted_launch_and_container_scoped_reader (test_azure.AzureTests.test_arm_trusted_launch_and_container_scoped_reader) ... ok
+test_artifact_url_refuses_sas_and_offsite_credentials (test_azure.AzureTests.test_artifact_url_refuses_sas_and_offsite_credentials) ... ok
+test_authorization_redirect_is_not_followed (test_azure.AzureTests.test_authorization_redirect_is_not_followed) ... ok
+test_azure_cli_always_selects_explicit_subscription (test_azure.AzureTests.test_azure_cli_always_selects_explicit_subscription) ... ok
+test_bastion_requires_distinct_subnet_and_matching_ssh_rule (test_azure.AzureTests.test_bastion_requires_distinct_subnet_and_matching_ssh_rule) ... ok
+test_cloud_init_has_no_sas_or_token_and_fits_custom_data (test_azure.AzureTests.test_cloud_init_has_no_sas_or_token_and_fits_custom_data) ... ok
+test_config_rejects_default_subscription_and_latest_image (test_azure.AzureTests.test_config_rejects_default_subscription_and_latest_image) ... ok
+test_deploy_refuses_unowned_resources_and_inventory_errors (test_azure.AzureTests.test_deploy_refuses_unowned_resources_and_inventory_errors) ... ok
+test_prepare_is_local_and_pins_all_plan_bytes (test_azure.AzureTests.test_prepare_is_local_and_pins_all_plan_bytes) ... ok
+test_private_ssh_cannot_open_to_internet_or_broad_vnet (test_azure.AzureTests.test_private_ssh_cannot_open_to_internet_or_broad_vnet) ... ok
+test_public_key_rejects_private_and_truncated_material (test_azure.AzureTests.test_public_key_rejects_private_and_truncated_material) ... ok
+test_release_binds_the_selected_receipt (test_azure.AzureTests.test_release_binds_the_selected_receipt) ... ok
+test_release_extracts_only_verified_manifest_files (test_azure.AzureTests.test_release_extracts_only_verified_manifest_files) ... ok
+test_release_is_deterministic_and_bounded (test_azure.AzureTests.test_release_is_deterministic_and_bounded) ... ok
+test_release_refuses_changed_patch_bytes_and_unlisted_patch (test_azure.AzureTests.test_release_refuses_changed_patch_bytes_and_unlisted_patch) ... ok
+test_release_refuses_duplicate_members (test_azure.AzureTests.test_release_refuses_duplicate_members) ... ok
+test_release_refuses_missing_efi (test_azure.AzureTests.test_release_refuses_missing_efi) ... ok
+test_release_refuses_optional_stale_banner_digest (test_azure.AzureTests.test_release_refuses_optional_stale_banner_digest) ... ok
+test_release_refuses_overwrite (test_azure.AzureTests.test_release_refuses_overwrite) ... ok
+test_release_refuses_patch_map_missing_stale_or_extra_entries (test_azure.AzureTests.test_release_refuses_patch_map_missing_stale_or_extra_entries) ... ok
+test_release_refuses_path_traversal (test_azure.AzureTests.test_release_refuses_path_traversal) ... ok
+test_release_refuses_symlinks (test_azure.AzureTests.test_release_refuses_symlinks) ... ok
+test_release_refuses_tampered_script (test_azure.AzureTests.test_release_refuses_tampered_script) ... ok
+test_release_refuses_unhashed_extra_file (test_azure.AzureTests.test_release_refuses_unhashed_extra_file) ... ok
+test_release_refuses_unrelated_payload_changes (test_azure.AzureTests.test_release_refuses_unrelated_payload_changes) ... ok
+test_release_refuses_unsafe_or_duplicate_patch_series (test_azure.AzureTests.test_release_refuses_unsafe_or_duplicate_patch_series) ... ok
+test_release_refuses_upstream_or_cargo_lock_provenance_mismatch (test_azure.AzureTests.test_release_refuses_upstream_or_cargo_lock_provenance_mismatch) ... ok
+test_storage_checks_do_not_disable_firewall_or_public_access (test_azure.AzureTests.test_storage_checks_do_not_disable_firewall_or_public_access) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.255s
+
+OK

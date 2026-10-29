@@ -1,0 +1,82 @@
+{
+  "schema": "thox.ginux.media.repository-delivery.v1",
+  "product_source_commit": "0c91c839cf19b5171b6efea86cffc4b91e398467",
+  "state": "reviewed_private_delivery_candidate",
+  "artifacts": [
+    {
+      "id": "01QLXZLDUBFIM53RQKPNCYNZTVYMZEO4CJ",
+      "name": "THOX_Ginux_Live_Demo.mp4",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/THOX_Ginux_Live_Demo.mp4",
+      "bytes": 1092072
+    },
+    {
+      "id": "01QLXZLDV62BPT2UYWSFF3OYYMZVN7D5SQ",
+      "name": "THOX_Ginux_Live_Recovery.mp4",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/THOX_Ginux_Live_Recovery.mp4",
+      "bytes": 592593
+    },
+    {
+      "id": "01QLXZLDVJ5RLZW3EF2VDJMLUOA7YIZUDF",
+      "name": "THOX_Ginux_Demo_Film_1080p.mp4",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/THOX_Ginux_Demo_Film_1080p.mp4",
+      "bytes": 3816554
+    },
+    {
+      "id": "01QLXZLDTFM2ZZDV6TCJCLEGB4RIFO7WR7",
+      "name": "THOX_Ginux_Engineer_Usage_Scenario.mp4",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/THOX_Ginux_Engineer_Usage_Scenario.mp4",
+      "bytes": 2289848
+    },
+    {
+      "id": "01QLXZLDXVD5BPRXV4VJFYWVFF7MMJNY6R",
+      "name": "THOX_Ginux_Team_Usage_Scenario.mp4",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/THOX_Ginux_Team_Usage_Scenario.mp4",
+      "bytes": 2494502
+    },
+    {
+      "id": "01QLXZLDXJPQQLL3RPNVHKD74SS33QNTKP",
+      "name": "THOX_Ginux_Standalone_Video_Preview.html",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/THOX_Ginux_Standalone_Video_Preview.html",
+      "bytes": 2112629
+    },
+    {
+      "id": "01QLXZLDQPCY3WXXKP3ZHI2WZDCFYEWBDZ",
+      "name": "THOX_Ginux_Video_Review_v0.1.0.zip",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/THOX_Ginux_Video_Review_v0.1.0.zip",
+      "bytes": 27249572
+    },
+    {
+      "id": "01QLXZLDXGQAEMU65MRNEKLJZEA547EHHP",
+      "name": "THOX_Ginux_Email_Review.zip",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/THOX_Ginux_Email_Review.zip",
+      "bytes": 1529341
+    },
+    {
+      "id": "01QLXZLDTE6FXMOYNTTVG352BY44FCAGFL",
+      "name": "THOX_Ginux_Contact_Sheet.jpg",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/THOX_Ginux_Contact_Sheet.jpg",
+      "bytes": 192875
+    },
+    {
+      "id": "01QLXZLDUACWGGR3ZTPRHL6M5BQZAW7HFF",
+      "name": "THOX_Ginux_Captions.txt",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/THOX_Ginux_Captions.txt",
+      "bytes": 595
+    },
+    {
+      "id": "01QLXZLDUVOERHNHKHDVFINLYYXO7X4D6N",
+      "name": "PACKAGE_RECEIPT.json",
+      "url": "https://thoxai-my.sharepoint.com/personal/sadie_thox_ai/Documents/THOX%20Agent%20Reports%20Archive/ThoxOS%20Ginux/2026-10/Video_Review_20261029_v0.1/PACKAGE_RECEIPT.json",
+      "bytes": 519
+    }
+  ],
+  "package_sha256": "25afdbb49cb4ca8cf4060e0c1563783ec96b47ae6df4da1c2a658cfd21572bd3",
+  "recording_commands_passed": 15,
+  "recording_clean_shutdowns": 2,
+  "genuine_recordings": 2,
+  "fictional_user_composites": 2,
+  "film_seconds": 44,
+  "generated_provider": "Runway; Higgsfield rejected before job creation",
+  "azure_deployment": "not_run",
+  "publication": "not_requested"
+}

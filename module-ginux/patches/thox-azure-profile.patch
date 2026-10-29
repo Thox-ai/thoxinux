@@ -1,0 +1,24 @@
+diff --git a/control-plane/runtime/src/main.rs b/control-plane/runtime/src/main.rs
+--- a/control-plane/runtime/src/main.rs
++++ b/control-plane/runtime/src/main.rs
+@@ -516,8 +516,18 @@
+ 
+     // THOX.ai LLC modification: identify this research build; retain upstream ABI and prompt.
+     write(console, b"\r\nThoxOS Ginux Research Edition\r\n");
+-    write(console, b"Engineering preview: QEMU guest; physical hardware unvalidated.\r\n");
+-    write(console, b"Based on Ginux by Gregory M. Kurtzer and contributors.\r\n");
++    write(
++        console,
++        b"Engineering preview: QEMU guest; physical hardware unvalidated.\r\n",
++    );
++    write(
++        console,
++        b"Based on Ginux by Gregory M. Kurtzer and contributors.\r\n",
++    );
++    write(
++        console,
++        b"Build profile: THOX Azure Compute Edition (QEMU/TCG)\r\n",
++    );
+     write(console, b"\r\nGinux controller v0 (ring 3)\r\n");
+     write(console, b"Type 'help' for commands.\r\n");
+     if !linux_sysinfo_contract(console) {

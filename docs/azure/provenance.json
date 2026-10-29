@@ -1,0 +1,32 @@
+{
+  "template_system": "THOX Official Templates 1.0.0",
+  "master": "html/THOX_Documentation_Template_v1.0.0.html",
+  "master_sha256": "aab961e6b34956604ecdd23972385f7541b92c58d5b926a225c1f24f46b857ff",
+  "predecessor_source_baseline": "e88662bdc7e975753a5a049eb4b664bcee0db7e5",
+  "build_receipt_sha256": "c4ac916269f053a689801af6a9214b6613090a35bd0a247eeb3e2d10d6ccf31b",
+  "lifecycle_receipt_sha256": "0b16de8defd0882b997e30efca1cb8c586daebb0ae7204583e2e89b5cfd7a99a",
+  "artifact_stage": "engineering-candidate",
+  "date": "2026-10-29",
+  "fonts": {
+    "body": "Inter, locally available",
+    "technical_pdf": "DejaVu Sans Mono compatibility fallback; JetBrains Mono unavailable",
+    "technical_html": "JetBrains Mono declared with monospace fallback",
+    "font_binaries_distributed": false
+  },
+  "actual_status": {
+    "kernel_build": "Passed: final customized EFI built with Rust 1.99.0; 12,507,648 bytes. SHA-256 3ebcc9043ef9dc8b7e75abc15b113a5810c8d39c0ad47143476a41caed24d5ba.",
+    "controller_and_persistence": "Passed: 17 cold-boot and 5 recovered-boot commands on the delivered EFI; clean shutdown and same-volume saved-configuration recovery.",
+    "linux_domain_execution": "Passed: embedded /sbin/init, detached PID 100, stop/start/restart and failure recovery. Minimal embedded workflow only; not broad Linux compatibility.",
+    "packaging_and_infrastructure": "120 unit checks passed: stack 5, libraries 53, module 17, SSD 15, Azure 30. Strict Resources schema failed; 13 adapted checks passed. Format/clippy passed.",
+    "azure_deployment": "Not run: no Azure login, server ARM validation, what-if or cloud deployment. Local QEMU does not establish Azure acceptance.",
+    "image_capture": "Not run: no accepted Azure image-builder, Gallery version or clone. Docker, KVM and physical KnightHub/SSD boot also remain unrun."
+  },
+  "files": {
+    "THOX_Ginux_Azure_Deployment_Guide.pdf": "5421035cd7348bf370b176069a105e12ed9e4d51fdcbd9dbc288325f863e8992",
+    "html/THOX_Ginux_Azure_Deployment_Guide.html": "4cd1b2e4d17c3717a8bb969197c19c3645bb395a3e00f589eb76a197c65b5d23",
+    "html/thox-report.css": "485f6e1f2c261534508f34b346198b9f22b832e5b847d8e68974ef7363834e24",
+    "html/thox-report.js": "d1bab39e9247e95c528403cf73e0416b4600af2613f62101da590d09d174a8e5",
+    "html/assets/azure-boundaries.svg": "d12cf5be4b5c528a880f3591ea972fb83e0311229811826198c03e97626964c4",
+    "html/assets/thox-horizontal-dark.svg": "c4a696874cd0940bae8f39fe48ddba6d03d017029fff1299d1857bd4e3d98370"
+  }
+}

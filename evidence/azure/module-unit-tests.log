@@ -1,0 +1,22 @@
+test_dry_command_preserves_validated_hardware_and_creates_no_state (test_launcher.LauncherTests.test_dry_command_preserves_validated_hardware_and_creates_no_state) ... ok
+test_duplicate_checksum_rejected (test_launcher.LauncherTests.test_duplicate_checksum_rejected) ... ok
+test_high_memory_profile_rejected (test_launcher.LauncherTests.test_high_memory_profile_rejected) ... ok
+test_invalid_memory_rejected (test_launcher.LauncherTests.test_invalid_memory_rejected) ... ok
+test_manifest_traversal_rejected (test_launcher.LauncherTests.test_manifest_traversal_rejected) ... ok
+test_mismatched_firmware_configuration_rejected (test_launcher.LauncherTests.test_mismatched_firmware_configuration_rejected) ... ok
+test_missing_efi_checksum_rejected (test_launcher.LauncherTests.test_missing_efi_checksum_rejected) ... ok
+test_qemu_path_option_injection_rejected (test_launcher.LauncherTests.test_qemu_path_option_injection_rejected) ... ok
+test_tampered_efi_rejected_before_launch (test_launcher.LauncherTests.test_tampered_efi_rejected_before_launch) ... ok
+test_unknown_accelerator_rejected (test_launcher.LauncherTests.test_unknown_accelerator_rejected) ... ok
+test_generated_boot_catalog_is_only_allowed_regenerated_file (test_source_preparation.SourcePreparationTests.test_generated_boot_catalog_is_only_allowed_regenerated_file) ... ok
+test_missing_guarded_source_is_rejected (test_source_preparation.SourcePreparationTests.test_missing_guarded_source_is_rejected) ... ok
+test_patch_path_traversal_is_rejected (test_source_preparation.SourcePreparationTests.test_patch_path_traversal_is_rejected) ... ok
+test_pristine_apply_and_idempotent_repeat (test_source_preparation.SourcePreparationTests.test_pristine_apply_and_idempotent_repeat) ... ok
+test_source_revision_mismatch_is_rejected (test_source_preparation.SourcePreparationTests.test_source_revision_mismatch_is_rejected) ... ok
+test_unrelated_edit_is_rejected_without_overwriting_it (test_source_preparation.SourcePreparationTests.test_unrelated_edit_is_rejected_without_overwriting_it) ... ok
+test_untracked_source_is_rejected (test_source_preparation.SourcePreparationTests.test_untracked_source_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.735s
+
+OK
