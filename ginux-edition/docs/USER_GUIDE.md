@@ -82,7 +82,9 @@ make ssd-image
 sudo installer/install-to-ssd.sh --image build/ssd/thoxos-ginux-knighthub-0.1.0.img --device /dev/sdX
 ```
 
-On Windows (KnightHub): elevated PowerShell, `.\installer\Install-ThoxOSGinux.ps1 -ImagePath <img> -DiskNumber <n>` (find `<n>` with `Get-Disk`), or Rufus in DD image mode.
+The writer also takes the compressed image directly (`--image thoxos-ginux-knighthub-0.1.0.img.xz`); check it first with `sha256sum` against `docs/VALIDATION.md`.
+
+On Windows (KnightHub): decompress a `.img.xz` with 7-Zip first, then use an elevated PowerShell, `.\installer\Install-ThoxOSGinux.ps1 -ImagePath <img> -DiskNumber <n>` (find `<n>` with `Get-Disk`), or Rufus in DD image mode.
 
 Boot: disable Secure Boot in firmware setup, plug in the SSD, open the boot menu (F11 or F12 on most desktop boards), choose the SSD's UEFI entry. The boot menu offers:
 

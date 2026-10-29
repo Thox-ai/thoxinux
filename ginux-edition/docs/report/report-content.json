@@ -243,8 +243,8 @@
         {
           "type": "numbered",
           "items": [
-            "Build: make ssd-image (or use the image from this delivery's build host).",
-            "Write to a spare USB SSD: installer/install-to-ssd.sh on Linux, or Install-ThoxOSGinux.ps1 or Rufus DD mode on Windows.",
+            "Get the image: the xz file delivered with this report (398 MiB, image SHA-256 6edc11d0...5690), or build it with make ssd-image.",
+            "Write it to a spare USB SSD: installer/install-to-ssd.sh on Linux takes the .img.xz directly; on Windows decompress with 7-Zip, then use Install-ThoxOSGinux.ps1 or Rufus in DD mode.",
             "Disable Secure Boot, open the boot menu, choose the SSD.",
             "tty1 shows ThoxOS; Ctrl-Alt-F2 is the host admin login (user thox, new password at first login)."
           ]
