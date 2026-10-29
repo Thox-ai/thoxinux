@@ -1,0 +1,8 @@
+{
+  "kernel_build": "Passed: final customized EFI built with Rust 1.99.0; 12,507,648 bytes. SHA-256 3ebcc9043ef9dc8b7e75abc15b113a5810c8d39c0ad47143476a41caed24d5ba.",
+  "controller_and_persistence": "Passed: 17 cold-boot and 5 recovered-boot commands on the delivered EFI; clean shutdown and same-volume saved-configuration recovery.",
+  "linux_domain_execution": "Passed: embedded /sbin/init, detached PID 100, stop/start/restart and failure recovery. Minimal embedded workflow only; not broad Linux compatibility.",
+  "packaging_and_infrastructure": "120 unit checks passed: stack 5, libraries 53, module 17, SSD 15, Azure 30. Strict Resources schema failed; 13 adapted checks passed. Format/clippy passed.",
+  "azure_deployment": "Not run: no Azure login, server ARM validation, what-if or cloud deployment. Local QEMU does not establish Azure acceptance.",
+  "image_capture": "Not run: no accepted Azure image-builder, Gallery version or clone. Docker, KVM and physical KnightHub/SSD boot also remain unrun."
+}

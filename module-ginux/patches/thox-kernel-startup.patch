@@ -1,0 +1,464 @@
+diff --git a/Makefile b/Makefile
+index a28955c..d536b93 100644
+--- a/Makefile
++++ b/Makefile
+@@ -17,7 +17,7 @@ SYSTEM_PROFILE := profiles/minimal-system-v0/profile.tsv
+ 
+ .DEFAULT_GOAL := help
+ 
+-.PHONY: help doctor manifest system-image test-alpine test-rocky-shell test-rocky-dnf test-multi-domain test-linux-abi test-linux-runtime test-storage test-oci-cache probe-rocky-systemd test-rocky-systemd test-rocky-detached test-domain-responsiveness benchmark-rocky-systemd benchmark-prepare-linux benchmark-prepare-ginux benchmark-linux-comparison benchmark-ginux-boot benchmark-boot-comparison benchmark-ginux-sysbench benchmark-compare profile-rocky-systemd rocky-image rocky-image-check linux-probe controller-runtime network-service protocol-service volume-service abi-conformance architecture-check linux-compat-check build build-verification build-linux-profile run reset-storage test test-c1 test-c2 fmt gate clean
++.PHONY: test-linux-stack help doctor manifest system-image test-alpine test-rocky-shell test-rocky-dnf test-multi-domain test-linux-abi test-linux-runtime test-storage test-oci-cache probe-rocky-systemd test-rocky-systemd test-rocky-detached test-domain-responsiveness benchmark-rocky-systemd benchmark-prepare-linux benchmark-prepare-ginux benchmark-linux-comparison benchmark-ginux-boot benchmark-boot-comparison benchmark-ginux-sysbench benchmark-compare profile-rocky-systemd rocky-image rocky-image-check linux-probe controller-runtime network-service protocol-service volume-service abi-conformance architecture-check linux-compat-check build build-verification build-linux-profile run reset-storage test test-c1 test-c2 fmt gate clean
+ 
+ help:
+ 	@echo "Ginux development targets"
+@@ -52,6 +52,7 @@ help:
+ 	@echo "  make architecture-check Check architecture and roadmap consistency"
+ 	@echo "  make linux-compat-check Validate the Linux syscall compatibility ledger"
+ 	@echo "  make test-linux-abi     Run the complete controller Linux ABI report"
++	@echo "  make test-linux-stack   Verify complete auxv stack layout without overlap"
+ 	@echo "  make test-linux-runtime Verify ELF, loader, PIE, TLS, heap, and memory behavior"
+ 	@echo "  make build   Build the x86-64 UEFI image"
+ 	@echo "  make run     Build Ginux and boot it in headless QEMU"
+@@ -118,6 +119,11 @@ protocol-service:
+ 	@test -f "$(PROTOCOL_SERVICE)"
+ 	@echo "Built $(PROTOCOL_SERVICE)"
+ 
++test-linux-stack:
++	@mkdir -p build/host-tests
++	@rustc --edition 2021 --test kernel/src/linux_stack.rs -o build/host-tests/linux-stack
++	@build/host-tests/linux-stack
++
+ abi-conformance:
+ 	@clang -target x86_64-none-elf -std=c11 -ffreestanding -fsyntax-only \
+ 		-Wall -Wextra -Werror -I. tests/abi/native-service-v0.c
+@@ -238,6 +244,7 @@ test-linux-abi: build
+ 
+ check: manifest architecture-check linux-compat-check
+ 	@$(MAKE) abi-conformance
++	@$(MAKE) test-linux-stack
+ 	@cargo fmt --all -- --check
+ 	@cargo clippy --package ginux-boot --target $(TARGET) -- -D warnings
+ 	@cargo clippy --package ginux-native-abi -- -D warnings
+diff --git a/kernel/linux-probe.S b/kernel/linux-probe.S
+index 100d69f..341a0d6 100644
+--- a/kernel/linux-probe.S
++++ b/kernel/linux-probe.S
+@@ -127,10 +127,8 @@ ginux_linux_probe:
+     require_equal
+     cmp qword ptr [rax + 24], 0
+     je failure
+-    cmp qword ptr [rax + 32], 0
+-    require_equal
+-    cmp qword ptr [rax + 40], 0
+-    require_equal
++    lea rax, [rax + 32]
++    call .Lrequire_auxiliary_terminator
+     jmp .Ldynamic_exec_complete
+ .Linitial_graph_entry:
+ #else
+@@ -237,8 +235,8 @@ valid_interpreter_base:
+     require_equal
+     cmp qword ptr [rsp + 312], 25
+     require_equal
+-    cmp qword ptr [rsp + 328], 0
+-    require_equal
++    lea rax, [rsp + 328]
++    call .Lrequire_auxiliary_terminator
+ 
+ #if !defined(GINUX_LINKED) || !defined(GINUX_GRAPH)
+     push r12
+@@ -5697,6 +5695,17 @@ linux_signal_restorer:
+     syscall
+     ud2
+ 
++.Lrequire_auxiliary_terminator:
++    # These fixtures publish no vDSO. Keep both AT_SYSINFO_EHDR words and
++    # the following AT_NULL pair intact, including after exec replacement.
++    cmp qword ptr [rax], 33
++    require_equal
++    mov rcx, qword ptr [rax + 8]
++    or rcx, qword ptr [rax + 16]
++    or rcx, qword ptr [rax + 24]
++    require_equal
++    ret
++
+ failure:
+     ud2
+ 
+diff --git a/kernel/linux-system-init.S b/kernel/linux-system-init.S
+index fcb0a2f..d60a66d 100644
+--- a/kernel/linux-system-init.S
++++ b/kernel/linux-system-init.S
+@@ -1879,9 +1879,11 @@ ginux_linux_system_init:
+     xor esi, esi
+     xor edx, edx
+     xor r10d, r10d
++    # Domain root owns only its mount namespace. Invalid mount pointers
++    # must still be rejected, after the namespace authority check.
+     mov eax, 165
+     syscall
+-    cmp rax, -1
++    cmp rax, -14
+     jne .Lfailure
+     xor edi, edi
+     xor esi, esi
+diff --git a/kernel/src/address_space.rs b/kernel/src/address_space.rs
+index c2afca2..fe8680e 100644
+--- a/kernel/src/address_space.rs
++++ b/kernel/src/address_space.rs
+@@ -204,9 +204,11 @@ pub(crate) fn run_installed_interactive_controller() -> bool {
+     let linux_root = current_root();
+     let kernel_root = paging::kernel_root_address();
+     unsafe { activate(kernel_root) };
+-    let valid = current_root() == kernel_root
+-        && crate::native_elf::inspect_controller(bytes)
+-            .is_some_and(|image| run_interactive_controller(&image));
++    let valid = crate::with_operator_console(|| {
++        current_root() == kernel_root
++            && crate::native_elf::inspect_controller(bytes)
++                .is_some_and(|image| run_interactive_controller(&image))
++    });
+     unsafe { activate(linux_root) };
+     valid && current_root() == linux_root
+ }
+@@ -1042,7 +1044,13 @@ pub(crate) fn verify_linux_elf_mapping(
+             }
+ 
+             let stack_bytes = mapped_frame::<u8>(stack_page)?;
+-            let stack_offset = PAGE_SIZE - 50 * size_of::<u64>();
++            // Reserve the complete argc/argv/envp + auxv before the seven
++            // payload words; AT_SYSINFO_EHDR must not overlap random bytes.
++            let stack_offset = crate::linux_stack::fixture_stack_offset(
++                PAGE_SIZE,
++                crate::linux_elf::AUXILIARY_VECTOR_WORDS,
++                7,
++            )?;
+             let random_offset = PAGE_SIZE - 7 * size_of::<u64>();
+             let platform_offset = PAGE_SIZE - 5 * size_of::<u64>();
+             let environment_offset = PAGE_SIZE - 4 * size_of::<u64>();
+@@ -1226,8 +1234,10 @@ pub(crate) fn verify_linux_elf_mapping(
+                 && stack_words.add(38).read() == 0
+                 && stack_words.add(39).read() == 25
+                 && stack_words.add(40).read() == random_address
+-                && stack_words.add(41).read() == 0
++                && stack_words.add(41).read() == 33
+                 && stack_words.add(42).read() == 0
++                && stack_words.add(43).read() == 0
++                && stack_words.add(44).read() == 0
+                 && core::slice::from_raw_parts(
+                     stack_bytes.add(random_offset),
+                     LINUX_FIXTURE_RANDOM.len(),
+@@ -2142,7 +2152,13 @@ pub(crate) fn verify_interpreted_elf_mapping(
+                 .write(0);
+ 
+             let stack_bytes = mapped_frame::<u8>(stack_page)?;
+-            let stack_offset = PAGE_SIZE - 48 * size_of::<u64>();
++            // Keep the complete auxv below the six payload words and
++            // retain the x86-64 process-entry stack alignment.
++            let stack_offset = crate::linux_stack::fixture_stack_offset(
++                PAGE_SIZE,
++                crate::linux_elf::AUXILIARY_VECTOR_WORDS,
++                6,
++            )?;
+             let platform_offset = PAGE_SIZE - 6 * size_of::<u64>();
+             let environment_offset = PAGE_SIZE - 4 * size_of::<u64>();
+             let argument_offset = PAGE_SIZE - 2 * size_of::<u64>();
+diff --git a/kernel/src/arch/x86_64/cpu.rs b/kernel/src/arch/x86_64/cpu.rs
+index cea04a9..9a9ffde 100644
+--- a/kernel/src/arch/x86_64/cpu.rs
++++ b/kernel/src/arch/x86_64/cpu.rs
+@@ -4575,7 +4575,11 @@ fn shutdown_linux_system_supervisor(failed: bool) -> bool {
+             Ordering::SeqCst,
+         );
+         CONTAINER_ACTIVE_SLOT.store(CONTAINER_SLOT_NONE, Ordering::SeqCst);
+-        CONTAINER_SELECTED_SLOT.store(CONTAINER_SLOT_NONE, Ordering::SeqCst);
++        // A pending restart already names its authorized next execution slot.
++        // Retain that selection until begin_configured_container validates it.
++        if !CONTAINER_RESTART_REQUESTED.load(Ordering::SeqCst) {
++            CONTAINER_SELECTED_SLOT.store(CONTAINER_SLOT_NONE, Ordering::SeqCst);
++        }
+     }
+     resumed
+ }
+@@ -4647,7 +4651,11 @@ pub(crate) fn stop_configured_container() {
+         }
+     }
+     CONTAINER_ACTIVE_SLOT.store(CONTAINER_SLOT_NONE, Ordering::SeqCst);
+-    CONTAINER_SELECTED_SLOT.store(CONTAINER_SLOT_NONE, Ordering::SeqCst);
++    // A pending restart already names its authorized next execution slot.
++    // Retain that selection until begin_configured_container validates it.
++    if !CONTAINER_RESTART_REQUESTED.load(Ordering::SeqCst) {
++        CONTAINER_SELECTED_SLOT.store(CONTAINER_SLOT_NONE, Ordering::SeqCst);
++    }
+     LINUX_EXECUTION_INSTANCE.store(LINUX_RUNTIME_HOST_INSTANCE, Ordering::SeqCst);
+ }
+ 
+diff --git a/kernel/src/lib.rs b/kernel/src/lib.rs
+index cc4b06c..5a4b4ed 100644
+--- a/kernel/src/lib.rs
++++ b/kernel/src/lib.rs
+@@ -19,6 +19,7 @@ mod linux_overlay;
+ mod linux_process;
+ mod linux_signal;
+ mod linux_socket;
++mod linux_stack;
+ mod linux_sysv_ipc;
+ mod linux_tmpfs;
+ mod linux_user;
+@@ -4388,6 +4389,15 @@ fn serial_init() {
+     }
+ }
+ 
++/// Route the resident controller to the operator console even when it is
++/// resumed from a detached embedded-domain supervisor.
++pub(crate) fn with_operator_console(operation: impl FnOnce() -> bool) -> bool {
++    let background = BACKGROUND_DOMAIN_OUTPUT.swap(false, Ordering::AcqRel);
++    let result = operation();
++    BACKGROUND_DOMAIN_OUTPUT.store(background, Ordering::Release);
++    result
++}
++
+ fn serial_write(message: &str) {
+     serial_write_bytes(message.as_bytes());
+ }
+diff --git a/kernel/src/linux_socket.rs b/kernel/src/linux_socket.rs
+index 8994c22..ce57f47 100644
+--- a/kernel/src/linux_socket.rs
++++ b/kernel/src/linux_socket.rs
+@@ -113,6 +113,8 @@ struct Slot {
+     pending_length: u8,
+     pending: [u8; SLOT_COUNT],
+     peer: Option<u8>,
++    // Remains true after peer close clears the peer slot reference.
++    local_tcp: bool,
+     read_shutdown: bool,
+     write_shutdown: bool,
+     reuse_address: bool,
+@@ -149,6 +151,7 @@ impl Slot {
+         pending_length: 0,
+         pending: [0; SLOT_COUNT],
+         peer: None,
++        local_tcp: false,
+         read_shutdown: false,
+         write_shutdown: false,
+         reuse_address: false,
+@@ -347,6 +350,7 @@ pub(crate) fn open(kind: Kind) -> Result<u8, Error> {
+             pending_length: 0,
+             pending: [0; SLOT_COUNT],
+             peer: None,
++            local_tcp: false,
+             read_shutdown: false,
+             write_shutdown: false,
+             reuse_address: false,
+@@ -486,6 +490,7 @@ pub(crate) fn connect_unix(slot: u8, path: &[u8]) -> Result<(), Error> {
+             pending_length: 0,
+             pending: [0; SLOT_COUNT],
+             peer: Some(slot),
++            local_tcp: false,
+             read_shutdown: false,
+             write_shutdown: false,
+             reuse_address: listener.reuse_address,
+@@ -556,6 +561,7 @@ pub(crate) fn open_pair(socket_type: u8) -> Result<(u8, u8), Error> {
+             pending_length: 0,
+             pending: [0; SLOT_COUNT],
+             peer: Some(second as u8),
++            local_tcp: false,
+             read_shutdown: false,
+             write_shutdown: false,
+             reuse_address: false,
+@@ -590,6 +596,7 @@ pub(crate) fn open_pair(socket_type: u8) -> Result<(u8, u8), Error> {
+             pending_length: 0,
+             pending: [0; SLOT_COUNT],
+             peer: Some(first as u8),
++            local_tcp: false,
+             read_shutdown: false,
+             write_shutdown: false,
+             reuse_address: false,
+@@ -644,7 +651,7 @@ pub(crate) fn close(slot: u8) -> bool {
+         state.references -= 1;
+         return true;
+     }
+-    if state.kind == Kind::Unix || state.peer.is_some() && !state.listening {
++    if state.kind == Kind::Unix || state.local_tcp && !state.listening {
+         let pending_right_count = usize::from(state.pending_right_count);
+         let pending_connection_count = usize::from(state.pending_length);
+         let pending_connections = state.pending;
+@@ -736,7 +743,7 @@ pub(crate) fn shutdown_socket(slot: u8, how: u8) -> Result<(), Error> {
+     }
+     if matches!(how, 1 | 2) {
+         state.write_shutdown = true;
+-        if state.kind == Kind::Tcp && state.peer.is_none() {
++        if state.kind == Kind::Tcp && !state.local_tcp {
+             let runtime = runtime_existing().ok_or(Error::Unavailable)?;
+             let handle = state.handle.ok_or(Error::Invalid)?;
+             runtime.sockets.get_mut::<tcp::Socket>(handle).close();
+@@ -1035,6 +1042,7 @@ pub(crate) fn accept(slot: u8) -> Result<(u8, IpEndpoint), Error> {
+                 pending_length: 0,
+                 pending: [0; SLOT_COUNT],
+                 peer: Some(client_slot),
++                local_tcp: listener.kind == Kind::Tcp,
+                 read_shutdown: false,
+                 write_shutdown: false,
+                 reuse_address: listener.reuse_address,
+@@ -1111,6 +1119,7 @@ pub(crate) fn accept(slot: u8) -> Result<(u8, IpEndpoint), Error> {
+             pending_length: 0,
+             pending: [0; SLOT_COUNT],
+             peer: None,
++            local_tcp: false,
+             read_shutdown: false,
+             write_shutdown: false,
+             reuse_address: listener.reuse_address,
+@@ -1206,6 +1215,7 @@ pub(crate) fn connect(slot: u8, remote: IpEndpoint) -> Result<(), Error> {
+                 SLOTS[index].local_port = local_port;
+                 SLOTS[index].remote = Some(remote);
+                 SLOTS[index].peer = Some(listener as u8);
++                SLOTS[index].local_tcp = true;
+                 let pending = usize::from(SLOTS[listener].pending_length);
+                 SLOTS[listener].pending[pending] = slot;
+                 SLOTS[listener].pending_length += 1;
+@@ -1287,7 +1297,7 @@ pub(crate) fn send(slot: u8, input: &[u8], remote: Option<IpEndpoint>) -> Result
+     if state.write_shutdown {
+         return Err(Error::BrokenPipe);
+     }
+-    if state.kind == Kind::Unix || state.peer.is_some() && !state.listening {
++    if state.kind == Kind::Unix || state.local_tcp && !state.listening {
+         if remote.is_some() {
+             return Err(Error::Invalid);
+         }
+@@ -1388,7 +1398,7 @@ pub(crate) fn recv(slot: u8, output: &mut [u8]) -> Result<(usize, Option<IpEndpo
+     if state.read_shutdown {
+         return Ok((0, None));
+     }
+-    if state.kind == Kind::Unix || state.peer.is_some() && !state.listening {
++    if state.kind == Kind::Unix || state.local_tcp && !state.listening {
+         let received = output.len().min(state.local_length);
+         let mut copied = 0_usize;
+         while copied < received {
+@@ -1466,7 +1476,7 @@ pub(crate) fn recv(slot: u8, output: &mut [u8]) -> Result<(usize, Option<IpEndpo
+ pub(crate) fn peek_local(slot: u8, output: &mut [u8]) -> Result<usize, Error> {
+     let state = unsafe { SLOTS.get(usize::from(slot)) }
+         .filter(|slot| {
+-            slot.occupied && (slot.kind == Kind::Unix || slot.peer.is_some() && !slot.listening)
++            slot.occupied && (slot.kind == Kind::Unix || slot.local_tcp && !slot.listening)
+         })
+         .ok_or(Error::Invalid)?;
+     let returned = output.len().min(state.local_length);
+@@ -1526,7 +1536,7 @@ pub(crate) fn peek(slot: u8, output: &mut [u8]) -> Result<(usize, Option<IpEndpo
+     if state.read_shutdown {
+         return Ok((0, None));
+     }
+-    if state.kind == Kind::Unix || state.peer.is_some() && !state.listening {
++    if state.kind == Kind::Unix || state.local_tcp && !state.listening {
+         return peek_local(slot, output).map(|received| (received, None));
+     }
+     let runtime = runtime()?;
+@@ -1727,7 +1737,7 @@ pub(crate) fn readiness(slot: u8) -> Option<(bool, bool, bool)> {
+     if state.listening && state.pending_length != 0 {
+         return Some((true, false, false));
+     }
+-    if state.kind == Kind::Unix || state.peer.is_some() {
++    if state.kind == Kind::Unix || state.local_tcp {
+         let named =
+             state.kind == Kind::Unix && unsafe { UNIX_PATH_LENGTHS[usize::from(slot)] } != 0;
+         let peer = state
+@@ -2072,7 +2082,7 @@ fn drain_shutdown_tcp_receivers(runtime: &mut Runtime) {
+         state.occupied
+             && state.kind == Kind::Tcp
+             && !state.listening
+-            && state.peer.is_none()
++            && !state.local_tcp
+             && state.read_shutdown
+     }) {
+         let Some(handle) = state.handle else {
+diff --git a/kernel/src/linux_stack.rs b/kernel/src/linux_stack.rs
+new file mode 100644
+index 0000000..564611f
+--- /dev/null
++++ b/kernel/src/linux_stack.rs
+@@ -0,0 +1,86 @@
++//! Checked layout for bounded Linux startup-stack verification fixtures.
++//!
++//! The fixed payload offsets are measured from the end of the mapped stack
++//! page. Reserve the actual auxiliary-vector length before that payload,
++//! rather than assuming an older set of AT_* entries.
++
++use core::mem::size_of;
++
++/// Return a 16-byte-aligned stack offset for argc, one argv pointer, its
++/// terminator, one envp pointer, its terminator, auxv, and trailing payload.
++/// None means the complete layout does not fit in the mapped stack page.
++pub(crate) fn fixture_stack_offset(
++    page_size: usize,
++    auxiliary_words: usize,
++    payload_words: usize,
++) -> Option<usize> {
++    if !page_size.is_multiple_of(16) {
++        return None;
++    }
++    let words = 5_usize
++        .checked_add(auxiliary_words)?
++        .checked_add(payload_words)?;
++    let aligned_words = words.checked_add(1)? & !1;
++    page_size.checked_sub(aligned_words.checked_mul(size_of::<u64>())?)
++}
++
++#[cfg(test)]
++mod tests {
++    use super::fixture_stack_offset;
++
++    #[test]
++    fn static_auxv_and_random_payload_do_not_overlap() {
++        let offset = fixture_stack_offset(4096, 40, 7).unwrap();
++        let payload_start = 4096 - 7 * 8;
++        assert_eq!(offset % 16, 0);
++        assert!(offset + (5 + 40) * 8 <= payload_start);
++
++        let mut page = [0_u8; 4096];
++        let mut auxv = [0_u64; 40];
++        auxv[36] = 33; // AT_SYSINFO_EHDR
++        for (index, word) in auxv.iter().enumerate() {
++            let start = offset + (5 + index) * 8;
++            page[start..start + 8].copy_from_slice(&word.to_le_bytes());
++        }
++        page[payload_start..payload_start + 16].fill(0xa5);
++        let read = |index: usize| {
++            u64::from_le_bytes(
++                page[offset + index * 8..offset + (index + 1) * 8]
++                    .try_into()
++                    .unwrap(),
++            )
++        };
++        assert_eq!([read(41), read(42), read(43), read(44)], [33, 0, 0, 0]);
++        assert_eq!(&page[payload_start..payload_start + 16], &[0xa5; 16]);
++    }
++
++    #[test]
++    fn interpreted_auxv_and_string_payload_do_not_overlap() {
++        let offset = fixture_stack_offset(4096, 40, 6).unwrap();
++        assert_eq!(offset % 16, 0);
++        assert!(offset + (5 + 40) * 8 <= 4096 - 6 * 8);
++    }
++
++    #[test]
++    fn auxiliary_vector_growth_preserves_payload_and_alignment() {
++        for auxiliary_words in 0..100 {
++            for payload_words in [0, 6, 7, 8] {
++                let offset = fixture_stack_offset(4096, auxiliary_words, payload_words).unwrap();
++                assert_eq!(offset % 16, 0);
++                assert!(offset + (5 + auxiliary_words) * 8 <= 4096 - payload_words * 8);
++            }
++        }
++    }
++
++    #[test]
++    fn too_large_layout_and_integer_overflow_are_rejected() {
++        assert_eq!(fixture_stack_offset(4096, 512, 7), None);
++        assert_eq!(fixture_stack_offset(4096, usize::MAX, 7), None);
++        assert_eq!(fixture_stack_offset(4096, 40, usize::MAX), None);
++    }
++
++    #[test]
++    fn misaligned_page_size_is_rejected() {
++        assert_eq!(fixture_stack_offset(4095, 40, 7), None);
++    }
++}

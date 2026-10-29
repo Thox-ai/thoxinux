@@ -1,0 +1,35 @@
+{
+  "schema": "thox.azure.arm-schema-lock.v1",
+  "repository": "https://github.com/Azure/azure-resource-manager-schemas",
+  "revision": "349477f132aad67ac74af3224ddea833bffc806d",
+  "files": {
+    "2019-04-01-deploymentTemplate.json": {
+      "url": "https://raw.githubusercontent.com/Azure/azure-resource-manager-schemas/349477f132aad67ac74af3224ddea833bffc806d/schemas/2019-04-01/deploymentTemplate.json",
+      "sha256": "b28bd004b9ad9cbe4e6e7b5b4546bb6e3bd3999cb4bad937ef02b5ac567752ee"
+    },
+    "2022-04-01-Microsoft.Authorization.json": {
+      "url": "https://raw.githubusercontent.com/Azure/azure-resource-manager-schemas/349477f132aad67ac74af3224ddea833bffc806d/schemas/2022-04-01/Microsoft.Authorization.json",
+      "sha256": "15d234ecaff70ec12b44d13a14716135940665c45d7782202a6ba5b119fd1b36"
+    },
+    "2022-09-01-Microsoft.Resources.json": {
+      "url": "https://raw.githubusercontent.com/Azure/azure-resource-manager-schemas/349477f132aad67ac74af3224ddea833bffc806d/schemas/2022-09-01/Microsoft.Resources.json",
+      "sha256": "959be6ff20e4f85672380997c7b799f3774dd76253bb7bfd88e334cfe77ab958"
+    },
+    "2023-01-31-Microsoft.ManagedIdentity.json": {
+      "url": "https://raw.githubusercontent.com/Azure/azure-resource-manager-schemas/349477f132aad67ac74af3224ddea833bffc806d/schemas/2023-01-31/Microsoft.ManagedIdentity.json",
+      "sha256": "196838410705ae1babc3e82b5226ef795ac187f91a0eb49f4b601b69d2a2ee6c"
+    },
+    "2024-05-01-Microsoft.Network.json": {
+      "url": "https://raw.githubusercontent.com/Azure/azure-resource-manager-schemas/349477f132aad67ac74af3224ddea833bffc806d/schemas/2024-05-01/Microsoft.Network.json",
+      "sha256": "77e9b379c08b6f36e7651b2334109fab64099128c86c92ed7760b3576667f71a"
+    },
+    "2024-07-01-Microsoft.Compute.json": {
+      "url": "https://raw.githubusercontent.com/Azure/azure-resource-manager-schemas/349477f132aad67ac74af3224ddea833bffc806d/schemas/2024-07-01/Microsoft.Compute.json",
+      "sha256": "5b26bb5a7e2ec2d26994af43f2b434cc0ca0839b050fa77dd910a243e771b8f1"
+    },
+    "common-definitions.json": {
+      "url": "https://raw.githubusercontent.com/Azure/azure-resource-manager-schemas/349477f132aad67ac74af3224ddea833bffc806d/schemas/common/definitions.json",
+      "sha256": "5be65fcdfc43b8e5fdfca1794fe499c9e0836bbbbe55f3cc15ac03f7b6e6855f"
+    }
+  }
+}

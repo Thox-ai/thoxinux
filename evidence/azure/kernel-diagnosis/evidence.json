@@ -1,0 +1,33 @@
+{
+  "upstream_commit": "36503bda2d87465765e1b94e65f9d100f27ed5be",
+  "verified_utc": "2026-10-29T20:12:35.908652+00:00",
+  "efi_sha256": "076b57d7cae092dea5b627b9cad82f7db463e5172b4229c6f5726bec0229ac41",
+  "checks": {
+    "host_stack_tests": "5 passed",
+    "rustfmt": "passed",
+    "architecture": "passed",
+    "linux_compatibility_ledger": "passed",
+    "native_c_abi": "passed",
+    "clippy_warnings_denied": "passed",
+    "clean_efi_build": "passed",
+    "cold_lifecycle": "17 commands passed",
+    "recovered_lifecycle": "5 commands passed",
+    "attached_init_supervisor": "passed",
+    "pristine_git_apply_check": "passed",
+    "git_diff_whitespace": "passed"
+  },
+  "files": {
+    "kernel-startup-stack.patch": "ca19175faaec9e1037b82fc2bfa28dda1c2d6887548bab254af3059ac392afa0",
+    "lifecycle.py": "df99d0fba2ab0ad73d032c2f48c52d019b581e44d40070f1c98c5a7e9e410375",
+    "lifecycle-cold.log": "af1ab2cc39006cb1b1276887208b3c67e14c482eaf2d0499bc0e32541c0b9e03",
+    "lifecycle-recovered.log": "746f29786e2fd96bb50a4ea1aa436cd353d9838f1290cc5d56a66a236c745296",
+    "lifecycle-results.json": "170cc1ac485de9f53c0d33438e146b2d790ddc420d87b95ae306eb7d08c93074",
+    "embedded-init-attached.log": "bf0d7621bf68fc2d18baa0863c63455d4b856fdb500c4b9dfe600ef5424944cf",
+    "linux-stack-tests.log": "64eae6b0f6305fa593639fa0c57b7ed6cbd4e762ab6d9d9390762c067f89fb8f",
+    "clean-format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "contracts-check.log": "65d2827a42c7b5a17b3268ecb7e6a6a5d6d8e92d29686115c58b87bc05c9e4e3",
+    "clippy-check.log": "211d051fc9b4ebd886ebed2f919240f18ad2a886be9e9c4164493d5f73a781be",
+    "clean-build3.log": "d9c884d2bd0d17fcbb8f6b8c87373a5c692d724eb44d7b4c0237dfb761659eab",
+    "DIAGNOSIS.md": "849e3496a804ba0b16bd521e91481d20eceb2827b81981e4946cf4908758b012"
+  }
+}

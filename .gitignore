@@ -2,3 +2,4 @@ module-ginux/artifacts/GINUX.EFI
 module-ginux/.work/
 **/__pycache__/
 *.pyc
+docs/azure/qa/*.png

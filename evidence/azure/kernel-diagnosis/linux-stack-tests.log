@@ -1,0 +1,12 @@
+make: Entering directory '/workspace/scratch/8fd65eeca383/azure-work/kernel-fix/ginux'
+
+running 5 tests
+test tests::auxiliary_vector_growth_preserves_payload_and_alignment ... ok
+test tests::interpreted_auxv_and_string_payload_do_not_overlap ... ok
+test tests::misaligned_page_size_is_rejected ... ok
+test tests::static_auxv_and_random_payload_do_not_overlap ... ok
+test tests::too_large_layout_and_integer_overflow_are_rejected ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+make: Leaving directory '/workspace/scratch/8fd65eeca383/azure-work/kernel-fix/ginux'

@@ -1,0 +1,21 @@
+{
+  "pdf_pages": 9,
+  "page_text_lengths": [
+    2364,
+    2064,
+    2392,
+    2514,
+    2450,
+    2440,
+    2166,
+    2619,
+    2737
+  ],
+  "pdf_text_bounds": "passed",
+  "html_ids": 10,
+  "html_references_checked": 27,
+  "bad_references": [],
+  "svg_xml": "passed",
+  "browser_layout": "not_run; static references and isolated controls only",
+  "technical_pdf_font": "DejaVu Sans Mono compatibility fallback; JetBrains Mono unavailable"
+}

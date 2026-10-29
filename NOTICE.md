@@ -1,5 +1,5 @@
 ThoxOS Ginux Research Edition
-Copyright 2026 THOX.ai LLC for original THOX packaging and documentation.
+Copyright 2026 THOX.ai LLC for original THOX modifications, packaging and documentation.
 
 Based on Ginux by Gregory M. Kurtzer and Ginux contributors, Apache-2.0.
 Upstream source: https://github.com/gmkurtzer/ginux

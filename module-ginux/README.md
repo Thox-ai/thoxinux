@@ -1,4 +1,6 @@
-# ThoxOS Ginux Research Edition
+# ThoxOS Ginux Azure Compute Edition
+
+Version `0.2.0-azure-candidate`. [Current Azure QuickStart](../docs/azure/START_HERE.md) · [Deployment guide](../docs/azure/THOX_Ginux_Azure_Deployment_Guide.pdf) · [Azure CLI and infrastructure](../azure/README.md)
 
 THOX-branded Ginux research guest with a Docker/QEMU demo and a standalone Linux host launcher. This is an engineering preview. It is a serial-console operating-system prototype, and it does not provide a graphical ThoxOS desktop or NVIDIA acceleration.
 
@@ -8,7 +10,9 @@ Your AI. Your Data. Your Rules.™
 
 ## Current acceptance
 
-The delivered EFI compiled and passed a native QEMU TCG controller smoke test at 2 GiB: THOX banner, status, components, domain list, help and clean shutdown. Saved domain configuration survived a separate reboot. Starting the embedded minimal Linux domain triggered a kernel panic. The same failure reproduced with the unmodified pinned upstream EFI in this environment. Linux userspace execution, Docker runtime, KVM and physical KnightHub boot remain unqualified. Use this candidate for controller and architecture evaluation.
+The final combined THOX Azure EFI passed 22 actual native QEMU TCG commands at 2 GiB: embedded `/sbin/init`, detached PID 100, stop/start/restart, failure recovery, clean shutdown and saved-configuration recovery on a separate boot. [Current validation](../docs/azure/validation.json) and the [lifecycle receipt](../evidence/azure/lifecycle-results.json) bind the 17 cold-boot and 5 recovery commands to this payload. EFI SHA-256: `3ebcc9043ef9dc8b7e75abc15b113a5810c8d39c0ad47143476a41caed24d5ba` (12,507,648 bytes).
+
+This corrects the embedded-domain panic recorded in the **October 28 historical evidence** for both the predecessor THOX and pinned upstream build. The original evidence and guide are preserved. Broad Linux application compatibility, Docker runtime, KVM, actual Azure deployment and physical KnightHub boot remain unqualified.
 
 ## Quick start
 
@@ -19,11 +23,11 @@ docker compose build
 docker compose run --rm ginux
 ```
 
-The first build downloads the pinned Ginux source, Rust toolchain components and Cargo dependencies. The guest starts without a Linux domain image. OCI root filesystems are fetched when you explicitly request an image through the controller. The demo exposes no incoming network ports and mounts no host disks or home directories. Its named Docker volume stores the sparse 64 GiB guest volume. OVMF firmware variables are recreated from the matching template on each launch. Do not run two guests against the same state.
+The first build downloads the pinned Ginux source, Rust toolchain components and Cargo dependencies. The EFI contains a minimal embedded userspace fixture; external OCI root filesystems are fetched only when explicitly requested through the controller. The demo exposes no incoming network ports and mounts no host disks or home directories. Its named Docker volume stores the sparse 64 GiB guest volume. OVMF firmware variables are recreated from the matching template on each launch. Do not run two guests against the same state.
 
 For a managed build that uses an HTTPS inspection proxy, preserve the host's Docker proxy settings and pass its complete trusted CA bundle as a BuildKit secret. For example, `docker build --platform linux/amd64 --secret id=proxy_ca,src=/etc/ssl/certs/ca-certificates.crt --target runtime -t thoxos-ginux:0.1.0-candidate .`, followed by `docker compose run --no-build --rm ginux`. The secret is mounted only for networked Rust/Cargo/Git build steps and is not copied into image layers. Keep certificate verification enabled.
 
-The QEMU serial console should reach the preserved `ginux>` prompt. Use `status`, `components`, `domain list` and `help`, then enter `shutdown` for a clean exit. The following upstream Linux ABI workflow requires outbound image download and has not passed qualification in this package:
+The QEMU serial console should reach the preserved `ginux>` prompt. Use `status`, `components`, `domain list` and `help`, then enter `shutdown` for a clean exit. The following external-image workflow requires outbound image download and has not passed qualification in this package:
 
 ```text
 domain new alpine
@@ -64,7 +68,9 @@ rustup target add --toolchain 1.99.0 x86_64-unknown-uefi x86_64-unknown-none
 ./scripts/run-vm.sh --artifact-dir ./artifacts --state-dir "$HOME/.local/state/thox/ginux"
 ```
 
-`GINUX_SOURCE_DIR` and `GINUX_ARTIFACT_DIR` can select dedicated build and output directories. The build script rejects unrelated tracked edits in the source checkout. The four-line THOX banner patch preserves the upstream controller banner, `ginux>` prompt and ABI identity. The boot catalog is regenerated as part of the build.
+`GINUX_SOURCE_DIR` and `GINUX_ARTIFACT_DIR` can select dedicated build and output directories. The build script rejects unrelated tracked edits in the source checkout. The ordered patch series in `patches/series` contains the THOX banner, Azure Compute profile and kernel startup corrections. These preserve the upstream controller identity and `ginux>` prompt. Build receipts bind each patch and the compiled payload; the boot catalog is regenerated as part of the build.
+
+The startup patch reserves nonoverlapping Linux auxv/string/random stack space, keeps local TCP sockets out of network-backed lifetime handling, repairs detached output and restarted-domain state, and corrects the invalid mount-pointer fixture expectation to `EFAULT`. Owned-namespace pointer validation and host-authority checks remain active. The tested embedded userspace does not establish support for arbitrary distributions or applications.
 
 The native launcher runs as a regular user, verifies the artifact checksums, selects a matching OVMF CODE/VARS pair, locks the state directory and creates a sparse 64 GiB guest volume on first use. It never formats a host drive or resets an existing guest volume. `QEMU_ACCEL=kvm` opts into Linux KVM; `GINUX_MEMORY=2G` is the default and maximum memory allocation for this tested profile. Set both `OVMF_CODE` and `OVMF_VARS` when using nonstandard firmware locations. `--print-command` verifies artifacts and prints the command without creating guest state or launching QEMU.
 
@@ -74,7 +80,13 @@ The validated guest profile explicitly requests 48-bit IOMMU addressing with `in
 
 Ginux is pinned to [gmkurtzer/ginux commit 36503bda2d87465765e1b94e65f9d100f27ed5be](https://github.com/gmkurtzer/ginux/tree/36503bda2d87465765e1b94e65f9d100f27ed5be). It is an independent Rust x86-64 kernel with a Linux compatibility personality. Its validated target is Q35/OVMF with virtual IOMMU and modern virtio storage/network devices. Native KnightHub storage, RTX 4060 Ti/CUDA, graphical desktop, broad USB support and bare-metal boot are not established by this package.
 
-THOX modifications are limited to the research banner and packaging. The Apache-2.0 upstream license and attribution remain intact. See `LICENSE`, `NOTICE`, and the exported Ginux license/notice payloads.
+THOX modifications include the research/Azure banners, documented startup corrections and packaging. The Apache-2.0 upstream license and attribution remain intact. See `LICENSE`, `NOTICE`, the ordered patch series and exported license/notice payloads. `GINUX.EFI` is built output excluded from Git; the runtime release ZIP contains the actual compiled EFI and its matching receipt, checksums and patches.
+
+## Azure Compute host
+
+The [Azure deployment](../azure/README.md) retains Ubuntu 24.04 Gen2 as the Azure OS and runs this launcher with QEMU TCG, one vCPU and 2 GiB. The host has Trusted Launch, Secure Boot/vTPM, accelerated networking and explicit NAT; the VM has no public IP. Its managed identity fetches a private, SHA-256-pinned release ZIP. Default acceptance uses Azure Run Command; optional private SSH/Bastion enables the serial demo. No Docker daemon or KVM is required on that host. Host Secure Boot is separate from guest OVMF trust.
+
+The linked Windows AVD master-image procedure does not make Ginux a supported AVD session host. A [manual Linux host capture](../azure/CAPTURE_MASTER_IMAGE.md) follows successful cloud acceptance. Authentication, ARM server validation, deployment and capture have not run here.
 
 ## Validation
 
@@ -85,4 +97,4 @@ python3 -m unittest discover -s tests -v
 for script in scripts/*.sh; do bash -n "$script" || exit; done
 ```
 
-These use inert fixtures to verify hardware arguments, integrity rejection and invalid-input handling. They do not boot a kernel. Real build, QEMU boot, Docker, KVM and KnightHub SSD results must be recorded separately in the delivered evidence.
+Module guards passed 17 checks; the complete local suite passed 120 checks across kernel stack (5), upstream libraries (53), module (17), SSD (15) and Azure (30). Fixture checks do not boot a kernel. The 22 actual QEMU commands and compiled EFI receipt are recorded separately; Docker, KVM, Azure-host and KnightHub acceptance remain unrun.

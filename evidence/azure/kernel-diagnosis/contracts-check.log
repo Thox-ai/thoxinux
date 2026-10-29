@@ -1,0 +1,3 @@
+Architecture consistency check passed
+Linux compatibility matrix check passed (82 complete, 245 partial, 48 policy-denied, 0 missing)
+Native service ABI C conformance passed
