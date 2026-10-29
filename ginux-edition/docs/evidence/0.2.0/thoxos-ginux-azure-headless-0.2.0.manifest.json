@@ -1,0 +1,15 @@
+{
+  "product": "ThoxOS Ginux Edition",
+  "target": "azure",
+  "desktop": "headless",
+  "version": "0.2.0",
+  "image": "thoxos-ginux-azure-headless-0.2.0.img",
+  "image_sha256": "f9ec46933d7a245f65d873dbbcf22d6bb1c9dc3986d3267ce90ed1e337d715ba",
+  "size_mib": 8192,
+  "host_kernel": "6.12.113+deb13-cloud-amd64",
+  "ginux_efi_sha256": "6ff22d32dbabaa621f85a6ba16acc42bb95ed85fc928ae9eb7312992286856a1",
+  "esp_partuuid": "9c422a2a-b471-4a49-89ba-d69a5d22ccda",
+  "root_partuuid": "870dcb0f-072d-4d35-a9fc-cfa7516a512b",
+  "root_fs_uuid": "ca5f20be-b971-4602-91e0-65a00af5cade",
+  "secure_boot": "unsupported (unsigned systemd-boot); disable Secure Boot in firmware setup"
+}

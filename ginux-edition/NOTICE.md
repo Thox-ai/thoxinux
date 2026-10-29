@@ -29,6 +29,20 @@ THOX.ai LLC.
 | systemd-boot | Debian `systemd-boot-efi` | LGPL-2.1-or-later | UEFI boot manager on the KnightHub SSD |
 | Linux kernel | Debian `linux-image-amd64` | GPL-2.0 | KnightHub host kernel (hardware drivers, KVM) |
 | skopeo | Debian `skopeo` | Apache-2.0 | Seeds the registry at build time (not shipped) |
+| Linux kernel (cloud flavor) | Debian `linux-image-cloud-amd64` | GPL-2.0 | Azure host kernel (Hyper-V drivers, KVM) |
+| cloud-init | Debian `cloud-init` (Canonical and contributors) | Apache-2.0 or GPL-3.0 | Azure provisioning |
+| Azure Linux Agent | Debian `waagent` (Microsoft) | Apache-2.0 | Azure VM agent; provisioning is handed to cloud-init |
+| XFCE 4.20, Thunar, xfce4-panel plugins (whiskermenu, appmenu, genmon) | Debian packages | GPL-2.0-or-later and LGPL | ThoxOS Desktop session |
+| Plank | Debian `plank` | GPL-3.0-or-later | Dock |
+| LightDM and lightdm-gtk-greeter | Debian packages | GPL-3.0-or-later | Console greeter |
+| xrdp and xorgxrdp | Debian packages | Apache-2.0 (xrdp), MIT (xorgxrdp) | RDP server |
+| GTK 3 Adwaita stylesheet | GTK (The GTK Team), extracted from Debian `libgtk-3-0t64` at build time | LGPL-2.1-or-later | Base of the generated ThoxOS-Slate, ThoxOS-Porcelain and ThoxOS-ConsolePro GTK themes; those generated stylesheets are derivative works and stay under LGPL-2.1-or-later |
+| Papirus icon theme | Debian `papirus-icon-theme` (Papirus Development Team) | GPL-3.0 | Icons; the folder icons in ThoxOS-Papirus-Dark and -Light are recolored copies and stay under GPL-3.0 |
+| Inter, JetBrains Mono | Debian `fonts-inter`, `fonts-jetbrains-mono` | SIL OFL 1.1 | Interface and terminal fonts; used by the generator to render wallpapers, splash and logos |
+| Plymouth | Debian `plymouth` | GPL-2.0-or-later | Boot splash engine (the ThoxOS theme is generated) |
+| Firefox ESR | Debian `firefox-esr` (Mozilla) | MPL-2.0 | Browser; Mozilla's trademarks apply to its name and logo |
+| fastfetch | Debian `fastfetch` | MIT | About this system |
+| TXF 5.2 desktop tokens | ttracx/thox-experience-fabric at `adec4ae` (THOX.ai LLC) | THOX.ai LLC | `desktop/tokens/txf-tokens.json`, copied unchanged |
 
 The upstream Ginux NOTICE reads: "Ginux. Copyright 2026 Ginux contributors.
 This product includes software developed by Ginux contributors."

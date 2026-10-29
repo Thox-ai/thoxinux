@@ -1,0 +1,292 @@
+#!/usr/bin/python3
+# Copyright (c) 2026 THOX.ai LLC. Licensed under the Apache License, Version 2.0.
+"""thoxos-look: choose and apply a ThoxOS Desktop look (TXF 5.2).
+
+Looks are data files generated from the TXF tokens at image build time
+(/usr/share/thox/looks/<id>.json): slate (default, dark), porcelain (light) and
+console-pro (developer layout, left dock, mono window chrome).
+
+    thoxos-look list                 show the looks and which one is active
+    thoxos-look current              print the active look id
+    thoxos-look set LOOK             remember LOOK for this user and apply it now
+    thoxos-look apply                apply the remembered look (runs at session start)
+    thoxos-look off | on             stop or resume applying a look at session start
+    thoxos-look system-default LOOK  (root) default look for users who never chose one
+
+Per-user choice lives in ~/.config/thoxos/look; the system default in
+/etc/thoxos/desktop.conf (DEFAULT_LOOK=...). Applying writes XFCE settings with
+xfconf-query, the dock with gsettings, and the terminal palette; each step that
+fails is reported and the rest still run.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Callable, Mapping, Optional, Sequence
+
+LOOKS_DIR = Path(os.environ.get("THOXOS_LOOKS_DIR", "/usr/share/thox/looks"))
+SYSTEM_CONF = Path(os.environ.get("THOXOS_DESKTOP_CONF", "/etc/thoxos/desktop.conf"))
+FALLBACK_LOOK = "slate"
+LOOK_ID = re.compile(r"^[a-z][a-z0-9-]{1,31}$")
+PLANK_PATH = "net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/"
+
+Runner = Callable[[Sequence[str]], "subprocess.CompletedProcess[str]"]
+
+
+class LookError(Exception):
+    """A user-facing failure."""
+
+
+@dataclass(frozen=True)
+class Look:
+    id: str
+    name: str
+    data: Mapping
+
+
+def user_config_dir(env: Mapping[str, str]) -> Path:
+    base = env.get("XDG_CONFIG_HOME") or os.path.join(env.get("HOME", "/root"), ".config")
+    return Path(base) / "thoxos"
+
+
+def load_looks(directory: Path = LOOKS_DIR) -> dict[str, Look]:
+    looks: dict[str, Look] = {}
+    try:
+        files = sorted(directory.glob("*.json"))
+    except OSError as error:
+        raise LookError(f"cannot read {directory}: {error.strerror}") from error
+    for path in files:
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            raise LookError(f"{path}: {error}") from error
+        if data.get("schema") != "thox.thoxos-desktop.look/v1" or not LOOK_ID.match(str(data.get("id", ""))):
+            raise LookError(f"{path}: not a ThoxOS look definition")
+        looks[data["id"]] = Look(data["id"], str(data.get("name", data["id"])), data)
+    if not looks:
+        raise LookError(f"no looks installed in {directory}")
+    return looks
+
+
+def read_kv(path: Path) -> dict[str, str]:
+    values: dict[str, str] = {}
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        return values
+    except OSError as error:
+        raise LookError(f"cannot read {path}: {error.strerror}") from error
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        values[key.strip()] = value.strip().strip('"').strip("'")
+    return values
+
+
+def system_default(looks: Mapping[str, Look], conf: Path = SYSTEM_CONF) -> str:
+    value = read_kv(conf).get("DEFAULT_LOOK", FALLBACK_LOOK)
+    return value if value in looks else FALLBACK_LOOK
+
+
+def chosen_look(looks: Mapping[str, Look], env: Mapping[str, str], conf: Path = SYSTEM_CONF) -> str:
+    path = user_config_dir(env) / "look"
+    try:
+        value = path.read_text(encoding="utf-8").strip()
+    except FileNotFoundError:
+        value = ""
+    except OSError as error:
+        raise LookError(f"cannot read {path}: {error.strerror}") from error
+    return value if value in looks else system_default(looks, conf)
+
+
+def xfconf(channel: str, prop: str, kind: str, value: str) -> list[str]:
+    return ["xfconf-query", "-c", channel, "-p", prop, "--create", "-t", kind, "-s", value]
+
+
+def monitor_names(run: Runner) -> list[str]:
+    """xrandr output names (rdp0 under xrdp, Virtual-1 under QEMU, HDMI-A-1 ...)."""
+    names: list[str] = []
+    try:
+        result = run(["xrandr", "--listmonitors"])
+    except OSError:
+        return names
+    if result.returncode != 0:
+        return names
+    for line in result.stdout.splitlines()[1:]:
+        parts = line.split()
+        if parts:
+            names.append(parts[-1])
+    return names
+
+
+def backdrop_properties(run: Runner) -> list[str]:
+    """Every xfdesktop last-image property for the outputs that exist now."""
+    props: set[str] = set()
+    try:
+        listed = run(["xfconf-query", "-c", "xfce4-desktop", "-l"])
+        if listed.returncode == 0:
+            props.update(p for p in listed.stdout.split() if p.endswith("/last-image"))
+    except OSError:
+        pass
+    for name in monitor_names(run):
+        props.add(f"/backdrop/screen0/monitor{name}/workspace0/last-image")
+    return sorted(props)
+
+
+def plan(look: Look, run: Runner) -> list[list[str]]:
+    """The commands that apply a look, in order."""
+    d = look.data
+    term = d["terminal"]
+    dock = d["dock"]
+    steps = [
+        xfconf("xsettings", "/Net/ThemeName", "string", d["gtk_theme"]),
+        xfconf("xsettings", "/Net/IconThemeName", "string", d["icon_theme"]),
+        xfconf("xsettings", "/Gtk/FontName", "string", d["font"]),
+        xfconf("xsettings", "/Gtk/MonospaceFontName", "string", d["mono_font"]),
+        xfconf("xfwm4", "/general/theme", "string", d["xfwm_theme"]),
+        xfconf("xfwm4", "/general/button_layout", "string", d["button_layout"]),
+        xfconf("xfwm4", "/general/title_alignment", "string", "center"),
+        xfconf("xfwm4", "/general/title_font", "string", d["title_font"]),
+        xfconf("xfwm4", "/general/use_compositing", "bool", "true"),
+        xfconf("xfce4-terminal", "/font-name", "string", d["mono_font"]),
+        xfconf("xfce4-terminal", "/font-use-system", "bool", "false"),
+        xfconf("xfce4-terminal", "/color-foreground", "string", term["foreground"]),
+        xfconf("xfce4-terminal", "/color-background", "string", term["background"]),
+        xfconf("xfce4-terminal", "/color-cursor", "string", term["cursor"]),
+        xfconf("xfce4-terminal", "/color-cursor-use-default", "bool", "false"),
+        xfconf("xfce4-terminal", "/color-palette", "string", term["palette"]),
+        ["gsettings", "set", PLANK_PATH, "theme", dock["theme"]],
+        ["gsettings", "set", PLANK_PATH, "position", dock["position"]],
+        ["gsettings", "set", PLANK_PATH, "icon-size", str(int(dock["icon_size"]))],
+    ]
+    panel = d.get("panel")
+    if panel:
+        steps.append(xfconf("xfce4-panel", "/panels/dark-mode", "bool", "true" if panel["dark_mode"] else "false"))
+        rgba = ["xfconf-query", "-c", "xfce4-panel", "-p", "/panels/panel-1/background-rgba", "--create"]
+        for value in panel["rgba"]:
+            rgba += ["-t", "double", "-s", f"{float(value):.4f}"]
+        steps.append(rgba)
+    for prop in backdrop_properties(run):
+        steps.append(xfconf("xfce4-desktop", prop, "string", d["wallpaper"]))
+        steps.append(xfconf("xfce4-desktop", prop.replace("/last-image", "/image-style"), "int", "5"))
+    return steps
+
+
+def default_runner(argv: Sequence[str]) -> "subprocess.CompletedProcess[str]":
+    return subprocess.run(list(argv), capture_output=True, text=True, timeout=20, check=False)
+
+
+def apply(look: Look, run: Runner = default_runner, quiet: bool = False) -> int:
+    failures = 0
+    for argv in plan(look, run):
+        if shutil.which(argv[0]) is None and run is default_runner:
+            failures += 1
+            if not quiet:
+                print(f"thoxos-look: {argv[0]} not installed; skipped {' '.join(argv[1:5])}", file=sys.stderr)
+            continue
+        try:
+            result = run(argv)
+        except (OSError, subprocess.TimeoutExpired) as error:
+            failures += 1
+            print(f"thoxos-look: {' '.join(argv[:5])}: {error}", file=sys.stderr)
+            continue
+        if result.returncode != 0:
+            failures += 1
+            if not quiet:
+                detail = (result.stderr or result.stdout).strip().splitlines()
+                print(f"thoxos-look: {' '.join(argv[:5])}: {detail[-1] if detail else 'failed'}", file=sys.stderr)
+    if not quiet:
+        print(f"thoxos-look: applied {look.name}" + (f" ({failures} step(s) failed)" if failures else ""))
+    return 0 if failures == 0 else 3
+
+
+def write_user_choice(env: Mapping[str, str], value: str) -> Path:
+    directory = user_config_dir(env)
+    directory.mkdir(parents=True, exist_ok=True)
+    path = directory / "look"
+    path.write_text(value + "\n", encoding="utf-8")
+    return path
+
+
+def disabled(env: Mapping[str, str]) -> bool:
+    return (user_config_dir(env) / "look.off").exists()
+
+
+def set_system_default(value: str, conf: Path = SYSTEM_CONF) -> None:
+    lines = []
+    try:
+        lines = [l for l in conf.read_text(encoding="utf-8").splitlines() if not l.startswith("DEFAULT_LOOK=")]
+    except FileNotFoundError:
+        lines = ["# ThoxOS Desktop system settings"]
+    lines.append(f"DEFAULT_LOOK={value}")
+    conf.parent.mkdir(parents=True, exist_ok=True)
+    tmp = conf.with_suffix(".tmp")
+    tmp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    os.chmod(tmp, 0o644)
+    os.replace(tmp, conf)
+
+
+def main(argv: Optional[Sequence[str]] = None, env: Optional[Mapping[str, str]] = None,
+         run: Runner = default_runner) -> int:
+    args = list(sys.argv[1:] if argv is None else argv)
+    env = dict(os.environ if env is None else env)
+    if not args or args[0] in ("-h", "--help", "help"):
+        print(__doc__.strip())
+        return 0
+    command, rest = args[0], args[1:]
+    try:
+        looks = load_looks()
+        if command == "list":
+            active = chosen_look(looks, env)
+            for look in looks.values():
+                mark = "*" if look.id == active else " "
+                print(f"{mark} {look.id:<12} {look.name:<12} {look.data.get('description', '')}")
+            return 0
+        if command == "current":
+            print(chosen_look(looks, env))
+            return 0
+        if command == "set":
+            if len(rest) != 1 or rest[0] not in looks:
+                raise LookError(f"usage: thoxos-look set {{{'|'.join(looks)}}}")
+            write_user_choice(env, rest[0])
+            (user_config_dir(env) / "look.off").unlink(missing_ok=True)
+            return apply(looks[rest[0]], run)
+        if command == "apply":
+            if disabled(env):
+                return 0
+            quiet = "--quiet" in rest
+            return apply(looks[chosen_look(looks, env)], run, quiet=quiet)
+        if command == "off":
+            user_config_dir(env).mkdir(parents=True, exist_ok=True)
+            (user_config_dir(env) / "look.off").write_text("", encoding="utf-8")
+            print("thoxos-look: looks will no longer be applied at session start")
+            return 0
+        if command == "on":
+            (user_config_dir(env) / "look.off").unlink(missing_ok=True)
+            print("thoxos-look: looks will be applied at session start")
+            return 0
+        if command == "system-default":
+            if len(rest) != 1 or rest[0] not in looks:
+                raise LookError(f"usage: thoxos-look system-default {{{'|'.join(looks)}}}")
+            if os.geteuid() != 0:
+                raise LookError("system-default needs root (sudo)")
+            set_system_default(rest[0])
+            print(f"thoxos-look: system default is now {rest[0]}")
+            return 0
+        raise LookError(f"unknown command {command!r}; see thoxos-look --help")
+    except LookError as error:
+        print(f"thoxos-look: {error}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

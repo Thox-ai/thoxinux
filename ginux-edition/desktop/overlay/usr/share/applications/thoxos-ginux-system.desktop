@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=ThoxOS System Boot
+Comment=Full systemd boot of ThoxOS on Ginux, to its login prompt
+Exec=xfce4-terminal --title="ThoxOS System Boot" --hide-menubar --geometry=112x34 -x thoxos-ginux system
+Icon=thoxos-system
+Categories=System;X-ThoxOS;
+Terminal=false
+StartupNotify=true

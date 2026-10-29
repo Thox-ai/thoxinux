@@ -1,0 +1,7 @@
+# Accelerated networking: the Mellanox/MANA virtual function is enslaved to the
+# synthetic hv_netvsc interface by the kernel. networkd must leave it alone.
+[Match]
+Driver=mlx4_core mlx5_core mana
+
+[Link]
+Unmanaged=yes

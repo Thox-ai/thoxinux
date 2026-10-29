@@ -1,0 +1,15 @@
+{
+  "product": "ThoxOS Ginux Edition",
+  "target": "knighthub",
+  "desktop": "headless",
+  "version": "0.2.0",
+  "image": "thoxos-ginux-knighthub-0.2.0.img",
+  "image_sha256": "fc6246a463196d57ad9f4894262e919ecea621273467a78eddc8c1a16c433c3d",
+  "size_mib": 8192,
+  "host_kernel": "6.12.113+deb13-amd64",
+  "ginux_efi_sha256": "6ff22d32dbabaa621f85a6ba16acc42bb95ed85fc928ae9eb7312992286856a1",
+  "esp_partuuid": "df0756fb-f5c1-4b7c-883b-4e6f244e5255",
+  "root_partuuid": "febee0a7-b003-4cd2-ba51-729864a6f912",
+  "root_fs_uuid": "f33186cd-bb90-4f1e-97ad-5d7614fc8b66",
+  "secure_boot": "unsupported (unsigned systemd-boot); disable Secure Boot in firmware setup"
+}

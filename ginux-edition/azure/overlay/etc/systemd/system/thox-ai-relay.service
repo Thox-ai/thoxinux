@@ -1,0 +1,31 @@
+[Unit]
+Description=THOX AI relay: hosted model on 127.0.0.1:11434 for thox ask and ThoxOS on Ginux
+Documentation=file:///etc/thoxos/ai-relay.env.example
+ConditionPathExists=/etc/thoxos/ai-relay.env
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=thoxos-ai
+Group=thoxos-ai
+ExecStartPre=/usr/bin/python3 -I /usr/lib/thoxos-g/thox_ai_relay.py --check
+ExecStart=/usr/bin/python3 -I /usr/lib/thoxos-g/thox_ai_relay.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+CapabilityBoundingSet=
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target
