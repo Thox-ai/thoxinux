@@ -1,0 +1,36 @@
+# ThoxOS Ginux Edition userspace image.
+#
+# Base: the exact Rocky Linux 10 UBI init digest that upstream Ginux validated
+# through systemd multi-user.target. ThoxOS changes are a file overlay plus one
+# demo login account; no packages are added, so the systemd unit set Ginux was
+# validated against stays the same.
+#
+# Build (from the repository root):
+#   docker build -f rootfs/Containerfile --build-arg ROCKY_BASE=... -t thoxos-g/userspace:0.1.0 rootfs
+ARG ROCKY_BASE=docker.io/rockylinux/rockylinux:10-ubi-init@sha256:2ce9a2d1a810a47c72a86f79de7d54667bd922d2cec9880647ff6a9023f6fe8c
+FROM ${ROCKY_BASE}
+
+ARG THOXOS_VERSION=0.1.0
+# Demo console password for the `thox` account. Override it for any machine
+# other than a personal demo: --build-arg THOXOS_DEMO_PASSWORD=...
+ARG THOXOS_DEMO_PASSWORD=thoxos
+
+COPY overlay/ /
+
+RUN set -eu; \
+    mkdir -p /usr/share/thoxos; \
+    printf '%s\n' "${THOXOS_VERSION}" > /usr/share/thoxos/VERSION; \
+    chmod 0755 /usr/local/bin/thox /usr/local/bin/thox-shell; \
+    chmod 0644 /usr/lib/os-release /etc/issue /etc/motd /etc/thoxos/ai.env; \
+    ln -sf ../usr/lib/os-release /etc/os-release; \
+    useradd --create-home --comment "ThoxOS demo user" --groups wheel thox; \
+    printf 'thox:%s\n' "${THOXOS_DEMO_PASSWORD}" | chpasswd; \
+    /usr/local/bin/thox version >/dev/null; \
+    grep -q '^PRETTY_NAME="ThoxOS' /etc/os-release
+
+LABEL org.opencontainers.image.title="ThoxOS Ginux Edition userspace" \
+      org.opencontainers.image.version="${THOXOS_VERSION}" \
+      org.opencontainers.image.vendor="THOX.ai LLC" \
+      org.opencontainers.image.description="Rocky Linux 10 userspace with ThoxOS identity, for the Ginux kernel"
+
+CMD ["/sbin/init"]

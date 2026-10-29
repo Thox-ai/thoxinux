@@ -1,0 +1,11 @@
+ThoxOS Ginux Edition host (KnightHub)
+
+tty1   ThoxOS console: Ginux kernel under KVM, ThoxOS userspace (login: thox)
+tty2   host admin login (user thox, sudo); press Ctrl-Alt-F2
+
+Services:  thoxos-g-console  thoxos-g-registry  thoxos-g-dns  thoxos-g-growroot
+Status:    systemctl status 'thoxos-g-*'
+Logs:      journalctl -u thoxos-g-console -b
+Doctor:    sudo -u thoxos thoxos-g doctor
+Restart:   sudo systemctl restart thoxos-g-console
+Reset VM:  sudo systemctl stop thoxos-g-console && sudo rm /var/lib/thoxos-g/state/volume.raw && sudo systemctl start thoxos-g-console

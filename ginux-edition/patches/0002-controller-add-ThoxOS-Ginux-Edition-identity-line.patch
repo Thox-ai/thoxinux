@@ -1,0 +1,31 @@
+From bc684969b8dc9defea298988776c058e84b8e740 Mon Sep 17 00:00:00 2001
+From: Odette Lark <sadie@thox.ai>
+Date: Wed, 28 Oct 2026 22:24:06 -0500
+Subject: [PATCH 2/3] controller: add ThoxOS Ginux Edition identity line
+
+The upstream banner stays byte-identical so upstream console tests still
+match it exactly once.
+---
+ control-plane/runtime/src/main.rs | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/control-plane/runtime/src/main.rs b/control-plane/runtime/src/main.rs
+index b8ae06a..4a6e1c8 100644
+--- a/control-plane/runtime/src/main.rs
++++ b/control-plane/runtime/src/main.rs
+@@ -515,6 +515,12 @@ extern "C" fn ginux_controller_main() -> ! {
+     let mut line = [0_u8; MAX_LINE];
+ 
+     write(console, b"\r\nGinux controller v0 (ring 3)\r\n");
++    // ThoxOS Ginux Edition identity line. The upstream banner above stays
++    // byte-identical so upstream console tests keep matching it exactly once.
++    write(
++        console,
++        b"ThoxOS Ginux Edition 0.1.0 | THOX.ai | research preview\r\n",
++    );
+     write(console, b"Type 'help' for commands.\r\n");
+     if !linux_sysinfo_contract(console) {
+         exit(NATIVE_SERVICE_EXIT_REJECTED);
+-- 
+2.43.0
+

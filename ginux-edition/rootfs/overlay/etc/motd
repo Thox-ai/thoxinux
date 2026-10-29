@@ -1,0 +1,9 @@
+
+  ThoxOS 0.1.0 Ginux Edition
+  Linux userspace, no Linux kernel underneath.
+
+  thox status        identity, kernel and AI endpoint
+  thox ask "..."     ask the configured THOX model endpoint
+
+  Research preview built on Ginux (Apache-2.0). Not for production use.
+

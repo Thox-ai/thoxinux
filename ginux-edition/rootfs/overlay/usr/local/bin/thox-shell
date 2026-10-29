@@ -1,0 +1,206 @@
+#!/usr/bin/python3
+"""thox-shell: ThoxOS console shell for the Ginux shell domain (PID 1).
+
+Why not plain bash: on Ginux 36503bd the domain console has no line
+discipline (one byte per read, no echo), and an interactive bash or login(1)
+on it exits at the first read (VALIDATION V9). This shell owns the line
+editing itself: it reads the console one byte at a time, echoes, handles
+backspace and Ctrl-U, and runs each line with `bash -c`. A read that returns
+nothing (console detached with Ctrl-]) is retried, so detaching and
+`domain attach` keep the session.
+
+Built-ins: cd [dir], export NAME=VALUE, exit [status], help. Everything else
+runs through /bin/bash -c; its output is relayed with CRLF line endings and
+its stdin is /dev/null. Full-screen and input-reading programs (editors, top,
+pagers) are not supported on this console.
+"""
+
+from __future__ import annotations
+
+import os
+import shlex
+import subprocess
+import sys
+import time
+
+PROMPT_COLOR = "\x1b[38;2;5;164;81m"
+RESET = "\x1b[0m"
+BACKSPACE = (0x08, 0x7F)
+CTRL_C = 0x03
+CTRL_D = 0x04
+CTRL_U = 0x15
+
+
+def write(text: str) -> None:
+    os.write(1, text.encode("utf-8", "replace"))
+
+
+def print_file(path: str) -> None:
+    try:
+        with open(path, encoding="utf-8", errors="replace") as handle:
+            write(handle.read().replace("\n", "\r\n"))
+    except OSError:
+        return
+
+
+def prompt() -> str:
+    cwd = os.getcwd()
+    home = os.environ.get("HOME", "/root")
+    shown = "~" + cwd[len(home):] if cwd == home or cwd.startswith(home + "/") else cwd
+    return f"{PROMPT_COLOR}thoxos{RESET}:{shown}# "
+
+
+def read_line() -> str | None:
+    """Read one edited line from the console; None on Ctrl-D at an empty line."""
+    buffer = bytearray()
+    while True:
+        try:
+            data = os.read(0, 1)
+        except InterruptedError:
+            continue
+        if not data:
+            # Detached or no data yet: Ginux returns 0 instead of blocking.
+            time.sleep(0.05)
+            continue
+        byte = data[0]
+        if byte in (0x0D, 0x0A):
+            write("\r\n")
+            return buffer.decode("utf-8", "replace")
+        if byte in BACKSPACE:
+            if buffer:
+                # Remove one UTF-8 character.
+                while buffer and (buffer[-1] & 0xC0) == 0x80:
+                    buffer.pop()
+                if buffer:
+                    buffer.pop()
+                write("\b \b")
+            continue
+        if byte == CTRL_U:
+            write("\b \b" * len(buffer.decode("utf-8", "replace")))
+            buffer.clear()
+            continue
+        if byte == CTRL_C:
+            write("^C\r\n")
+            buffer.clear()
+            write(prompt())
+            continue
+        if byte == CTRL_D:
+            if not buffer:
+                write("\r\n")
+                return None
+            continue
+        if byte < 0x20:
+            continue
+        buffer.append(byte)
+        os.write(1, bytes([byte]))
+
+
+def run_builtin(argv: list[str]) -> bool | int:
+    """Handle shell built-ins. Returns False if not a built-in, else a status."""
+    name = argv[0]
+    if name == "cd":
+        target = argv[1] if len(argv) > 1 else os.environ.get("HOME", "/root")
+        try:
+            os.chdir(os.path.expanduser(target))
+        except OSError as error:
+            write(f"cd: {target}: {error.strerror}\r\n")
+            return 1
+        return 0
+    if name == "export":
+        for assignment in argv[1:]:
+            key, separator, value = assignment.partition("=")
+            if separator and key.replace("_", "").isalnum():
+                os.environ[key] = value
+            else:
+                write(f"export: invalid assignment: {assignment}\r\n")
+                return 1
+        return 0
+    if name == "help":
+        write(
+            "thox-shell built-ins: cd, export NAME=VALUE, exit, help.\r\n"
+            "Other lines run with /bin/bash -c. Try: thox status, cat /etc/os-release\r\n"
+        )
+        return 0
+    return False
+
+
+def run_command(line: str) -> int:
+    """Run one line with bash; stream its output with CRLF line endings.
+
+    The Ginux console does not translate newlines, so output is relayed and
+    converted here. stdin is /dev/null: the console belongs to this shell.
+    """
+    process = subprocess.Popen(
+        ["/bin/bash", "-c", line],
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    assert process.stdout is not None
+    pending_cr = False
+    while True:
+        chunk = process.stdout.read1(4096) if hasattr(process.stdout, "read1") else process.stdout.read(4096)
+        if not chunk:
+            break
+        out = bytearray()
+        for byte in chunk:
+            if byte == 0x0A and not pending_cr:
+                out.extend(b"\r\n")
+            else:
+                out.append(byte)
+            pending_cr = byte == 0x0D
+        os.write(1, bytes(out))
+    return process.wait()
+
+
+def main() -> int:
+    # Plain fork and exec: the path systemd already exercises on Ginux.
+    if hasattr(subprocess, "_USE_VFORK"):
+        subprocess._USE_VFORK = False
+    if hasattr(subprocess, "_USE_POSIX_SPAWN"):
+        subprocess._USE_POSIX_SPAWN = False
+    os.environ.setdefault("HOME", "/root")
+    os.environ.setdefault("TERM", "linux")
+    os.environ.setdefault("LANG", "C.UTF-8")
+    os.environ["PATH"] = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+    try:
+        os.chdir(os.environ["HOME"])
+    except OSError:
+        os.chdir("/")
+    print_file("/etc/issue")
+    print_file("/etc/motd")
+    status = 0
+    while True:
+        write(prompt())
+        line = read_line()
+        if line is None:
+            return status
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            argv = shlex.split(line)
+        except ValueError as error:
+            write(f"thox-shell: {error}\r\n")
+            continue
+        if argv[0] == "exit":
+            try:
+                return int(argv[1]) if len(argv) > 1 else status
+            except ValueError:
+                return 2
+        builtin = run_builtin(argv)
+        if builtin is not False:
+            status = int(builtin)
+            continue
+        try:
+            status = run_command(line)
+        except OSError as error:
+            write(f"thox-shell: {error}\r\n")
+            status = 127
+        except KeyboardInterrupt:
+            write("\r\n")
+            status = 130
+
+
+if __name__ == "__main__":
+    sys.exit(main())

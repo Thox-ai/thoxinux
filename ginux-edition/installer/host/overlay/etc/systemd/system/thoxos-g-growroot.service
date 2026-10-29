@@ -1,0 +1,14 @@
+[Unit]
+Description=ThoxOS Ginux Edition: grow the root partition to fill the SSD (first boot)
+DefaultDependencies=no
+After=local-fs.target
+Before=thoxos-g-console.service
+ConditionPathExists=!/var/lib/thoxos-g/.root-grown
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/thoxos-g/growroot.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
