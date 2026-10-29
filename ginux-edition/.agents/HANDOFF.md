@@ -32,7 +32,7 @@ This module is the second runtime record in `ttracx/thoxos-ginux`. The first rec
 ## Conventions
 - Naming: `thoxos-g` for the launcher and services, `THOXOS_G_*` for settings.
 - Commit style: imperative subject, why in the body, `docs:` prefix for docs-only.
-- Test command: `make test`; boot gate: `make selftest`; shell gate: `tests/e2e/shell_session.py`; SSD harness: `tests/e2e/boot-ssd-image.sh`; Azure bench: `tests/e2e/boot-azure-image.sh VHD OUT GINUX_WAIT`.
+- Test command: `make test`; CI gate: `make ci` (`make ci-report` posts the `thox/local-ci` status; `scripts/install-pre-push-hook.sh` once per clone); boot gate: `make selftest`; shell gate: `tests/e2e/shell_session.py`; SSD harness: `tests/e2e/boot-ssd-image.sh`; Azure bench: `tests/e2e/boot-azure-image.sh VHD OUT GINUX_WAIT`.
 - Build command: `make demo-image`, `make ssd-image`, `installer/build-host-image.sh --target azure --desktop desktop|headless ...` (add `EXTRA_CA=` behind a TLS-inspecting proxy).
 - Versions: host images read `HOST_VERSION` (0.2.0); the guest reads `VERSION` (0.1.0).
 - Desktop themes are generated: edit `desktop/generator/txf_desktop_gen.py` or the token file, never the generated files. The generator fails the build on `#10B981` or `#00FF88`.
@@ -47,7 +47,7 @@ This module is the second runtime record in `ttracx/thoxos-ginux`. The first rec
 - Windows writer not run on Windows.
 - 0.1.0 KnightHub image very likely shares one machine ID across every SSD written from it (VALIDATION D-16); use the 0.2.0 image.
 - Record A's Azure variant (pull request #2) awaits a ruling beside this one (`docs/RECONCILIATION_2026-10-29.md`, R4 to R8).
-- GitHub CI runs end `startup_failure` before any job (VALIDATION V19); check the repository's Actions settings.
+- No GitHub Actions (cost, D32): CI is `make ci` / `make ci-report` and the pre-push hook. The workflow file is removed on this branch; `main` keeps it until #3 merges into `main` (its base is still `ginux-edition-0.1.0`).
 
 ## Compliance
 | Section | State |

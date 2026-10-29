@@ -14,7 +14,7 @@ Ordered by priority score (Market Value x 0.4 + Technical Feasibility x 0.3 + Ti
 | 8 | Private access option in `azuredeploy.json`: no public IP, RDP through Bastion or a VPN (Record A's posture, RECONCILIATION_2026-10-29 R6) | 6 | 8 | 7 | 7 | 6.9 | Hermes, Codex |
 | 9 | Run `Install-ThoxOSGinux.ps1` on KnightHub against a spare USB SSD and record the transcript | 5 | 8 | 8 | 5 | 6.5 | Tommy, Hermes |
 | 10 | Screen lock for RDP sessions (TXF surface 14) | 5 | 7 | 7 | 5 | 6.0 | Claude |
-| 11 | CI job that builds the Azure VHD and runs the QEMU boot and RDP test | 5 | 7 | 6 | 7 | 6.0 | Nova |
+| 11 | Opt-in bench step in local CI (no GitHub Actions): build the Azure VHD and run the QEMU and RDP bench, report it as its own commit status | 5 | 7 | 6 | 7 | 6.0 | Nova |
 | 12 | Signed boot path (shim + signed loader) so the SSD boots with Secure Boot on and Azure can use Trusted Launch | 6 | 6 | 5 | 6 | 5.8 | Codex |
 | 13 | Azure Virtual Desktop bridge, only if AVD is required: a Windows host pool that publishes Remote Desktop Connection to the ThoxOS VM as a RemoteApp | 5 | 7 | 5 | 5 | 5.6 | Hermes |
 | 14 | Accelerated networking: test with the VF marked unmanaged, then turn it on in the template | 4 | 7 | 6 | 4 | 5.3 | Hermes |

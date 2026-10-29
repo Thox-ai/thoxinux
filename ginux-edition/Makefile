@@ -1,6 +1,7 @@
 # ThoxOS Ginux Edition build entry points.
 #
 #   make test          unit tests and static checks (no QEMU, no Docker)
+#   make ci            local CI gate (make test, logged); ci-report also posts a GitHub commit status
 #   make efi           patched GINUX.EFI on this machine -> build/dist/
 #   make userspace     ThoxOS userspace image -> build/userspace.tar
 #   make demo-image    Docker demo image thoxos-g/demo:$(VERSION)
@@ -39,10 +40,10 @@ SSD_SIZE ?= 8G
 ADMIN_PASSWORD_FILE ?=
 
 .DEFAULT_GOAL := help
-.PHONY: help test efi userspace demo-image demo demo-shell demo-web selftest ssd-image azure-image azure-boot clean
+.PHONY: help test ci ci-report efi userspace demo-image demo demo-shell demo-web selftest ssd-image azure-image azure-boot clean
 
 help:
-	@sed -n '3,17p' Makefile | sed -e 's/^#$$//' -e 's/^# //'
+	@sed -n '3,18p' Makefile | sed -e 's/^#$$//' -e 's/^# //'
 
 test:
 	python3 -m pytest -q tests
@@ -50,6 +51,12 @@ test:
 	@if command -v shellcheck >/dev/null; then \
 		shellcheck -x $(SHELL_SOURCES); \
 	else echo "shellcheck not installed; skipped"; fi
+
+ci:
+	bash scripts/local-ci.sh $(if $(FULL),--full,)
+
+ci-report:
+	bash scripts/local-ci.sh --report $(if $(FULL),--full,)
 
 efi:
 	bash scripts/ginux-source.sh build/ginux-src

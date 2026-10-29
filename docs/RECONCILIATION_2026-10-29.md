@@ -46,4 +46,6 @@ Tommy's request of 2026-10-29 ("build the complete kernel and customized ThoxOS 
 
 ## What stays untouched
 
-Record A's pull request and files are unchanged by this branch, and Record B's files are unchanged by Record A's. The two `azure/` directories live at different paths (`azure/` and `ginux-edition/azure/`). A merge is Tommy's call.
+Record A's files are unchanged by this branch, and Record B's files are unchanged by Record A's. The two `azure/` directories live at different paths (`azure/` and `ginux-edition/azure/`).
+
+Update 2026-10-29: Tommy merged pull request #2 (merge commit `e85d538`, 21:06 UTC) and then #1, the 0.1.0 module (`10787b1`), into `main`. Both Azure records now sit side by side on `main`. Merging places them together; it does not settle R4 to R8, which still wait for a ruling.

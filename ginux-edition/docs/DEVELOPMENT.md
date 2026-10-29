@@ -96,6 +96,19 @@ Behind a TLS-inspecting proxy add `EXTRA_CA=/path/ca.pem`; the CA reaches only t
 3. `git -C build/ginux-src format-patch -o ../../patches <GINUX_COMMIT>` and renumber.
 4. Rebuild and run `make selftest`. A patch that cannot pass the selftest does not ship.
 
+## Continuous integration
+
+CI runs on a developer or build machine, not on GitHub Actions (cost; DECISIONS D32). The checks are the ones the retired Actions workflow ran, and the result still reaches pull requests as a commit status named `thox/local-ci`.
+
+| Command | What it does |
+|---|---|
+| `make ci` | `make test` with a log and a JSON result in `build/local-ci/<sha>.*` |
+| `make ci-report` | The same, then posts the result as a commit status on `HEAD` with `gh`; refuses a dirty tree so the status describes exactly the committed files |
+| `make ci FULL=1`, `make ci-report FULL=1` | Adds the full desktop theme generation test in a Debian 13 container with the real fonts and icon theme |
+| `scripts/install-pre-push-hook.sh` | Makes `git push` run the gate first when the push changes `ginux-edition/`; a red result stops the push (`--no-verify` skips it, `--remove` uninstalls) |
+
+Flow: install the hook once, push (the gate runs), then `make ci-report` so the pushed commit shows its check on the pull request. The heavy gates stay manual and are recorded in VALIDATION.md: `make selftest`, `tests/e2e/boot-ssd-image.sh` and `tests/e2e/boot-azure-image.sh`.
+
 ## Conventions
 
 - Commit messages: imperative subject, body explains why. `docs:` prefix for documentation-only commits.
