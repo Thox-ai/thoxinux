@@ -71,3 +71,7 @@ Copyright 2026 THOX.ai LLC for original THOX work. Private engineering repositor
 ## Governance and releases
 
 This private engineering candidate is reviewed through source changes and evidence-bound acceptance. Public publication, production qualification and physical boot require their own actual review and evidence. The [releases page](https://github.com/ttracx/thoxos-ginux/releases) contains no stable release from this build; deployment downloads are supplied with separate exact payload receipts.
+
+## Introduction and recorded demos
+
+See the [solution introduction, actual screen recordings and labeled user scenes](docs/azure/media/README.md), with [download provenance](docs/azure/media/DELIVERY_MANIFEST.json). The source-bound media package and five-email introduction were delivered privately to Tommy and Craig.
