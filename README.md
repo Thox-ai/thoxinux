@@ -71,7 +71,7 @@ No established MeshStack or ThoxWork integration runs inside this Ginux variant.
 
 The [October 28 kit guide](START_HERE.md), [PDF](docs/THOX_Ginux_Research_Guide.pdf), [HTML](docs/html/THOX_Ginux_Research_Guide.html) and [original validation](evidence/VALIDATION_SUMMARY.json) remain predecessor evidence, including that payload's embedded-domain panic. The original `ssd-module/` installer copies files onto an existing accepted Linux host; it does not flash, repartition or reboot. Its image/writer mismatch is historical to that path and does not negate the separate image bench.
 
-## Source, license and development
+## Source, license and governance
 
 Ginux upstream is `gmkurtzer/ginux` commit `36503bda2d87465765e1b94e65f9d100f27ed5be`, Apache-2.0. THOX work preserves upstream authorship and notices; see [LICENSE](LICENSE), [NOTICE.md](NOTICE.md), [module provenance](module-ginux/SOURCE_MANIFEST.json) and [image-lane notice](ginux-edition/NOTICE.md). The root research module originated in `ttracx/thoxos-desktop-debian` at `1390b8a18334e91d03725b177c813760f4b38579`.
 
