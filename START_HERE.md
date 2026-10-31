@@ -1,5 +1,7 @@
 # ThoxOS Ginux Research Kit
 
+> **Historical kit guide — October 28, 2026.** These instructions identify the original delivered payload and its limits. For the current desktop, browser shell or headless Azure Compute path, use the [repository experience selector](README.md#choose-your-experience). The separate `ginux-edition/` implementation has its own image and test evidence; do not apply this kit's embedded-domain failure or image/writer limitation to that implementation.
+
 Internal engineering candidate, 2026-10-28. Prepared for Tommy Xaypanya.
 
 The included THOX EFI was built and booted under QEMU TCG. Controller commands, clean shutdown and saved configuration recovery passed. Starting the embedded Linux domain panics in this environment; the same failure reproduced with pristine upstream. This is a controller and architecture demo. Docker execution, full Linux host-image construction, KVM and KnightHub hardware acceptance remain pending.

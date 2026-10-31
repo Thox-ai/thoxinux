@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Ask THOX
+Comment=Ask the THOX model: local first, hosted through the relay
+Exec=xfce4-terminal --title="Ask THOX" --hide-menubar --geometry=100x28 -x thoxos-ask
+Icon=thoxos-ask
+Categories=Utility;X-ThoxOS;
+Terminal=false
+StartupNotify=true

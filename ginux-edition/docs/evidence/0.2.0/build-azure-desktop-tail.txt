@@ -1,0 +1,3 @@
+-rw-r--r-- 1 root root        673 Oct 29 16:58 thoxos-ginux-azure-headless-0.2.0.manifest.json
+-rw-r--r-- 1 root root 8589935104 Oct 29 16:58 thoxos-ginux-azure-headless-0.2.0.vhd
+-rw-r--r-- 1 root root        104 Oct 29 16:58 thoxos-ginux-azure-headless-0.2.0.vhd.sha256

@@ -1,0 +1,20 @@
+#!/bin/bash
+# Copyright (c) 2026 THOX.ai LLC. Licensed under the Apache License, Version 2.0.
+# thoxos-ask: Ask THOX from the desktop. One argument asks once; without
+# arguments it prompts in a loop. Uses `thox ask` with /etc/thoxos/ai.env
+# (127.0.0.1:11434: a local model server, or thox-ai-relay for hosted routing).
+set -uo pipefail
+if (($#)); then
+    thox ask "$*"
+    status=$?
+    echo
+    read -r -p "Press Enter to close. " _ || true
+    exit "$status"
+fi
+echo "Ask THOX. It runs here first: local model if one is listening, otherwise the hosted relay."
+echo "An empty line or Ctrl-D closes this window."
+while IFS= read -r -e -p "ask> " question; do
+    [[ -z "$question" ]] && break
+    thox ask "$question" || true
+    echo
+done

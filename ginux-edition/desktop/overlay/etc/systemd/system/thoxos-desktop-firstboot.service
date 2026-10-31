@@ -1,0 +1,13 @@
+[Unit]
+Description=ThoxOS Desktop first boot: per-machine RDP keys and TLS certificate
+ConditionPathExists=!/var/lib/thoxos-desktop/firstboot.done
+Before=xrdp.service xrdp-sesman.service display-manager.service
+After=local-fs.target systemd-random-seed.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/thoxos-desktop/firstboot.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

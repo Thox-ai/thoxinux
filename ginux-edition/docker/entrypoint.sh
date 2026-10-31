@@ -73,16 +73,29 @@ prepare_state() {
     chmod 0750 "$state_dir"
 }
 
+# Use one privilege boundary and one explicit configuration allowlist for every
+# mode, including ttyd's delayed child. Do not retain the container environment:
+# registry/web credentials and unrelated host variables are not guest settings.
+runtime_command=(
+    setpriv --reuid="$run_user" --regid="$run_user" --init-groups --inh-caps=-all
+    --reset-env -- env
+    "HOME=/home/$run_user" "TERM=${TERM:-xterm-256color}" LANG=C.UTF-8
+)
+for setting in \
+    THOXOS_G_EFI THOXOS_G_STATE_DIR THOXOS_G_QEMU THOXOS_G_MEMORY \
+    THOXOS_G_VOLUME_SIZE THOXOS_G_ACCEL THOXOS_G_CPU \
+    THOXOS_G_OVMF_CODE THOXOS_G_OVMF_VARS THOXOS_G_IMAGE THOXOS_G_DOMAIN \
+    THOXOS_G_DOMAIN_MEMORY_MIB THOXOS_G_INIT THOXOS_G_SHELL_INIT THOXOS_G_MODE \
+    THOXOS_G_DNS THOXOS_G_BOOT_TIMEOUT THOXOS_G_USERSPACE_MANIFEST; do
+    if [[ -v "$setting" ]]; then
+        runtime_command+=("$setting=${!setting}")
+    fi
+done
+unset setting
+readonly -a runtime_command
+
 as_runtime_user() {
-    setpriv --reuid="$run_user" --regid="$run_user" --init-groups --inh-caps=-all \
-        --reset-env -- env \
-        HOME="/home/$run_user" TERM="${TERM:-xterm-256color}" LANG=C.UTF-8 \
-        THOXOS_G_STATE_DIR="$state_dir" \
-        ${THOXOS_G_MEMORY:+THOXOS_G_MEMORY="$THOXOS_G_MEMORY"} \
-        ${THOXOS_G_ACCEL:+THOXOS_G_ACCEL="$THOXOS_G_ACCEL"} \
-        ${THOXOS_G_BOOT_TIMEOUT:+THOXOS_G_BOOT_TIMEOUT="$THOXOS_G_BOOT_TIMEOUT"} \
-        ${THOXOS_G_DOMAIN_MEMORY_MIB:+THOXOS_G_DOMAIN_MEMORY_MIB="$THOXOS_G_DOMAIN_MEMORY_MIB"} \
-        "$@"
+    "${runtime_command[@]}" "$@"
 }
 
 case "$mode" in
@@ -120,8 +133,7 @@ web)
         -t 'fontFamily=JetBrains Mono, ui-monospace, monospace' \
         -t 'fontSize=15' \
         -t 'theme={"background":"#09090B","foreground":"#E4E4E7","cursor":"#05A451","selectionBackground":"#05A45155","green":"#05A451","brightGreen":"#05A451"}' \
-        setpriv --reuid="$run_user" --regid="$run_user" --init-groups --inh-caps=-all \
-        env HOME="/home/$run_user" THOXOS_G_STATE_DIR="$state_dir" /usr/bin/thoxos-g console
+        "${runtime_command[@]}" /usr/bin/thoxos-g console
     ;;
 selftest)
     as_runtime_user /usr/bin/thoxos-g console \

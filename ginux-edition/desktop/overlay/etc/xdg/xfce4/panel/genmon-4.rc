@@ -1,0 +1,5 @@
+Command=/usr/local/bin/thoxos-ai-chip
+UseLabel=0
+Text=
+UpdatePeriod=15000
+Font=JetBrains Mono Bold 8

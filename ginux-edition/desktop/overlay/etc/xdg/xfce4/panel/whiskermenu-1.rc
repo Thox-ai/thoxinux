@@ -1,0 +1,24 @@
+favorites=thoxos-ginux-shell.desktop,thoxos-ask.desktop,xfce4-terminal.desktop,thunar.desktop,firefox-esr.desktop,thoxos-looks.desktop
+button-icon=thoxos-mark
+button-title=ThoxOS
+show-button-title=false
+show-button-icon=true
+launcher-show-name=true
+launcher-show-description=true
+position-search-alternate=true
+position-commands-alternate=false
+menu-width=520
+menu-height=520
+search-actions=2
+
+[action0]
+name=Ask THOX
+pattern=?
+command=xfce4-terminal --title="Ask THOX" --hide-menubar -x thoxos-ask %s
+regex=false
+
+[action1]
+name=Run in Terminal
+pattern=!
+command=exo-open --launch TerminalEmulator %s
+regex=false

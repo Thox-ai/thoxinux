@@ -1,0 +1,15 @@
+#!/bin/bash
+# Copyright (c) 2026 THOX.ai LLC. Licensed under the Apache License, Version 2.0.
+# thoxos-looks-menu: pick a ThoxOS Desktop look in a terminal window.
+set -uo pipefail
+echo "ThoxOS Desktop looks (TXF 5.2). Current: $(thoxos-look current)"
+echo
+thoxos-look list
+echo
+PS3="Choose a look (number), or Ctrl-D to keep the current one: "
+select look in slate porcelain console-pro; do
+    [[ -n "${look:-}" ]] || { echo "Pick 1, 2 or 3."; continue; }
+    thoxos-look set "$look"
+    sleep 1
+    break
+done

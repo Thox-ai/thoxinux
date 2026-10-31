@@ -1,0 +1,13 @@
+[Unit]
+Description=ThoxOS Ginux Edition: per-machine SSH host keys
+Documentation=file:///etc/thoxos-g/README.host
+# The image ships without host keys; every VM generates its own.
+Before=ssh.service
+ConditionPathExists=!/etc/ssh/ssh_host_ed25519_key
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ssh-keygen -A
+
+[Install]
+WantedBy=multi-user.target

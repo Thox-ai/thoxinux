@@ -1,0 +1,2 @@
+# Stable name for the Hyper-V PTP clock that chrony uses on Azure.
+SUBSYSTEM=="ptp", ATTR{clock_name}=="hyperv", SYMLINK += "ptp_hyperv"

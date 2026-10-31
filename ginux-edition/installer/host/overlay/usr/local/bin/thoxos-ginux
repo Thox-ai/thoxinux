@@ -1,0 +1,36 @@
+#!/bin/bash
+# Copyright (c) 2026 THOX.ai LLC. Licensed under the Apache License, Version 2.0.
+# thoxos-ginux: run ThoxOS on the Ginux kernel for the current user.
+#
+#   thoxos-ginux [shell]   ThoxOS shell domain (interactive; the default)
+#   thoxos-ginux system    full systemd boot of ThoxOS to its login prompt
+#   thoxos-ginux doctor    check QEMU, firmware and KVM for this user
+#
+# Each user gets an own Ginux VM and state directory (~/.local/state/thoxos-g),
+# so several desktop or SSH users can run ThoxOS at once (2 GiB RAM each).
+# Ctrl-A then X stops the VM. KVM is used when /dev/kvm is usable, otherwise
+# QEMU falls back to software emulation (slow, but it works).
+set -euo pipefail
+
+mode="${1:-shell}"
+case "$mode" in
+shell | system | doctor) ;;
+-h | --help) sed -n '3,12p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+*) echo "thoxos-ginux: unknown mode '$mode' (shell, system or doctor)" >&2; exit 2 ;;
+esac
+
+state="${XDG_STATE_HOME:-$HOME/.local/state}/thoxos-g"
+mkdir -p "$state"
+chmod 0700 "$state"
+export THOXOS_G_STATE_DIR="$state"
+
+if [[ ! -r /dev/kvm || ! -w /dev/kvm ]]; then
+    echo "thoxos-ginux: /dev/kvm is not usable by $(id -un); Ginux runs without KVM (slow)." >&2
+    echo "thoxos-ginux: on Azure pick a size with nested virtualization; locally add yourself to the kvm group." >&2
+fi
+
+case "$mode" in
+shell) exec /usr/bin/thoxos-g console --shell ;;
+system) exec /usr/bin/thoxos-g console ;;
+doctor) exec /usr/bin/thoxos-g doctor ;;
+esac

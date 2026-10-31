@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=ThoxOS dock
+Comment=Floating dock (Plank) with the ThoxOS dock theme
+Exec=plank
+OnlyShowIn=XFCE;
+NoDisplay=true

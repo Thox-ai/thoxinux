@@ -1,77 +1,82 @@
-# ThoxOS Ginux Azure Compute Edition
+# ThoxOS Ginux Edition
 
-[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE) [![Stage: Research candidate](https://img.shields.io/badge/stage-research_candidate-orange.svg)](docs/THOX_Ginux_Research_Guide.pdf)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE) [![Stage: Engineering preview](https://img.shields.io/badge/stage-engineering_preview-orange.svg)](docs/continuation/README.md)
 
-**Current Azure variant:** [Start here](docs/azure/START_HERE.md) · [PDF guide](docs/azure/THOX_Ginux_Azure_Deployment_Guide.pdf) · [HTML guide](docs/azure/html/THOX_Ginux_Azure_Deployment_Guide.html) · [Deployment commands](azure/README.md)
-
-Version `0.2.0-azure-candidate` builds the independent Ginux Rust kernel with THOX branding and startup fixes, packages the compiled EFI with verified provenance, and supplies a private Azure Compute deployment. Ubuntu 24.04 Gen2 remains the Azure host; QEMU TCG runs THOX Ginux inside that host. Docker/QEMU and external Linux SSD host workflows remain available.
+ThoxOS Ginux Edition combines a Linux host with Gregory Kurtzer's independent Rust Ginux kernel running in QEMU. Choose a complete ThoxOS Desktop, an interactive browser shell, or the headless kernel lifecycle research path below. The host supplies real hardware drivers; Ginux runs the tested userspace inside its VM.
 
 **Your AI. Your Data. Your Rules.™**
 
-## Readiness
+## Choose your experience
 
-The final customized THOX Azure EFI was built and passed 22 real local QEMU commands across a cold boot and a second boot on the same guest volume. Embedded `/sbin/init` starts, detached execution reports PID 100, stop/start/restart and failure recovery work, and clean shutdown and saved-configuration recovery pass. See [current validation](docs/azure/validation.json) and the [payload-bound lifecycle receipt](evidence/azure/lifecycle-results.json).
+| Experience | Start here | Demonstrated behavior | Remaining acceptance |
+| --- | --- | --- | --- |
+| **ThoxOS Desktop** | [Desktop guide](ginux-edition/docs/DESKTOP.md) · [Azure image guide](ginux-edition/docs/AZURE.md) | Debian 13/XFCE desktop, TXF 5.2 three looks, RDP, and a per-user Ginux shell, captured from a VHD in QEMU by the image team | Real Azure deployment, nested KVM, hosted inference and KnightHub physical boot |
+| **Browser or terminal shell** | [QuickStart](ginux-edition/docs/QUICKSTART.md) · [User guide](ginux-edition/docs/USER_GUIDE.md) | Docker systemd boot and interactive OCI ThoxOS shell; authenticated browser console with image-team captures and logs | Fresh Docker execution in this continuation environment; Windows writer and physical SSD acceptance |
+| **Headless kernel lifecycle** | [Azure Compute Start Here](docs/azure/START_HERE.md) · [Kernel module](module-ginux/README.md) | Patched EFI, embedded `/sbin/init`, detached status, restart, recovery, shutdown and saved configuration under QEMU TCG | Azure host deployment and broader Linux workload compatibility |
 
-The fixes reserve the complete Linux auxiliary-vector stack layout, separate local TCP lifetime from network-backed sockets, repair detached output and restart behavior, and align invalid mount-pointer fixtures with existing owned-namespace validation. These results cover the tested embedded minimal userspace workflow, not broad Linux application compatibility.
+The implementations have separate patch sets and binary identities. [The reconciliation record](docs/RECONCILIATION_2026-10-29.md) preserves both. [The continuation note](docs/continuation/README.md) distinguishes prior-team image validation from checks rerun for this source change.
 
-120 unit checks pass across the kernel stack (5), upstream libraries (53), module (17), SSD (15) and Azure (30) lanes; formatting and clippy with warnings denied pass. These are separate from the 22 actual guest commands. The Azure module also has locked-schema checks. The untouched strict Microsoft.Resources schema result fails; 13 checks pass only with two documented schema adaptations. [The schema receipt](azure/ARM_SCHEMA_VALIDATION.json) preserves both results. Azure authentication, server-side ARM validation, what-if, deployment, cloud bootstrap and Compute Gallery capture have **not run** here.
+![ThoxOS Desktop with TXF Slate and About, captured over RDP from a VHD booted in QEMU](ginux-edition/docs/previews/azure/rdp-slate-about.png)
 
-Docker execution, KVM, full Linux SSD host-image construction and physical KnightHub boot remain unrun. Fresh-media installation is blocked by the historical host-image/writer layout mismatch; no SSD was written. This remains an engineering candidate. The SSD host remains Linux. No graphical Ginux desktop, native Azure Ginux boot, Windows Azure Virtual Desktop session host, NVIDIA/CUDA, native USB/NVMe or deployed THOX AI/mesh/workspace services are claimed.
+*Authentic image-team capture: ThoxOS Desktop on Debian 13, reached over RDP in QEMU software emulation. The Ginux VM inside this Linux host desktop has a console. This is not an Azure deployment capture.*
 
-## Quick start
+![Console Pro desktop with ThoxOS running on Ginux in a terminal, captured in QEMU](ginux-edition/docs/previews/azure/rdp-console-pro-ginux.png)
 
-From this source checkout, build and launch with Docker Engine/Desktop and Compose v2:
+## Start with the interactive shell
+
+On an x86-64 Linux build host with Docker Engine/Desktop and the documented prerequisites:
 
 ```bash
-cd module-ginux
-docker compose build
-docker compose run --rm ginux
+cd ginux-edition
+make test
+make demo-image
+make selftest
+make demo-shell
 ```
 
-At `ginux>` enter `status`, `components`, `domain list` and `help`, then `shutdown` for a clean exit. The default profile uses one vCPU, 2 GiB RAM and an explicit 48-bit virtual IOMMU. Persistent guest storage is a sparse 64 GiB ordinary file. Docker execution is a prepared workflow and has not been validated in this session.
+Try `uname -srm`, `thox version` and `thox status`. `make demo` instead reaches the systemd login prompt; interactive use uses `make demo-shell` because the upstream getty path does not complete login. The Docker demo runs QEMU and keeps Docker's Linux host kernel.
 
-The accepted EFI is 12,507,648 bytes, SHA-256 `3ebcc9043ef9dc8b7e75abc15b113a5810c8d39c0ad47143476a41caed24d5ba`. Its build-receipt SHA-256 is `c4ac916269f053a689801af6a9214b6613090a35bd0a247eeb3e2d10d6ccf31b`.
+For a browser shell after building the image:
 
-Git contains source, patch series, build receipts, checksums and attribution. Compiled `GINUX.EFI` is deliberately excluded from Git. Build it locally or use the compiled payload in the separately delivered `THOX_Ginux_Azure_Release.zip`; a source-only ZIP is not the runtime release. The October 28 EFI SHA-256 `4fd25157b9f0348346a56fcb3e8d51d29414094f0f3aaa533ffddb52932e69e8` identifies the historical installation kit only.
+```bash
+docker run --rm -e THOXOS_G_MODE=shell -p 127.0.0.1:7681:7681 \
+  -v thoxos-g-state:/var/lib/thoxos-g/state thoxos-g/demo:0.1.0 web
+```
 
-See [module build instructions](module-ginux/README.md), [SSD host integration](ssd-module/README.md) and [fresh-media limits](ssd-module/docs/EXTERNAL_SSD.md). The postboot installer never repartitions, flashes, changes firmware or reboots.
+Open `http://127.0.0.1:7681` and use the generated credential in the container log. Keep the bind address on loopback. The [user guide](ginux-edition/docs/USER_GUIDE.md) covers configuration, persistence and troubleshooting.
 
-## Azure deployment and host image
+## Desktop and external-SSD images
 
-Follow [Azure Start Here](docs/azure/START_HERE.md) to package the built EFI and supply the explicit subscription, resource group, Ubuntu image version, private artifact container and administrator public key. The infrastructure uses `Standard_D4s_v5`, Trusted Launch, Secure Boot/vTPM, accelerated networking, no VM public IP and explicit outbound NAT. A user-assigned managed identity downloads the private SHA-256-pinned ZIP. Default acceptance access uses Azure Run Command; private SSH and billable Standard Bastion are explicit options.
+The image implementation is under `ginux-edition/`. Host images use version `0.2.0`; its Ginux guest/userspace is `0.1.0`. The image team's [validation record](ginux-edition/docs/VALIDATION.md) and [raw evidence](ginux-edition/docs/evidence/0.2.0/) document a cold kernel build, Docker checks, desktop VHD bench (23 checks), headless VHD bench (13 checks), and SSD image QEMU USB-disk bench (6 checks). These are separate from physical hardware tests and new continuation checks.
 
-The linked Microsoft master-image article describes Windows Azure Virtual Desktop. This project uses a Linux host image lifecycle. [Linux master-image capture](azure/CAPTURE_MASTER_IMAGE.md) is manual and follows live host acceptance. Deployment does not automatically generalize a VM, create an AVD pool or publish an image.
+Follow the [QuickStart](ginux-edition/docs/QUICKSTART.md) to build the Azure desktop/headless VHD or KnightHub SSD image. The 0.2.0 image fixes per-machine identity initialization found in the earlier 0.1.0 image. Physical writing needs a clearly identified spare target; the protected THOXOS/Vibe disk is not a default target. No physical SSD was selected or written in this continuation.
 
-## Historical research evidence
+The desktop VHD has an unsigned boot loader and uses **Standard** Azure security with restricted-source SSH/RDP and a public IP. The separate root `azure/` variant uses an Ubuntu 24.04 Gen2 marketplace host, **Trusted Launch**, private NIC, explicit NAT, container-scoped managed identity and SHA-256-pinned artifact. Preserve those differences. Both designs are Linux Azure VMs; neither is a Windows Azure Virtual Desktop session host. Azure deployment and Gallery publication remain unrun.
 
-The following artifacts describe the **October 28 predecessor**, including its embedded-domain panic. They remain unchanged for audit and do not describe the current patched payload.
+## Headless Azure Compute kernel
 
-- [Illustrated PDF guide](docs/THOX_Ginux_Research_Guide.pdf)
-- [HTML guide and authentic controller transcript](docs/html/THOX_Ginux_Research_Guide.html)
-- [Installation-kit QuickStart](START_HERE.md), applicable to the original kit containing the EFI
-- [Validation summary](evidence/VALIDATION_SUMMARY.json)
-- [Delivered-payload QEMU receipt](evidence/qemu-delivered-payload.json)
-- [Configuration recovery receipt](evidence/qemu-recovery.json)
-- [Pristine upstream failure comparison](evidence/qemu-upstream-domain.json)
+Version `0.2.0-azure-candidate` under root `module-ginux/` and `azure/` has a separate complete EFI: 12,507,648 bytes, SHA-256 `3ebcc9043ef9dc8b7e75abc15b113a5810c8d39c0ad47143476a41caed24d5ba`. Build-receipt SHA-256: `c4ac916269f053a689801af6a9214b6613090a35bd0a247eeb3e2d10d6ccf31b`.
 
-These guides distinguish actual CLI tests, fixtures, architecture illustrations and unrun hardware validation. No stable release has been issued.
+The [kernel lifecycle receipt](evidence/azure/lifecycle-results.json) records 22 actual QEMU commands across cold and recovered boots. [The Azure validation summary](evidence/azure/VALIDATION_SUMMARY.json) records the original 120 unit checks across kernel, upstream libraries, launchers, SSD and Azure tooling. These are payload-bound historical results, not a claim that every check was rerun for this continuation. The strict Microsoft.Resources schema failure and 13 adapted local checks remain separate in [the schema receipt](azure/ARM_SCHEMA_VALIDATION.json).
 
-## Source, ownership and license
+Git contains source, patches, receipts and attribution. Compiled EFI and full host images are separate payloads; a source ZIP is not an installation image. The root [Azure guide](docs/azure/START_HERE.md), [PDF](docs/azure/THOX_Ginux_Azure_Deployment_Guide.pdf), [HTML](docs/azure/html/THOX_Ginux_Azure_Deployment_Guide.html), [deployment commands](azure/README.md) and [manual capture procedure](azure/CAPTURE_MASTER_IMAGE.md) cover this path.
 
-Extracted from the research module in `ttracx/thoxos-desktop-debian` commit `1390b8a18334e91d03725b177c813760f4b38579`. The predecessor evidence and image-lane boundaries remain intact.
+## Evidence and boundaries
 
-Ginux upstream is `gmkurtzer/ginux` commit `36503bda2d87465765e1b94e65f9d100f27ed5be`, Apache-2.0. The kernel remains attributed to its upstream authors. THOX work includes the research/Azure banners, documented startup corrections, packaging, integration and documentation. Preserve component notices, patch provenance and source manifests. See [LICENSE](LICENSE), [NOTICE.md](NOTICE.md) and [module provenance](module-ginux/SOURCE_MANIFEST.json).
+[Recorded demos](docs/azure/media/README.md) include actual Ginux screen recordings and separately labeled synthetic user scenes. The image team's [desktop capture inventory](ginux-edition/docs/DESKTOP.md#screenshots) identifies splash, login, three looks and the working Ginux console. Current source-change evidence belongs to [the continuation record](docs/continuation/README.md).
 
-Copyright 2026 THOX.ai LLC for original THOX work. Private engineering repository; no public publication or physical acceptance is implied.
+No established MeshStack or ThoxWork integration runs inside this Ginux variant. Ginux and desktop captures do not prove distributed inference. Native Ginux Hyper-V boot, a Ginux graphical desktop, qualified NVIDIA/CUDA, native USB/NVMe drivers and general Linux application compatibility remain unestablished. Hosted-model relay tests use a local stub; real hosted inference remains unrun. No stable GitHub Release or physical acceptance is claimed.
 
-## Internal engineering continuity
+## Historical kit
 
-[Agent pickup](AGENTS.md) and [handoff](.agents/HANDOFF.md). Keep these instructions out of user installation archives.
+The [October 28 kit guide](START_HERE.md), [PDF](docs/THOX_Ginux_Research_Guide.pdf), [HTML](docs/html/THOX_Ginux_Research_Guide.html) and [original validation](evidence/VALIDATION_SUMMARY.json) remain predecessor evidence, including that payload's embedded-domain panic. The original `ssd-module/` installer copies files onto an existing accepted Linux host; it does not flash, repartition or reboot. Its image/writer mismatch is historical to that path and does not negate the separate image bench.
 
-## Governance and releases
+## Source, license and development
 
-This private engineering candidate is reviewed through source changes and evidence-bound acceptance. Public publication, production qualification and physical boot require their own actual review and evidence. The [releases page](https://github.com/ttracx/thoxos-ginux/releases) contains no stable release from this build; deployment downloads are supplied with separate exact payload receipts.
+Ginux upstream is `gmkurtzer/ginux` commit `36503bda2d87465765e1b94e65f9d100f27ed5be`, Apache-2.0. THOX work preserves upstream authorship and notices; see [LICENSE](LICENSE), [NOTICE.md](NOTICE.md), [module provenance](module-ginux/SOURCE_MANIFEST.json) and [image-lane notice](ginux-edition/NOTICE.md). The root research module originated in `ttracx/thoxos-desktop-debian` at `1390b8a18334e91d03725b177c813760f4b38579`.
 
-## Introduction and recorded demos
+Use [local CI](ginux-edition/docs/DEVELOPMENT.md#continuous-integration) for the image implementation; GitHub Actions is retired under the existing cost decision. Local checks do not establish Azure or physical acceptance. See [Releases](https://github.com/ttracx/thoxos-ginux/releases) for actual issued releases.
 
-See the [solution introduction, actual screen recordings and labeled user scenes](docs/azure/media/README.md), with [download provenance](docs/azure/media/DELIVERY_MANIFEST.json). The source-bound media package and five-email introduction were delivered privately to Tommy and Craig.
+Internal continuity: [agent entry](AGENTS.md), [continuation handoff](.agents/CONTINUATION_HANDOFF.md), [root handoff](.agents/HANDOFF.md) and [image-lane handoff](ginux-edition/.agents/HANDOFF.md). Keep agent instructions out of user installation packages and public output.
+
+Copyright 2026 THOX.ai LLC for original THOX work. Private engineering repository; public publication and production qualification are separate states.

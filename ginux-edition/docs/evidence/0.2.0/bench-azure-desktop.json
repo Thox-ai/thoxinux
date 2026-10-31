@@ -1,0 +1,114 @@
+{
+  "checks": {
+    "ssh reachable": {
+      "ok": true,
+      "detail": "after 43 s"
+    },
+    "boot splash captured": {
+      "ok": true,
+      "detail": "Plymouth ThoxOS splash on the VGA console"
+    },
+    "cloud-init finished": {
+      "ok": true,
+      "detail": "status: done\nextended_status: done\nboot_status_code: enabled-by-generator\nlast_update: Thu, 01 Jan 1970 00:00:40 +0000\ndetail: DataSourceNoCloud [seed=/dev/vdb]\nerrors: []\nrecoverable_errors: {}"
+    },
+    "systemd running": {
+      "ok": true,
+      "detail": "running"
+    },
+    "no failed units": {
+      "ok": true,
+      "detail": "running"
+    },
+    "identity": {
+      "ok": true,
+      "detail": "ThoxOS Desktop on Debian 13 (Trixie)|Ginux Edition\n6.12.113+deb13-cloud-amd64\ntarget=azure\ndesktop=desktop\nhost_version=0.2.0\nguest_version=0.1.0"
+    },
+    "desktop and runtime services active": {
+      "ok": true,
+      "detail": "active\nactive\nactive\nactive\nactive\ninactive\nactive"
+    },
+    "admin groups": {
+      "ok": true,
+      "detail": "uid=1001(thox) gid=1001(thox) groups=1001(thox),4(adm),27(sudo),993(kvm),999(systemd-journal)"
+    },
+    "root grown to the disk": {
+      "ok": true,
+      "detail": "20498055168"
+    },
+    "per-machine keys and machine-id": {
+      "ok": true,
+      "detail": "a4d8f21f1eb74180a11b007fe5c47d4c (VM UUID a4d8f21f-1eb7-4180-a11b-007fe5c47d4c; generated at first boot)"
+    },
+    "three looks installed": {
+      "ok": true,
+      "detail": "console-pro  Console Pro  Developer layout: left dock, TXF mono chrome with a green close glyph\n  porcelain    Porcelain    Light appearance: porcelain surfaces, TXF green line-work\n* slate        TXF Slate    Dark-first default: top bar, floating dock, authentic traffic lights"
+    },
+    "launcher icons in the icon cache": {
+      "ok": true,
+      "detail": "thoxos-ginux\nthoxos-ask\nthoxos-looks\nthoxos-about\nthoxos-system\nthoxos-doctor"
+    },
+    "AI relay off until configured": {
+      "ok": true,
+      "detail": "enabled\ninactive\n<txt><span background='#27272A' foreground='#A1A1AA' font_family='JetBrains Mono' weight='bold' size='small'> AI OFF </span></txt><tool>THOX AI: no model endpoint configured (see /etc/thoxos/ai-relay.env)</tool>"
+    },
+    "Ginux doctor for the administrator": {
+      "ok": true,
+      "detail": "ok   qemu                   11.1.2\nok   ovmf                   /usr/share/OVMF/OVMF_CODE_4M.fd + /usr/share/OVMF/OVMF_VARS_4M.fd\nwarn kvm                    not usable; TCG works but boots far slower\nok   ginux efi              /usr/lib/thoxos-g/GINUX.EFI\nok   local registry         127.0.0.1:443\nok   dns forwarder          127.0.0.1:53 (tcp probe)\nok   state dir              /home/thox/.local/state/thoxos-g\nthoxos-ginux: /dev/kvm is not usable by thox; Ginux runs without KVM (slow).\nthoxos-ginux: on Azure pick a size with nested virtualization; locally add yourself to the kvm group."
+    },
+    "Azure agent settings and Hyper-V initrd": {
+      "ok": true,
+      "detail": "Provisioning.Agent=cloud-init\nResourceDisk.Format=n\nResourceDisk.EnableSwap=n\n3"
+    },
+    "console greeter (LightDM)": {
+      "ok": true,
+      "detail": "lightdm-gtk-greeter on seat0"
+    },
+    "rdp session (slate)": {
+      "ok": true,
+      "detail": "xfce4-panel and plank running"
+    },
+    "look applied (slate)": {
+      "ok": true,
+      "detail": "ThoxOS-Slate"
+    },
+    "rdp session (porcelain)": {
+      "ok": true,
+      "detail": "xfce4-panel and plank running"
+    },
+    "look applied (porcelain)": {
+      "ok": true,
+      "detail": "ThoxOS-Porcelain"
+    },
+    "rdp session (console-pro)": {
+      "ok": true,
+      "detail": "xfce4-panel and plank running"
+    },
+    "look applied (console-pro)": {
+      "ok": true,
+      "detail": "ThoxOS-ConsolePro"
+    },
+    "Ginux VM running for the desktop user": {
+      "ok": true,
+      "detail": "2759 qemu-system-x86_64 -machine q35,accel=tcg -cpu max,+smep,+smap,+umip -smp 1 -m 2G -display none -monitor none -chardev stdio,id=thoxos-console,signal=off -serial chardev:thoxos-console -no-reboot -net none -rtc base=utc -device intel-iommu,intremap=off,aw-bits=48 -device virtio-blk-pci,drive=ginux-volume,disable-legacy=on,iommu_platform=on,serial=ginux-volume -netdev user,id=ginux-net,restrict=off -device virtio-net-pci,netdev=ginux-net,disable-legacy=on,iommu_platform=on,mac=52:54:00:12:34:56,addr=0x3 -drive if=none,id=ginux-volume,format=raw,file=/home/thox/.local/state/thoxos-g/volume.raw -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd -drive if=pflash,format=raw,file=/home/thox/.local/state/thoxos-g/ovmf-vars.fd -drive if=none,id=ginux-esp,format=raw,file=fat:rw:/home/thox/.local/state/thoxos-g/esp -device ide-hd,drive=ginux-esp,bootindex=1"
+    }
+  },
+  "captures": [
+    "boot-splash.png",
+    "lightdm-greeter.png",
+    "rdp-login.png",
+    "rdp-slate-desktop.png",
+    "rdp-slate-about.png",
+    "rdp-porcelain-desktop.png",
+    "rdp-porcelain-files.png",
+    "rdp-console-pro-desktop.png",
+    "rdp-console-pro-ginux-boot.png",
+    "rdp-console-pro-ginux.png"
+  ],
+  "notes": [
+    "walinuxagent and chrony outside Azure: ['inactive', 'active']",
+    "machine-id a4d8f21f1eb74180a11b007fe5c47d4c, VM UUID a4d8f21f-1eb7-4180-a11b-007fe5c47d4c"
+  ],
+  "elapsed_seconds": 1243,
+  "serial_tail": "  |\n[   40.455990] cloud-init[603]: |  .o=*+*B. o..   |\n\u001b[!p\u001b]104\u0007\u001b[?7h[   40.462832] cloud-init[603]: +----[SHA256]-----+\n[   40.463542] cloud-init[603]: Generating public/private ecdsa key pair.\n\u001b[6n\u001b[32766;32766H\u001b[6n[   40.469175] cloud-init[603]: Your identification has been saved in /etc/ssh/ssh_host_ecdsa_key\n[   40.470055] cloud-init[603]: Your public key has been saved in /etc/ssh/ssh_host_ecdsa_key.pub\n[   40.470696] cloud-init[603]: The key fingerprint is:\n[   40.471294] cloud-init[603]: SHA256:xUUcLzVrW7QVjpD9w+5X0rjb3skvSp1FUxK++7BcOFQ root@thoxos-e2e\n[   40.471896] cloud-init[603]: The key's randomart image is:\n[   40.477072] cloud-init[603]: +---[ECDSA 256]---+\n[   40.478005] cloud-init[603]: |           +*.=o=|\n[   40.478651] cloud-init[603]: |         . oo=o=+|\n[   40.479243] cloud-init[603]: |          o ..B+E|\n[   40.479842] cloud-init[603]: |         .   o X.|\n[   40.486172] cloud-init[603]: |        S     =oo|\n[   40.486792] cloud-init[603]: |             oo*o|\n[   40.487559] cloud-init[603]: |            . Ooo|\n[   40.489239] cloud-init[603]: |           . .+O+|\n[   40.489959] cloud-init[603]: |            ..+*O|\n[   40.490468] cloud-init[603]: +----[SHA256]-----+\n[   40.490978] cloud-init[603]: Generating public/private ed25519 key pair.\n[   40.491915] cloud-init[603]: Your identification has been saved in /etc/ssh/ssh_host_ed25519_key\n[   40.496988] cloud-init[603]: Your public key has been saved in /etc/ssh/ssh_host_ed25519_key.pub\n[   40.497721] cloud-init[603]: The key fingerprint is:\n[   40.498221] cloud-init[603]: SHA256:eiK08l0zqQZksLEjkZbheQC6hmfGi9cySTEgJUGf/yE root@thoxos-e2e\n[   40.499038] cloud-init[603]: The key's randomart image is:\n[   40.499722] cloud-init[603]: +--[ED25519 256]--+\n[   40.506266] cloud-init[603]: |OB+              |\n[   40.507221] cloud-init[603]: |*=* .            |\n[   40.507831] cloud-init[603]: |o+oO             |\n[   40.510498] cloud-init[603]: |oo=o+            |\n[   40.511373] cloud-init[603]: |oo*+.E .S        |\n[   40.512093] cloud-init[603]: |.* =..o...       |\n[   40.512614] cloud-init[603]: |. B +.o.*        |\n[   40.513121] cloud-init[603]: | . = o.= o       |\n[   40.513704] cloud-init[603]: |    ..o          |\n[   40.514295] cloud-init[603]: +----[SHA256]-----+\n\u001b[!p\u001b]104\u0007\u001b[?7h\u001b[6n\u001b[32766;32766H\u001b[6n\n\nThoxOS Desktop on Debian 13 (Trixie), Ginux Edition thoxos-e2e ttyS0\n\nthoxos-e2e login: [  811.497627] hrtimer: interrupt took 26998594 ns\n\u001b[!p\u001b]104\u0007\u001b[?7h\u001b[6n\u001b[32766;32766H\u001b[6n[ 1238.188218] systemd-shutdown[1]: Syncing filesystems and block devices.\n[ 1238.221152] systemd-shutdown[1]: Sending SIGTERM to remaining processes...\n[ 1238.265751] systemd-journald[313]: Received SIGTERM from PID 1 (systemd-shutdow).\n[ 1238.342043] systemd-shutdown[1]: Sending SIGKILL to remaining processes...\n[ 1238.372050] systemd-shutdown[1]: Unmounting file systems.\n[ 1238.380027] (sd-umount)[3029]: Unmounting '/run/credentials/systemd-journald.service'.\n[ 1238.388986] (sd-remount)[3030]: Remounting '/' read-only with options 'errors=remount-ro'.\n[ 1238.426033] EXT4-fs (vda2): re-mounted 764f8c30-4103-4d66-9cb4-c4790be49654 ro.\n[ 1238.451232] systemd-shutdown[1]: All filesystems unmounted.\n[ 1238.451484] systemd-shutdown[1]: Deactivating swaps.\n[ 1238.452189] systemd-shutdown[1]: All swaps deactivated.\n[ 1238.452361] systemd-shutdown[1]: Detaching loop devices.\n[ 1238.465820] systemd-shutdown[1]: All loop devices detached.\n[ 1238.466028] systemd-shutdown[1]: Stopping MD devices.\n[ 1238.466830] systemd-shutdown[1]: All MD devices stopped.\n[ 1238.466989] systemd-shutdown[1]: Detaching DM devices.\n[ 1238.467555] systemd-shutdown[1]: All DM devices detached.\n[ 1238.467783] systemd-shutdown[1]: All filesystems, swaps, loop devices, MD devices and DM devices detached.\n[ 1238.471295] systemd-shutdown[1]: Syncing filesystems and block devices.\n[ 1238.475190] systemd-shutdown[1]: Powering off.\n[ 1238.482807] ACPI: PM: Preparing to enter system sleep state S5\n[ 1238.485326] reboot: Power down\n"
+}

@@ -1,37 +1,92 @@
-# ThoxOS Ginux Edition KnightHub host root filesystem.
+# ThoxOS Ginux Edition host root file system.
 #
-# A minimal Debian 13 host that boots from the external SSD on real hardware
-# (NVMe, USB, NIC, GPU stay with the Linux kernel) and runs the Ginux kernel
-# under KVM with the validated QEMU profile, console on tty1. Ginux itself has
-# no NVMe, USB or physical NIC drivers yet, so this hosted path is the working
-# way to boot ThoxOS Ginux Edition on KnightHub.
+# One Debian 13 host definition, two axes:
+#   TARGET   knighthub  external SSD on KnightHub (generic kernel, firmware, tty1 console)
+#            azure      Azure VM image (cloud kernel, Hyper-V drivers in the initrd,
+#                       cloud-init + Azure Linux Agent, serial console, SSH)
+#   DESKTOP  headless   console only (ThoxOS on Ginux on tty1)
+#            desktop    ThoxOS Desktop (TXF 5.2 looks on XFCE, LightDM, xrdp)
 #
-# Built by installer/build-ssd-image.sh; the result is exported, not run.
+# Ginux itself drives only QEMU virtio devices, so the host owns the hardware and
+# runs Ginux under KVM with the validated QEMU profile. The ThoxOS runtime
+# (GINUX.EFI, seeded registry, TLS leaf, thoxos-g) comes from the demo image.
+#
+# Built by installer/build-host-image.sh from a staged context; the result is
+# exported into a disk image, never run as a container service.
 
 ARG DEBIAN_IMAGE=docker.io/library/debian:trixie@sha256:2dc419c6d7fe3dad0a2f9fd469c34cc90b0f9ba642d8fde837fe3d7d34a0e7f1
 ARG DEMO_IMAGE=thoxos-g/demo:0.1.0
+ARG DESKTOP=headless
 
 FROM ${DEMO_IMAGE} AS demo
 
+# ------------------------------------------------------------ desktop assets
+# Themes, wallpapers, splash, dock and terminal palettes are generated from the
+# TXF desktop tokens here, so the host image never carries the generator's
+# build dependencies.
+FROM ${DEBIAN_IMAGE} AS desktop-gen-desktop
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends python3 python3-pil libgtk-3-0t64 libglib2.0-bin \
+      fonts-inter fonts-jetbrains-mono papirus-icon-theme \
+ && rm -rf /var/lib/apt/lists/*
+COPY desktop/ /src/desktop/
+RUN set -eu; \
+    mkdir -p /tmp/adwaita /gen/usr/local/bin; \
+    lib="$(readlink -f /usr/lib/x86_64-linux-gnu/libgtk-3.so.0)"; \
+    for css in gtk-contained.css gtk-contained-dark.css; do \
+        gresource extract "$lib" "/org/gtk/libgtk/theme/Adwaita/$css" >"/tmp/adwaita/$css"; \
+        test -s "/tmp/adwaita/$css"; \
+    done; \
+    python3 /src/desktop/generator/txf_desktop_gen.py \
+        --tokens /src/desktop/tokens/txf-tokens.json --adwaita-dir /tmp/adwaita \
+        --fonts-dir /usr/share/fonts --papirus-dir /usr/share/icons --out /gen; \
+    cp -a /src/desktop/overlay/. /gen/; \
+    install -m 0755 /src/desktop/bin/* /gen/usr/local/bin/
+
+FROM ${DEBIAN_IMAGE} AS desktop-gen-headless
+RUN mkdir -p /gen
+
+FROM desktop-gen-${DESKTOP} AS desktop-assets
+
+# ---------------------------------------------------------------------- host
 FROM ${DEBIAN_IMAGE} AS host
+ARG TARGET=knighthub
+ARG DESKTOP=headless
 ARG THOXOS_VERSION=0.1.0
+ARG HOST_VERSION=0.2.0
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Kernel, boot loader, systemd and firmware for common desktop NICs and GPUs.
-# initramfs-tools with MODULES=most keeps USB storage (uas, usb-storage, xhci)
-# in the initrd so the root file system on the external SSD is found.
-RUN echo "deb http://deb.debian.org/debian trixie non-free-firmware" >/etc/apt/sources.list.d/firmware.list \
- && echo "deb http://deb.debian.org/debian trixie-backports main" >/etc/apt/sources.list.d/backports.list \
- && apt-get update \
- && apt-get install -y --no-install-recommends \
-      systemd systemd-sysv systemd-resolved systemd-timesyncd dbus udev kmod \
-      linux-image-amd64 initramfs-tools systemd-boot-efi \
-      firmware-realtek firmware-misc-nonfree firmware-intel-misc \
-      ovmf python3 dnsmasq-base ca-certificates util-linux passwd procps \
-      sudo less nano iproute2 iputils-ping cloud-guest-utils e2fsprogs dosfstools \
-      kbd console-setup locales \
- && apt-get install -y --no-install-recommends -t trixie-backports qemu-system-x86 \
- && rm -rf /var/lib/apt/lists/*
+# Packages per target and desktop choice. initramfs-tools with MODULES=most
+# keeps USB storage in the KnightHub initrd; the Azure initrd gets the Hyper-V
+# storage and network drivers Azure requires (hv_vmbus, hv_storvsc, hv_netvsc).
+RUN set -eu; \
+    case "$TARGET" in knighthub|azure) ;; *) echo "TARGET must be knighthub or azure" >&2; exit 2 ;; esac; \
+    case "$DESKTOP" in headless|desktop) ;; *) echo "DESKTOP must be headless or desktop" >&2; exit 2 ;; esac; \
+    echo "deb http://deb.debian.org/debian trixie non-free-firmware" >/etc/apt/sources.list.d/firmware.list; \
+    echo "deb http://deb.debian.org/debian trixie-backports main" >/etc/apt/sources.list.d/backports.list; \
+    apt-get update; \
+    common="systemd systemd-sysv systemd-resolved dbus udev kmod initramfs-tools systemd-boot-efi \
+        ovmf python3 dnsmasq-base ca-certificates util-linux passwd procps sudo less nano \
+        iproute2 iputils-ping cloud-guest-utils e2fsprogs dosfstools kbd console-setup locales"; \
+    if [ "$TARGET" = azure ]; then \
+        target="linux-image-cloud-amd64 cloud-init waagent hyperv-daemons openssh-server chrony gdisk netbase"; \
+    else \
+        target="linux-image-amd64 systemd-timesyncd firmware-realtek firmware-misc-nonfree firmware-intel-misc"; \
+    fi; \
+    desktop=""; \
+    if [ "$DESKTOP" = desktop ]; then \
+        desktop="xfce4 xfce4-panel xfwm4 xfdesktop4 xfce4-session xfce4-settings xfconf thunar xfce4-terminal \
+            xfce4-whiskermenu-plugin xfce4-appmenu-plugin appmenu-gtk3-module xfce4-genmon-plugin xfce4-notifyd \
+            plank lightdm lightdm-gtk-greeter xserver-xorg-core xserver-xorg-input-libinput xserver-xorg-video-fbdev \
+            xrdp xorgxrdp xauth x11-xserver-utils dbus-x11 dconf-cli dconf-gsettings-backend polkitd \
+            fonts-inter fonts-jetbrains-mono papirus-icon-theme adwaita-icon-theme librsvg2-common \
+            plymouth plymouth-themes firefox-esr fastfetch mousepad ristretto exo-utils xdg-utils xdg-user-dirs ssl-cert"; \
+    fi; \
+    # shellcheck disable=SC2086
+    apt-get install -y --no-install-recommends $common $target $desktop; \
+    apt-get install -y --no-install-recommends -t trixie-backports qemu-system-x86; \
+    rm -rf /var/lib/apt/lists/*
 
 # ThoxOS runtime from the demo image: one source of truth for GINUX.EFI, the
 # seeded registry, its TLS leaf, and the thoxos-g driver.
@@ -43,40 +98,18 @@ COPY --from=demo /var/lib/thoxos-g/registry /var/lib/thoxos-g/registry
 COPY --from=demo /etc/thoxos-g /etc/thoxos-g
 COPY --from=demo /usr/share/thoxos-g /usr/share/thoxos-g
 
-# Host overlay: systemd units, network, kernel hooks, configuration.
+# Host overlay (all targets), then the target and desktop layers.
 COPY overlay/ /
+COPY overlay-azure/ /tmp/thoxos-overlay-azure/
+COPY --from=desktop-assets /gen/ /tmp/thoxos-overlay-desktop/
+COPY thox /usr/local/bin/thox
+COPY thox_ai_relay.py /usr/lib/thoxos-g/thox_ai_relay.py
 
-# The admin password arrives as the BuildKit secret "admin_password" so it never
-# lands in image history. Without it the account gets "thoxos", expired: the
-# first login must set a new password.
-RUN --mount=type=secret,id=admin_password,required=false set -eu; \
-    admin_password=thoxos; \
-    if [ -s /run/secrets/admin_password ]; then admin_password="$(head -n1 /run/secrets/admin_password)"; fi; \
-    echo 'MODULES=most' >/etc/initramfs-tools/conf.d/thoxos-g-modules; \
-    printf '%s\n' uas usb_storage xhci_pci xhci_hcd nvme ext4 vfat >>/etc/initramfs-tools/modules; \
-    kernel="$(ls /lib/modules | sort -V | tail -1)"; \
-    update-initramfs -c -k "$kernel" >/dev/null 2>&1 || update-initramfs -u -k "$kernel"; \
-    test -s "/boot/initrd.img-$kernel"; \
-    test -s /usr/lib/systemd/boot/efi/systemd-bootx64.efi; \
-    # /etc/hostname, /etc/hosts and /etc/resolv.conf are bind mounts during a
-    # Docker build; installer/assemble-disk.sh writes them into the disk image.
-    sed -i 's/^# *en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen && locale-gen >/dev/null; \
-    useradd --system --no-create-home --shell /usr/sbin/nologin thoxos-registry; \
-    useradd --create-home --shell /bin/bash --groups kvm thoxos; \
-    useradd --create-home --shell /bin/bash --groups sudo,kvm,adm,systemd-journal thox; \
-    printf 'thox:%s\n' "$admin_password" | chpasswd; \
-    chage -d 0 thox; \
-    passwd -l root >/dev/null; \
-    chown thoxos-registry:thoxos-registry /etc/thoxos-g/tls/registry.key; \
-    chmod 0600 /etc/thoxos-g/tls/registry.key; \
-    mkdir -p /var/lib/thoxos-g/state /boot/efi; \
-    chown thoxos:thoxos /var/lib/thoxos-g/state; \
-    chmod 0750 /var/lib/thoxos-g/state; \
-    chmod 0755 /usr/lib/thoxos-g/*.sh /etc/kernel/postinst.d/zz-thoxos-g-esp /etc/initramfs/post-update.d/zz-thoxos-g-esp; \
-    systemctl enable systemd-networkd systemd-resolved systemd-timesyncd \
-        thoxos-g-dns.service thoxos-g-registry.service thoxos-g-console.service \
-        thoxos-g-growroot.service >/dev/null; \
-    systemctl mask getty@tty1.service >/dev/null; \
-    systemctl set-default multi-user.target >/dev/null; \
-    printf '%s\n' "$THOXOS_VERSION" >/usr/share/thoxos-g/HOST_VERSION; \
-    cd /usr/lib/thoxos-g && sha256sum -c GINUX.EFI.sha256
+# The KnightHub admin password arrives as the BuildKit secret "admin_password"
+# so it never lands in image history. Without it the account gets "thoxos",
+# expired: the first login must set a new password. Azure images carry no
+# login account at all: cloud-init creates the administrator at deployment.
+COPY configure-host.sh /usr/lib/thoxos-g/configure-host.sh
+RUN --mount=type=secret,id=admin_password,required=false \
+    TARGET="$TARGET" DESKTOP="$DESKTOP" HOST_VERSION="$HOST_VERSION" THOXOS_VERSION="$THOXOS_VERSION" \
+    bash /usr/lib/thoxos-g/configure-host.sh

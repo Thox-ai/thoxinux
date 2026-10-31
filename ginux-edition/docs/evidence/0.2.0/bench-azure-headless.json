@@ -1,0 +1,65 @@
+{
+  "checks": {
+    "ssh reachable": {
+      "ok": true,
+      "detail": "after 40 s"
+    },
+    "cloud-init finished": {
+      "ok": true,
+      "detail": "status: done\nextended_status: done\nboot_status_code: enabled-by-generator\nlast_update: Thu, 01 Jan 1970 00:00:32 +0000\ndetail: DataSourceNoCloud [seed=/dev/vdb]\nerrors: []\nrecoverable_errors: {}"
+    },
+    "systemd running": {
+      "ok": true,
+      "detail": "running"
+    },
+    "no failed units": {
+      "ok": true,
+      "detail": "running"
+    },
+    "identity": {
+      "ok": true,
+      "detail": "Debian GNU/Linux 13 (trixie)|\n6.12.113+deb13-cloud-amd64\ntarget=azure\ndesktop=headless\nhost_version=0.2.0\nguest_version=0.1.0"
+    },
+    "runtime services active": {
+      "ok": true,
+      "detail": "active\nactive\nactive\ninactive\nactive"
+    },
+    "admin groups": {
+      "ok": true,
+      "detail": "uid=1001(thox) gid=1001(thox) groups=1001(thox),4(adm),27(sudo),993(kvm),999(systemd-journal)"
+    },
+    "root grown to the disk": {
+      "ok": true,
+      "detail": "20498055168"
+    },
+    "per-machine keys and machine-id": {
+      "ok": true,
+      "detail": "4b8c92a8946749548d0bae464382546c (VM UUID 4b8c92a8-9467-4954-8d0b-ae464382546c; generated at first boot)"
+    },
+    "AI relay off until configured": {
+      "ok": true,
+      "detail": "enabled\ninactive"
+    },
+    "Ginux doctor for the administrator": {
+      "ok": true,
+      "detail": "ok   qemu                   11.1.2\nok   ovmf                   /usr/share/OVMF/OVMF_CODE_4M.fd + /usr/share/OVMF/OVMF_VARS_4M.fd\nwarn kvm                    not usable; TCG works but boots far slower\nok   ginux efi              /usr/lib/thoxos-g/GINUX.EFI\nok   local registry         127.0.0.1:443\nok   dns forwarder          127.0.0.1:53 (tcp probe)\nok   state dir              /home/thox/.local/state/thoxos-g\nthoxos-ginux: /dev/kvm is not usable by thox; Ginux runs without KVM (slow).\nthoxos-ginux: on Azure pick a size with nested virtualization; locally add yourself to the kvm group."
+    },
+    "Azure agent settings and Hyper-V initrd": {
+      "ok": true,
+      "detail": "Provisioning.Agent=cloud-init\nResourceDisk.Format=n\nResourceDisk.EnableSwap=n\n3"
+    },
+    "ThoxOS on Ginux boots for the administrator": {
+      "ok": true,
+      "detail": "in 853 s; rc=0\nthoxos-g: reached 'Welcome to ThoxOS'\nthoxos-g: reached 'login:'"
+    }
+  },
+  "captures": [
+    "headless-console.png"
+  ],
+  "notes": [
+    "walinuxagent and chrony outside Azure: ['inactive', 'active']",
+    "machine-id 4b8c92a8946749548d0bae464382546c, VM UUID 4b8c92a8-9467-4954-8d0b-ae464382546c"
+  ],
+  "elapsed_seconds": 919,
+  "serial_tail": "md-tmpfiles-setup.ser\u2026\u001b[0mreate System Files and Directories.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39msystemd-resolved.service\u001b[0m - Network Name Resolution.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39msystemd-networkd.service\u001b[0m - Network Configuration.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39msystemd-binfmt.service\u001b[0m - Set Up Additional Binary Formats.\n\n[\u001b[0;32m  OK  \u001b[0m] Unset automount \u001b[0;1;39mproc-sys-fs-binfmt\u2026\u001b[0mormats File System Automount Point.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped target \u001b[0;1;39mlocal-fs.target\u001b[0m - Local File Systems.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped target \u001b[0;1;39mlocal-fs-pre.target\u001b[0m\u2026Preparation for Local File Systems.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped target \u001b[0;1;39mnetwork-pre.target\u001b[0m - Preparation for Network.\n\n[\u001b[0;32m  OK  \u001b[0m] Closed \u001b[0;1;39msystemd-networkd.socket\u001b[0m - Network Service Netlink Socket.\n\n         Unmounting \u001b[0;1;39mrun-lock.mount\u001b[0m - Legacy Locks Directory /run/lock...\n\n         Unmounting \u001b[0;1;39mtmp.mount\u001b[0m - Temporary Directory /tmp...\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39mcloud-init-local.service\u001b[0m -\u2026ud-init: Local Stage (pre-network).\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39msystemd-network-generator.\u2026\u001b[0mork Units from Kernel Command Line.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39msystemd-sysctl.service\u001b[0m - Apply Kernel Variables.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39msystemd-modules-load.service\u001b[0m - Load Kernel Modules.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39msystemd-tmpfiles-setup-dev\u2026\u001b[0mCreate Static Device Nodes in /dev.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39msystemd-sysusers.service\u001b[0m - Create System Users.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39msystemd-remount-fs.service\u001b[0m\u2026mount Root and Kernel File Systems.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped \u001b[0;1;39msystemd-tmpfiles-setup-dev\u2026\u001b[0mic Device Nodes in /dev gracefully.\n\n[\u001b[0;32m  OK  \u001b[0m] Unmounted \u001b[0;1;39mrun-lock.mount\u001b[0m - Legacy Locks Directory /run/lock.\n\n[\u001b[0;32m  OK  \u001b[0m] Unmounted \u001b[0;1;39mtmp.mount\u001b[0m - Temporary Directory /tmp.\n\n[\u001b[0;32m  OK  \u001b[0m] Stopped target \u001b[0;1;39mswap.target\u001b[0m - Swaps.\n\n[\u001b[0;32m  OK  \u001b[0m] Reached target \u001b[0;1;39mshutdown.target\u001b[0m - System Shutdown.\n\n[\u001b[0;32m  OK  \u001b[0m] Reached target \u001b[0;1;39mumount.target\u001b[0m - Unmount All Filesystems.\n\n[\u001b[0;32m  OK  \u001b[0m] Reached target \u001b[0;1;39mfinal.target\u001b[0m - Late Shutdown Services.\n\n[\u001b[0;32m  OK  \u001b[0m] Finished \u001b[0;1;39msystemd-poweroff.service\u001b[0m - System Power Off.\n\n[\u001b[0;32m  OK  \u001b[0m] Reached target \u001b[0;1;39mpoweroff.target\u001b[0m - System Power Off.\n\n[  913.842978] systemd-shutdown[1]: Syncing filesystems and block devices.\n[  913.879747] systemd-shutdown[1]: Sending SIGTERM to remaining processes...\n[  913.914718] systemd-journald[306]: Received SIGTERM from PID 1 (systemd-shutdow).\n[  913.964404] systemd-shutdown[1]: Sending SIGKILL to remaining processes...\n[  913.994627] systemd-shutdown[1]: Unmounting file systems.\n[  914.003471] (sd-umount)[1149]: Unmounting '/run/credentials/systemd-journald.service'.\n[  914.012416] (sd-remount)[1150]: Remounting '/' read-only with options 'errors=remount-ro'.\n[  914.050667] EXT4-fs (vda2): re-mounted ca5f20be-b971-4602-91e0-65a00af5cade ro.\n[  914.067595] systemd-shutdown[1]: All filesystems unmounted.\n[  914.069434] systemd-shutdown[1]: Deactivating swaps.\n[  914.071666] systemd-shutdown[1]: All swaps deactivated.\n[  914.073256] systemd-shutdown[1]: Detaching loop devices.\n[  914.085320] systemd-shutdown[1]: All loop devices detached.\n[  914.087027] systemd-shutdown[1]: Stopping MD devices.\n[  914.089282] systemd-shutdown[1]: All MD devices stopped.\n[  914.090880] systemd-shutdown[1]: Detaching DM devices.\n[  914.092844] systemd-shutdown[1]: All DM devices detached.\n[  914.094704] systemd-shutdown[1]: All filesystems, swaps, loop devices, MD devices and DM devices detached.\n[  914.100486] systemd-shutdown[1]: Syncing filesystems and block devices.\n[  914.104075] systemd-shutdown[1]: Powering off.\n[  914.110326] ACPI: PM: Preparing to enter system sleep state S5\n[  914.114505] reboot: Power down\n"
+}

@@ -1,0 +1,26 @@
+azure-boot [    0.0s] starting QEMU: qemu-system-x86_64 -machine q35 -accel tcg -cpu max,-svm,-vmx -smp 2 -m 4096 -uuid a4d8f21f-1eb7-4180-a11b-007fe5c47d4c -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd -drive if=pflash,format=raw,file=/out/ovmf-vars.fd -drive file=/out/azure-test.qcow2,format=qcow2,if=virtio -drive file=/out/seed.img,format=raw,if=virtio,readonly=on -netdev user,id=n0,hostfwd=tcp:127.0.0.1:2222-:22,hostfwd=tcp:127.0.0.1:3389-:3389 -device virtio-net-pci,netdev=n0 -vga std -display none -serial file:/out/serial.log -monitor unix:/out/monitor.sock,server,nowait
+azure-boot [   43.4s] ok   ssh reachable: after 43 s
+azure-boot [   43.4s] ok   boot splash captured: Plymouth ThoxOS splash on the VGA console
+azure-boot [   48.4s] ok   cloud-init finished: status: done
+azure-boot [   49.6s] ok   systemd running: running
+azure-boot [   49.6s] ok   no failed units: running
+azure-boot [   50.6s] ok   identity: ThoxOS Desktop on Debian 13 (Trixie)|Ginux Edition
+azure-boot [   52.3s] ok   desktop and runtime services active: active
+azure-boot [   53.3s] ok   admin groups: uid=1001(thox) gid=1001(thox) groups=1001(thox),4(adm),27(sudo),993(kvm),999(systemd-journal)
+azure-boot [   54.3s] ok   root grown to the disk: 20498055168
+azure-boot [   55.5s] ok   per-machine keys and machine-id: a4d8f21f1eb74180a11b007fe5c47d4c (VM UUID a4d8f21f-1eb7-4180-a11b-007fe5c47d4c; generated at first boot)
+azure-boot [   57.1s] ok   three looks installed: console-pro  Console Pro  Developer layout: left dock, TXF mono chrome with a green close glyph
+azure-boot [   58.2s] ok   launcher icons in the icon cache: thoxos-ginux
+azure-boot [   59.7s] ok   AI relay off until configured: enabled
+azure-boot [   61.7s] ok   Ginux doctor for the administrator: ok   qemu                   11.1.2
+azure-boot [   64.8s] ok   Azure agent settings and Hyper-V initrd: Provisioning.Agent=cloud-init
+azure-boot [   66.0s] ok   console greeter (LightDM): lightdm-gtk-greeter on seat0
+azure-boot [  140.1s] ok   rdp session (slate): xfce4-panel and plank running
+azure-boot [  167.4s] ok   look applied (slate): ThoxOS-Slate
+azure-boot [  216.7s] ok   rdp session (porcelain): xfce4-panel and plank running
+azure-boot [  243.9s] ok   look applied (porcelain): ThoxOS-Porcelain
+azure-boot [  292.9s] ok   rdp session (console-pro): xfce4-panel and plank running
+azure-boot [  320.1s] ok   look applied (console-pro): ThoxOS-ConsolePro
+azure-boot [  321.2s] waiting 600 s for ThoxOS on Ginux (nested software emulation)
+azure-boot [ 1224.3s] ok   Ginux VM running for the desktop user: 2759 qemu-system-x86_64 -machine q35,accel=tcg -cpu max,+smep,+smap,+umip -smp 1 -m 2G -display none -monitor none -chardev stdio,id=thoxos-console,signal=off -serial chardev:thoxos-console -no-reboot -net none -rtc base=utc -device intel-iommu,intremap=off,aw-bits=48 -device virtio-blk-pci,drive=ginux-volume,disable-legacy=on,iommu_platform=on,serial=ginux-volume -netdev user,id=ginux-net,restrict=off -device virtio-net-pci,netdev=ginux-net,disable-legacy=on,iommu_platform=on,mac=52:54:00:12:34:56,addr=0x3 -drive if=none,id=ginux-volume,format=raw,file=/home/thox/.local/state/thoxos-g/volume.raw -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd -drive if=pflash,format=raw,file=/home/thox/.local/state/thoxos-g/ovmf-vars.fd -drive if=none,id=ginux-esp,format=raw,file=fat:rw:/home/thox/.local/state/thoxos-g/esp -device ide-hd,drive=ginux-esp,bootindex=1
+azure-boot: 23 passed, 0 failed: []

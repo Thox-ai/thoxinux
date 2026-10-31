@@ -1,0 +1,106 @@
+{
+  "schema": "thox.ginux.independent-scoped-review.v1",
+  "reviewer": "/root/mesh_integration_review",
+  "reviewed_at_utc": "2026-10-31T03:16:38.755657+00:00",
+  "scope": "Read-only review of four safety fixes, their regression tests and continuation README/handoff; not whole-repository certification",
+  "remote_inputs": {
+    "main": "10787b1ae9dc024f069d229e83339876212afc5e",
+    "desktop_image": "7f8f2007d3ae8da19ddb0309e99ee25904971cd1"
+  },
+  "local_history": "Restored snapshot and in-flight integration; authenticated shipping SHA must be supplied by parent after push",
+  "files": [
+    {
+      "path": "ginux-edition/scripts/ginux-source.sh",
+      "sha256": "f26c7c11283ba2a2a078bb8f411fa042d9a968ee8fa025d9a2ff6246fdf428c7",
+      "bytes": 4586
+    },
+    {
+      "path": "ginux-edition/docker/entrypoint.sh",
+      "sha256": "250c38492ae011c34524ba7a8835a5c28d009b4fb90645510245904ef88478ae",
+      "bytes": 5417
+    },
+    {
+      "path": "ginux-edition/runtime/thox_ai_relay.py",
+      "sha256": "57544ac54fb91f54f3c4ab563bfa4ab75ed2783b54c233b4ea2d63493eab2cfe",
+      "bytes": 13248
+    },
+    {
+      "path": "ginux-edition/azure/azuredeploy.json",
+      "sha256": "ee6a5965b8301830ade92bde406bcc8d39a8d2780ae96faf4bdf4bf3f72e3097",
+      "bytes": 10165
+    },
+    {
+      "path": "ginux-edition/tests/test_ginux_source.py",
+      "sha256": "b8792474b01318c4a07470057413ceae7fdbdfca4c6071528942a776fc31d134",
+      "bytes": 6346
+    },
+    {
+      "path": "ginux-edition/tests/test_entrypoint_environment.py",
+      "sha256": "ab827e5bb4a178a6a42acf51dd1fe19d77c98aee91b50d1f11597e7b14001477",
+      "bytes": 5616
+    },
+    {
+      "path": "ginux-edition/tests/test_thox_ai_relay.py",
+      "sha256": "90e1f8905772131a9f01be19aca505194394d4a220d0af3cc0fbd66a78654e82",
+      "bytes": 10370
+    },
+    {
+      "path": "ginux-edition/tests/test_azure_image.py",
+      "sha256": "5ad5674dff21a24cfa5698c587e756ddef0ec1ccee1cd89916e3e0fe264d5e57",
+      "bytes": 8472
+    },
+    {
+      "path": ".agents/CONTINUATION_HANDOFF.md",
+      "sha256": "a508f80425651109bdb01f3ed32e6599132ced3983e073bbeaf82c114d603f26",
+      "bytes": 7236
+    },
+    {
+      "path": "docs/continuation/README.md",
+      "sha256": "405e08113bf90f85562e1f960d5615e88812dfa41c61958ba8944ff4ed9d42b7",
+      "bytes": 6985
+    }
+  ],
+  "executed_checks": [
+    {
+      "command": "PATH=<scoped-runtime>/usr/bin:$PATH LD_LIBRARY_PATH=<scoped-runtime>/usr/lib/x86_64-linux-gnu python3 -m pytest -q -p no:cacheprovider ginux-edition/tests/test_thox_ai_relay.py ginux-edition/tests/test_azure_image.py ginux-edition/tests/test_ginux_source.py ginux-edition/tests/test_entrypoint_environment.py",
+      "result": "53 passed in 9.58s",
+      "exit_code": 0,
+      "evidence_type": "Execution-tool output; this JSON summarizes it rather than claiming to be raw log"
+    },
+    {
+      "command": "bash -n ginux-edition/scripts/ginux-source.sh ginux-edition/docker/entrypoint.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "<scoped-runtime>/usr/bin/shellcheck ginux-edition/scripts/ginux-source.sh ginux-edition/docker/entrypoint.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    },
+    {
+      "command": "setpriv current UID/GID with --init-groups --inh-caps=-all --reset-env",
+      "result": "setpriv: initgroups failed: Operation not permitted",
+      "exit_code": 1,
+      "classification": "Host capability refusal; actual privilege transition not accepted"
+    }
+  ],
+  "review_outcome": "No new blocking defect found in these scoped fixes; source suitable for promotion as engineering preview with named unrun target gates",
+  "findings": [
+    "Source preparation reconstructs expected patched index separately, refuses drift and preserves foreign/local work; new checkout is staged in owned temporary directory before move.",
+    "All seven entrypoint modes share explicit supported-setting allowlist and reset environment; stub tests verify shell arguments and environment, not container isolation.",
+    "Relay retains TLS verification and refuses 301/302/303/307/308 across three auth schemes; real local TLS regression sink remains untouched while final endpoint succeeds.",
+    "Azure image template no longer accepts AI credential parameters or writes credentials to customData; desktop-look setting remains safely quoted.",
+    "Continuation documentation keeps root EFI, image EFI, historical VHD evidence, fresh capture and Mesh fixture/live limits distinct."
+  ],
+  "limits": [
+    "No Docker image rebuild or execution",
+    "No actual setpriv/initgroups transition in this host",
+    "No Azure server validation/deployment",
+    "No image VHD rebuild/boot or physical SSD action",
+    "No hosted provider inference",
+    "No MeshStack integration acceptance",
+    "Continuation validation/media links were still pending parent integration at review time"
+  ]
+}
