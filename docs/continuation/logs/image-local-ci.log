@@ -1,0 +1,10 @@
+local-ci: make test
+make[1]: Entering directory '/workspace/scratch/8fd65eeca383/work/source/ginux-edition'
+python3 -m pytest -q tests
+........................................................................ [ 41%]
+........................................................................ [ 83%]
+............................s                                            [100%]
+172 passed, 1 skipped in 15.51s
+for f in scripts/build-efi.sh scripts/ginux-source.sh scripts/install-pre-push-hook.sh scripts/local-ci.sh scripts/make-local-ca.sh scripts/with-extra-ca.sh docker/entrypoint.sh installer/assemble-disk.sh installer/build-host-image.sh installer/build-ssd-image.sh installer/install-to-ssd.sh installer/host/configure-host.sh azure/build-vhd.sh azure/publish-image.sh installer/host/overlay/usr/lib/thoxos-g/esp-sync.sh installer/host/overlay/usr/lib/thoxos-g/growroot.sh azure/overlay/usr/lib/thoxos-g/chrony-azure-ptp.sh installer/host/overlay/usr/local/bin/thoxos-ginux desktop/bin/thoxos-ask desktop/bin/thoxos-looks-menu desktop/bin/thoxos-hold desktop/overlay/usr/lib/thoxos-desktop/firstboot.sh tests/e2e/boot-azure-image.sh tests/e2e/boot-ssd-image.sh; do bash -n "$f" || exit 1; done
+make[1]: Leaving directory '/workspace/scratch/8fd65eeca383/work/source/ginux-edition'
+local-ci: ok   make test

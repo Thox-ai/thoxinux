@@ -1,0 +1,16 @@
+azure-boot [    0.0s] starting QEMU: qemu-system-x86_64 -machine q35 -accel tcg -cpu max,-svm,-vmx -smp 2 -m 4096 -uuid 4b8c92a8-9467-4954-8d0b-ae464382546c -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd -drive if=pflash,format=raw,file=/out/ovmf-vars.fd -drive file=/out/azure-test.qcow2,format=qcow2,if=virtio -drive file=/out/seed.img,format=raw,if=virtio,readonly=on -netdev user,id=n0,hostfwd=tcp:127.0.0.1:2222-:22,hostfwd=tcp:127.0.0.1:3389-:3389 -device virtio-net-pci,netdev=n0 -vga std -display none -serial file:/out/serial.log -monitor unix:/out/monitor.sock,server,nowait
+azure-boot [   39.5s] ok   ssh reachable: after 40 s
+azure-boot [   43.7s] ok   cloud-init finished: status: done
+azure-boot [   45.2s] ok   systemd running: running
+azure-boot [   45.2s] ok   no failed units: running
+azure-boot [   46.5s] ok   identity: Debian GNU/Linux 13 (trixie)|
+azure-boot [   47.9s] ok   runtime services active: active
+azure-boot [   49.2s] ok   admin groups: uid=1001(thox) gid=1001(thox) groups=1001(thox),4(adm),27(sudo),993(kvm),999(systemd-journal)
+azure-boot [   50.6s] ok   root grown to the disk: 20498055168
+azure-boot [   51.9s] ok   per-machine keys and machine-id: 4b8c92a8946749548d0bae464382546c (VM UUID 4b8c92a8-9467-4954-8d0b-ae464382546c; generated at first boot)
+azure-boot [   53.4s] ok   AI relay off until configured: enabled
+azure-boot [   55.8s] ok   Ginux doctor for the administrator: ok   qemu                   11.1.2
+azure-boot [   59.4s] ok   Azure agent settings and Hyper-V initrd: Provisioning.Agent=cloud-init
+azure-boot [   60.1s] booting ThoxOS on Ginux inside the VM (nested software emulation, up to 1500 s)
+azure-boot [  913.5s] ok   ThoxOS on Ginux boots for the administrator: in 853 s; rc=0
+azure-boot: 13 passed, 0 failed: []

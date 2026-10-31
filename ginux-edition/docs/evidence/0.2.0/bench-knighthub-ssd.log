@@ -1,0 +1,12 @@
+title    ThoxOS Ginux Edition 0.2.0 (KnightHub host, Ginux under KVM)
+linux    /thoxos/vmlinuz
+initrd   /thoxos/initrd.img
+options  root=PARTUUID=febee0a7-b003-4cd2-ba51-729864a6f912 rw systemd.show_status=1 systemd.journald.forward_to_console=1 systemd.mask=serial-getty@ttyS0.service module_blacklist=nouveau console=tty1 console=ttyS0,115200
+ssd-boot: ok  kernel
+ssd-boot: ok  root mounted
+ssd-boot: ok  growroot
+ssd-boot: ok  registry
+ssd-boot: ok  dns
+ssd-boot: ok  console
+ssd-boot: all checks passed; tty1 captured
+qemu-system-x86_64: terminating on signal 15 from pid 1 (python3)

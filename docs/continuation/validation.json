@@ -1,0 +1,226 @@
+{
+  "schema_version": "1.0",
+  "document_id": "THOX-GINUX-CONTINUATION-20261030",
+  "observed_utc": "2026-10-31T03:18:21.204417+00:00",
+  "session": "ChatGPT Work Mode /root continuation",
+  "stage": "engineering_preview",
+  "source_inputs": {
+    "main": "10787b1ae9dc024f069d229e83339876212afc5e",
+    "image_branch": "7f8f2007d3ae8da19ddb0309e99ee25904971cd1",
+    "image_same_tree_as": "98845311dd79f09fb96c25e7e6e9200ece7631ff",
+    "upstream": "36503bda2d87465765e1b94e65f9d100f27ed5be"
+  },
+  "test_binding": "Executed against the integrated working tree; exact tested code hashes below. The local restored Git history differs from remote; post-push receipt supplies final remote SHA.",
+  "checks": [
+    {
+      "command": "PATH=<scoped-qemu-shellcheck>:$PATH LD_LIBRARY_PATH=<scoped-libs> make ci",
+      "cwd": "ginux-edition",
+      "status": "passed",
+      "tests_passed": 172,
+      "tests_skipped": 1,
+      "skip_reason": "Full stub-Adwaita generation test looks for Inter/JetBrains Mono under system /usr/share/fonts; fonts extracted only to scoped runtime.",
+      "shell_syntax": "passed all 24 selected scripts",
+      "shellcheck": "passed all selected scripts",
+      "log": "logs/image-local-ci.log",
+      "full_container_theme_generation": "not_run: Docker unavailable"
+    },
+    {
+      "command": "python3 -m pytest -q azure/tests module-ginux/tests ssd-module/tests",
+      "status": "passed",
+      "tests_passed": 62,
+      "subtests_passed": 27,
+      "log": "logs/root-tests.log"
+    },
+    {
+      "command": "independent scoped pytest + bash -n + shellcheck + git diff --check",
+      "status": "passed",
+      "tests_passed": 53,
+      "tests_skipped": 0,
+      "counting": "subset of integrated tests; do not add to 234 total",
+      "receipt": "independent-review.json"
+    }
+  ],
+  "fresh_guest_proof": {
+    "status": "passed",
+    "efi_sha256": "3ebcc9043ef9dc8b7e75abc15b113a5810c8d39c0ad47143476a41caed24d5ba",
+    "efi_bytes": 12507648,
+    "kernel_rebuilt_this_continuation": false,
+    "qemu": "8.2.2 TCG",
+    "firmware": "OVMF 2024.02",
+    "memory_mib": 2048,
+    "vcpus": 1,
+    "iommu_address_width": 48,
+    "cold_asserted_commands": 11,
+    "recovered_asserted_commands": 4,
+    "clean_shutdowns": 2,
+    "qemu_exit_codes": [
+      0,
+      0
+    ],
+    "same_persistent_volume": true,
+    "capture_kind": "actual Xterm X11 framebuffer; automated paced PTY input to real QEMU guest; not a transcript animation",
+    "scope": "Root Azure EFI controller and embedded minimal-system-v0 only; not rebuilt desktop/image or MeshStack.",
+    "video_validation": {
+      "cold_seconds": 25.6,
+      "recovered_seconds": 19.1,
+      "resolution": "1920x1080",
+      "frame_rate": 10,
+      "audio": "none",
+      "sampled_distinct_frames": [
+        16,
+        12
+      ],
+      "full_decode": "passed both movies",
+      "receipt": "media/video-qa.json"
+    }
+  },
+  "media": [
+    {
+      "path": "docs/continuation/media/CAPTURE_MANIFEST.json",
+      "bytes": 3228,
+      "sha256": "5b06c567c4bc2b2d647a6abf29b2599c6f12846c42cdbcef9cf5800444b2be74"
+    },
+    {
+      "path": "docs/continuation/media/CAPTURE_METHOD.md",
+      "bytes": 2588,
+      "sha256": "af54aafb147275a00d844302bcf04b95673fd38154bf717869c6e75ddf479397"
+    },
+    {
+      "path": "docs/continuation/media/ENVIRONMENT.json",
+      "bytes": 1034,
+      "sha256": "1e12c3bfd5a4479e6230658f6cbace6e01ad3ad2134f3e8a24fe062a61b0bdfd"
+    },
+    {
+      "path": "docs/continuation/media/cold-receipt.json",
+      "bytes": 3161,
+      "sha256": "c497bf0eb635ae5746976b33b4983deaba5320b615aef07c1b174ca1b4752d54"
+    },
+    {
+      "path": "docs/continuation/media/cold-serial.log",
+      "bytes": 3027,
+      "sha256": "d57fa0d44584f76da8b9c89e6dfc5159a3a18384450eada5118fd18497885b4b"
+    },
+    {
+      "path": "docs/continuation/media/live-guest.mp4",
+      "bytes": 770941,
+      "sha256": "2381901f2fdb9d141f524a01d70a28ee29cbbbc7565532f03da2036e966cf4b2"
+    },
+    {
+      "path": "docs/continuation/media/live-guest.png",
+      "bytes": 30052,
+      "sha256": "d9d6d4dedcc94cd55ee2b7f0d3e1ee78939773d5970c4eb37d9439d813e75712"
+    },
+    {
+      "path": "docs/continuation/media/recovered-receipt.json",
+      "bytes": 2149,
+      "sha256": "e79451002c66fb31908c8687f2fd2f27de7d3490e402441712eb73eceed37152"
+    },
+    {
+      "path": "docs/continuation/media/recovered-serial.log",
+      "bytes": 2294,
+      "sha256": "ab93b06a4c4e0ef7d0bd94e2c8a2effa672c9f41558a8266a7e6d0f07e9e1eb5"
+    },
+    {
+      "path": "docs/continuation/media/recovery.mp4",
+      "bytes": 494155,
+      "sha256": "3cd5861258c827ffec0743f4138ae24759cc2482a48a90f9a81739a41d5a105e"
+    },
+    {
+      "path": "docs/continuation/media/recovery.png",
+      "bytes": 30683,
+      "sha256": "367a13f93bb7e482c038e325099b1a5a9b44295621fb87cf1ec791f7d31b3133"
+    },
+    {
+      "path": "docs/continuation/media/video-qa.json",
+      "bytes": 1001,
+      "sha256": "0d13418e96e59f4d5de3c9735c705cbb041b674acac443c30b9e619605400751"
+    }
+  ],
+  "code_sha256": {
+    "azure/deployment.example.json": "4855aac15e0c52235a420bcecc3904c753d9f2cf9b5cfa8b7cdb3d5b84f58dc4",
+    "azure/bootstrap.py": "f5dad2230517b3e1934424dc56c24137efca0cd0261aca72e97af622ce65d3e2",
+    "azure/validate_arm_schema.py": "a9098f306a8e9ad62319fe477d1fd6c0338e9b592819edbc2e4c1011df3566a9",
+    "azure/azuredeploy.json": "365248bbc49516d7c551ccc424115d19c2d0b29ddc8303da0aa39638537fc8ea",
+    "azure/ARM_SCHEMA_VALIDATION.json": "4b47bbc2859045a46276720bf31fca32eb84cc46562b23aea35162744f69fd8d",
+    "azure/package_release.py": "d682f09b6909b84c0aeffff17f5a27db02038c951bec46134f35d5b07c59850c",
+    "azure/generate_template.py": "8140d8edcc400664f2782921df6f3855e6062cb88e630ec26536ac059212b825",
+    "azure/cloud_init.py": "afcb1a3d77be05020270935dd20333bb96820bf53e1a8bce75167f982131c671",
+    "azure/deploy.py": "95e7946fb622683b1302163b84826b7775769ced75938df459158fc35d6b777a",
+    "azure/arm-schema-lock.json": "283413683f3a359eddab91e9ac6e1b6d3150849e662b060a884a58921a75e653",
+    "azure/smoke_guest.py": "3cdeabb609b3b02be3e826fbd48df42c849cf5ee463be3a118e342d47a8360cf",
+    "azure/tests/test_azure.py": "bb11c748cf6f19ac8be622c9c25f003b44dc53599aabd864f3eecf3379403eda",
+    "module-ginux/SOURCE_MANIFEST.json": "431cf5e6ccfd0b10696be942c256b8962ba3a0c69ccc9a5b6438168df63c314c",
+    "module-ginux/scripts/build-native.sh": "3476a3bb07b7dc2c16a02a8ff0599e1e6dc48df9499bf4881f5fd9a545f6ceb6",
+    "module-ginux/scripts/write-build-receipt.py": "0f2312a695481034f91ce6bb3ebe214870cd0a591f9ec9a7e15b03b58a7ecc36",
+    "module-ginux/scripts/run-vm.sh": "c7694116061f7ea5b3d9f4eda416d9eca1410d7568d6560edf2e4617708e91c8",
+    "module-ginux/scripts/prepare-source.sh": "85b6980b48ade820a83ee038d6da4bed3b1d93d309b59494cb3b1b4fff705078",
+    "module-ginux/scripts/prepare_source.py": "70227764a0d4a28d7a5a63b6d9b260c02a1b4dea3587804fedae8c658d7c8ed6",
+    "module-ginux/tests/acceptance_lifecycle.py": "7608c2cfa1ae1b817a9a35daf56a784b9fb27326a585814c953dfd22d412b57c",
+    "module-ginux/tests/test_source_preparation.py": "26d445117aa50c7a5b3739921e87367665121ce9e8118b38571e5b010dcd212f",
+    "module-ginux/tests/test_launcher.py": "b497a78dd9985c813240ba835708706ab80571129bd640f675e262cfda5a2abd",
+    "module-ginux/artifacts/build-receipt.json": "c4ac916269f053a689801af6a9214b6613090a35bd0a247eeb3e2d10d6ccf31b",
+    "ssd-module/install_host.py": "bbe67039a5793340d9925288c2e7c84430fe42b032b73fcd31a1fef9a419f0e0",
+    "ssd-module/build_external_ssd.py": "04327430e698e33809df906711964397920412cc977c11f578e99ca026c65b70",
+    "ssd-module/preflight.py": "9a51bc035fa37126d6f70c726d451e62c8b647c3a9c17ba50249fc83029cd3c4",
+    "ssd-module/tests/test_host.py": "a0a91e5d0a83849df759770f2e61241a251a6b8d81b8d1f6344b8e9dfc13ca98",
+    "ssd-module/vendor/windows-writer/SOURCE-MANIFEST.json": "00229209f04398badc7f340b9304d377e151e041547cd6a4f1c9cbce68470ea9",
+    "ginux-edition/installer/build-ssd-image.sh": "4ecf264e222e345be6156d33debaa96a5a7d48338c392c87b6604aef70cf04de",
+    "ginux-edition/installer/build-host-image.sh": "cdff916f14a2b1b35d1c85ca5e0c6c25eaa1e6b27045be1960e56ad2239a211c",
+    "ginux-edition/installer/assemble-disk.sh": "ff14eb6636d8145d6bdad2644079c137745b037ec8cd7038b3c3996fa7f282c7",
+    "ginux-edition/installer/install-to-ssd.sh": "f12f163e05b214f8f43b4501baa68950c37b67567e243f35c882439727ee9fc1",
+    "ginux-edition/azure/azuredeploy.json": "ee6a5965b8301830ade92bde406bcc8d39a8d2780ae96faf4bdf4bf3f72e3097",
+    "ginux-edition/azure/build-vhd.sh": "a415450350ef23ed51435e0b6a69bcbde917f0f10d4581f4a380637101004224",
+    "ginux-edition/azure/publish-image.sh": "acd79d3b7176a1291836424d3aff845f1bee29113feb12c6c6613a157c9bdbcb",
+    "ginux-edition/azure/vhd_check.py": "56af88c6da9fcee2365bb3e6e7e49ff8787d162e4422cffb45a287ec8741b9e2",
+    "ginux-edition/scripts/make-local-ca.sh": "1dd293f306d6581802c060552587ecf8ea53e3204c26fef098cd53f5d46d88f2",
+    "ginux-edition/scripts/ginux-source.sh": "f26c7c11283ba2a2a078bb8f411fa042d9a968ee8fa025d9a2ff6246fdf428c7",
+    "ginux-edition/scripts/build-efi.sh": "44f716d393989b4140cc92483a89cfb8fa4d85746304325493044808a5c38f5b",
+    "ginux-edition/scripts/with-extra-ca.sh": "116edb1a4298f350ed8f4c700f573461cf60efbadd730b22957a4ecbc4a30d0e",
+    "ginux-edition/scripts/local-ci.sh": "5ef8814bdb1970f2230b47fde40d8ef95ae9d8eb67a0985509148eae0d8e540e",
+    "ginux-edition/scripts/install-pre-push-hook.sh": "78fc39cd004d42ac5683db3eeb5c1eb6b7426584ccb36a4095a14f583005babc",
+    "ginux-edition/docker/entrypoint.sh": "250c38492ae011c34524ba7a8835a5c28d009b4fb90645510245904ef88478ae",
+    "ginux-edition/tests/test_txf_desktop_gen.py": "b5a5556cb0bad43ed1460f64df3ff88fe8ac13f1e7ee99c3813225481f8e2f83",
+    "ginux-edition/tests/test_azure_image.py": "5ad5674dff21a24cfa5698c587e756ddef0ec1ccee1cd89916e3e0fe264d5e57",
+    "ginux-edition/tests/test_thoxos_look.py": "4f03fd5e93d9cb25eb2555e40a711c95fb8f54eb30ed4fc47caff30c3fa91a88",
+    "ginux-edition/tests/test_thox_ai_relay.py": "90e1f8905772131a9f01be19aca505194394d4a220d0af3cc0fbd66a78654e82",
+    "ginux-edition/tests/test_entrypoint_environment.py": "ab827e5bb4a178a6a42acf51dd1fe19d77c98aee91b50d1f11597e7b14001477",
+    "ginux-edition/tests/test_desktop_overlay.py": "961729f7bf95049edf29a1bc86b96297e78eff44a933118f347076c1ee606024",
+    "ginux-edition/tests/test_thox_cli.py": "240f83798b14ea3996e8da0b33f043de866835b6843fd8acf41bece5e33d68ee",
+    "ginux-edition/tests/test_local_ci.py": "9d854342dcbd9be1936bd7485d45330b577638cdbc50af79986099799e82f454",
+    "ginux-edition/tests/fake_qemu.py": "3cce65261868d69f86ebfd1dbb81ff9320e53f342450c768706ace5f07ce18e9",
+    "ginux-edition/tests/test_ginux_source.py": "b8792474b01318c4a07470057413ceae7fdbdfca4c6071528942a776fc31d134",
+    "ginux-edition/tests/test_ai_chip.py": "ac4be1320c1384bbcf465df299d1a8bc1f9cd7d37c5c18337681d8e4c3bcf5ef",
+    "ginux-edition/tests/test_thoxos_g.py": "3b7c8130b54584c5a1990d40e5879f257082be14bdcc117001d94f64d96a3abe",
+    "ginux-edition/runtime/thox_ai_relay.py": "57544ac54fb91f54f3c4ab563bfa4ab75ed2783b54c233b4ea2d63493eab2cfe",
+    "ginux-edition/runtime/thoxos_g.py": "0ad45c81ae5a10b6a1f35be5e276b06786dedc76689b5399fb2458510424d698",
+    "ginux-edition/installer/host/configure-host.sh": "0d98dc5fa760206a9d556c6dc0e7ed89d886a22614d46633eb474e925314015c",
+    "ginux-edition/installer/host/overlay/usr/lib/thoxos-g/esp-sync.sh": "48e9450d88f2d63b22f93140073c3d75bb1532d5d65314131936f384a4d7396e",
+    "ginux-edition/installer/host/overlay/usr/lib/thoxos-g/growroot.sh": "6cedc2f4363cab0c6bf56343754053adcd862d9ff73ca14acad6b4dbcca33156",
+    "ginux-edition/azure/overlay/usr/lib/thoxos-g/chrony-azure-ptp.sh": "ef46f6a792e669b95c4447691c85454008e7ebf1ec727fcfc5d886b29d561052",
+    "ginux-edition/desktop/generator/txf_desktop_gen.py": "b4ee66bde28bac6866d17ff8d5b2b31120d3978834731234aab2ed4240341aa8",
+    "ginux-edition/desktop/tokens/txf-tokens.json": "e3d8f7728b5c7201fe63e807ec3581c7a1f1502a06fa862277ae842cdc16676c",
+    "ginux-edition/desktop/overlay/etc/firefox/policies/policies.json": "51575df3281ec095cd98928bd79dfd51f26c8dd6c1d125a318738d239545349c",
+    "ginux-edition/desktop/overlay/etc/firefox-esr/policies/policies.json": "51575df3281ec095cd98928bd79dfd51f26c8dd6c1d125a318738d239545349c",
+    "ginux-edition/desktop/overlay/usr/lib/thoxos-desktop/firstboot.sh": "376107c9708e7054c22186405651b61877dd4c244099b3eac3069a8723dc68d0",
+    "ginux-edition/tests/e2e/boot-azure-image.sh": "d5c9f42abba516d24819d3c5c3223360a24a845467596b2c2af490cff8303fb5",
+    "ginux-edition/tests/e2e/boot-ssd-image.sh": "8ac38fd6e4c55d7bb4aa6932d9c4b7553131874f1def7ba89ae9e6b311dc4355",
+    "ginux-edition/tests/e2e/boot_ssd_image.py": "9540e793c84e5c10125b49f82991d47359632847a6c5959a8d4d7c1424bb2fd9",
+    "ginux-edition/tests/e2e/shell_session.py": "ea5c1038a04d3cb6c8008ac1c6f8e15d19ddcd145b53a92c236fe94d407c3c83",
+    "ginux-edition/tests/e2e/azure/boot_azure_image.py": "30cff4176d285134da92cbcf488f89960dce5a4c7f90b80bfd7fe414d4574e56",
+    "ginux-edition/tests/e2e/shooter/with-extra-ca.sh": "116edb1a4298f350ed8f4c700f573461cf60efbadd730b22957a4ecbc4a30d0e",
+    "ginux-edition/tests/e2e/shooter/shoot_console.py": "d44cff2aef70d941c7867934e990f4aed215795f6ea36b64a6ed0b157a3dc0e3"
+  },
+  "not_run": [
+    "Corrected Docker image build/run: no Docker daemon; mount/user namespaces EPERM",
+    "Corrected desktop/headless VHD and SSD image rebuild/bench in this continuation",
+    "Actual privilege transition: setpriv initgroups EPERM",
+    "Azure server validate, what-if, deployment, cloud-init host acceptance and Gallery publication: no Azure identity/subscription",
+    "KnightHub physical SSD write/boot and Windows writer: connected devices offline and target unresolved",
+    "Native KVM and GPU/CUDA acceptance",
+    "Real hosted-model inference: tests used local TLS upstreams",
+    "MeshStack integration/live dashboard: absent from Ginux; existing Mesh GUI source remains fixture-backed",
+    "Formal stable GitHub Release: unissued; no Release-write connector action available",
+    "Native saved memory, cognition graph ingestion and external runtime activation"
+  ],
+  "historical_evidence": "Prior image-team captures/bench logs and original root kernel tests remain separate, unchanged records. Do not relabel those as fresh execution."
+}

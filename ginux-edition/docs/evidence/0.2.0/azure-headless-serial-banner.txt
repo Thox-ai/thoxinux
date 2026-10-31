@@ -1,0 +1,1 @@
+ThoxOS Ginux Edition host on Debian 13 (Trixie) thoxos-e2e ttyS0

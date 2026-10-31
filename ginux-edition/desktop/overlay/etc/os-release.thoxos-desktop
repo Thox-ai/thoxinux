@@ -1,0 +1,12 @@
+PRETTY_NAME="ThoxOS Desktop on Debian 13 (Trixie)"
+NAME="ThoxOS Desktop"
+VERSION_ID="13"
+VERSION="13 (trixie)"
+VERSION_CODENAME=trixie
+DEBIAN_VERSION_FULL=13
+ID=debian
+VARIANT="Ginux Edition"
+VARIANT_ID=ginux-edition
+HOME_URL="https://thox.ai/"
+SUPPORT_URL="https://github.com/ttracx/thoxos-ginux"
+BUG_REPORT_URL="https://github.com/ttracx/thoxos-ginux/issues"

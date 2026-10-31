@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=ThoxOS Doctor
+Comment=Check QEMU, firmware and KVM for ThoxOS on Ginux
+Exec=xfce4-terminal --title="ThoxOS Doctor" --hide-menubar -x thoxos-hold thoxos-ginux doctor
+Icon=thoxos-doctor
+Categories=System;X-ThoxOS;
+Terminal=false
+StartupNotify=true

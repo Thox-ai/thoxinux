@@ -1,0 +1,48 @@
+{
+  "cold": {
+    "guest_exit": 0,
+    "checked_operator_commands": 11,
+    "clean_shutdown": true,
+    "video_probe": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "10/1"
+        }
+      ],
+      "format": {
+        "duration": "25.600000",
+        "size": "770941"
+      }
+    },
+    "sampled_distinct_frames": 16,
+    "full_decode": "passed"
+  },
+  "recovered": {
+    "guest_exit": 0,
+    "checked_operator_commands": 4,
+    "clean_shutdown": true,
+    "video_probe": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "10/1"
+        }
+      ],
+      "format": {
+        "duration": "19.100000",
+        "size": "494155"
+      }
+    },
+    "sampled_distinct_frames": 12,
+    "full_decode": "passed"
+  }
+}

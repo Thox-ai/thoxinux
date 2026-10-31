@@ -1,0 +1,74 @@
+{
+  "label": "recovered",
+  "started_utc": "2026-10-31T03:16:40.362631+00:00",
+  "efi_sha256": "3ebcc9043ef9dc8b7e75abc15b113a5810c8d39c0ad47143476a41caed24d5ba",
+  "qemu_argv": [
+    "/workspace/scratch/8fd65eeca383/work/runtime/root/usr/bin/qemu-system-x86_64",
+    "-L",
+    "/workspace/scratch/8fd65eeca383/work/runtime/root/usr/share/qemu",
+    "-machine",
+    "q35,accel=tcg",
+    "-cpu",
+    "max,+smep,+smap,+umip",
+    "-smp",
+    "1",
+    "-m",
+    "2G",
+    "-display",
+    "none",
+    "-monitor",
+    "none",
+    "-serial",
+    "stdio",
+    "-no-reboot",
+    "-net",
+    "none",
+    "-device",
+    "intel-iommu,intremap=off,aw-bits=48",
+    "-device",
+    "virtio-blk-pci,drive=ginux-volume,disable-legacy=on,iommu_platform=on,serial=ginux-volume",
+    "-netdev",
+    "user,id=ginux-net,restrict=off",
+    "-device",
+    "virtio-net-pci,netdev=ginux-net,disable-legacy=on,iommu_platform=on,mac=52:54:00:12:34:56,addr=0x3",
+    "-drive",
+    "if=none,id=ginux-volume,format=raw,file=/workspace/scratch/8fd65eeca383/work/runtime/guest-state/volume.raw",
+    "-drive",
+    "if=pflash,format=raw,readonly=on,file=/workspace/scratch/8fd65eeca383/work/runtime/root/usr/share/OVMF/OVMF_CODE_4M.fd",
+    "-drive",
+    "if=pflash,format=raw,file=/workspace/scratch/8fd65eeca383/work/runtime/guest-state/vars.fd",
+    "-drive",
+    "if=none,id=ginux-esp,format=raw,file=fat:rw:/workspace/scratch/8fd65eeca383/work/runtime/guest-state/esp",
+    "-device",
+    "ide-hd,drive=ginux-esp,bootindex=1"
+  ],
+  "status": "passed",
+  "commands": [
+    {
+      "command": "domain status uxproof",
+      "expected": "State:       configured",
+      "at_seconds": 8.122,
+      "passed": true
+    },
+    {
+      "command": "domain start uxproof",
+      "expected": "running",
+      "at_seconds": 9.476,
+      "passed": true
+    },
+    {
+      "command": "domain status uxproof",
+      "expected": "State:       running",
+      "at_seconds": 12.124,
+      "passed": true
+    },
+    {
+      "command": "domain stop uxproof",
+      "expected": "stopped",
+      "at_seconds": 13.57,
+      "passed": true
+    }
+  ],
+  "qemu_exit": 0,
+  "duration_seconds": 18.877
+}

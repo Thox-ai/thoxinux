@@ -1,0 +1,105 @@
+{
+  "evidence": "fresh actual local Ginux kernel screen capture",
+  "date_local": "2026-10-30",
+  "timezone": "America/Chicago",
+  "efi_sha256": "3ebcc9043ef9dc8b7e75abc15b113a5810c8d39c0ad47143476a41caed24d5ba",
+  "checked_commands": 15,
+  "clean_shutdowns": 2,
+  "files": [
+    {
+      "path": "THOX_Ginux_Live_Cold.mp4",
+      "bytes": 770941,
+      "sha256": "2381901f2fdb9d141f524a01d70a28ee29cbbbc7565532f03da2036e966cf4b2"
+    },
+    {
+      "path": "THOX_Ginux_Live_Recovered.mp4",
+      "bytes": 494155,
+      "sha256": "3cd5861258c827ffec0743f4138ae24759cc2482a48a90f9a81739a41d5a105e"
+    },
+    {
+      "path": "THOX_Ginux_cold_10s.png",
+      "bytes": 29630,
+      "sha256": "4726444f3f6189ab49baf845e96bde934b74aca5891b2227f3603cbde082ef71"
+    },
+    {
+      "path": "THOX_Ginux_cold_20s.png",
+      "bytes": 30052,
+      "sha256": "d9d6d4dedcc94cd55ee2b7f0d3e1ee78939773d5970c4eb37d9439d813e75712"
+    },
+    {
+      "path": "THOX_Ginux_recovered_10s.png",
+      "bytes": 30683,
+      "sha256": "367a13f93bb7e482c038e325099b1a5a9b44295621fb87cf1ec791f7d31b3133"
+    },
+    {
+      "path": "cold-receipt.json",
+      "bytes": 3161,
+      "sha256": "c497bf0eb635ae5746976b33b4983deaba5320b615aef07c1b174ca1b4752d54"
+    },
+    {
+      "path": "recovered-receipt.json",
+      "bytes": 2149,
+      "sha256": "e79451002c66fb31908c8687f2fd2f27de7d3490e402441712eb73eceed37152"
+    },
+    {
+      "path": "cold-serial.log",
+      "bytes": 3027,
+      "sha256": "d57fa0d44584f76da8b9c89e6dfc5159a3a18384450eada5118fd18497885b4b"
+    },
+    {
+      "path": "recovered-serial.log",
+      "bytes": 2294,
+      "sha256": "ab93b06a4c4e0ef7d0bd94e2c8a2effa672c9f41558a8266a7e6d0f07e9e1eb5"
+    },
+    {
+      "path": "cold-events.json",
+      "bytes": 1443,
+      "sha256": "f688a5ee01e5787ac613481d5c4c55e9eb8f1b58d098d5966b796d24116aa020"
+    },
+    {
+      "path": "recovered-events.json",
+      "bytes": 510,
+      "sha256": "9e04e533a8ab387d810090883e98547d859d4de9799108d6a684dc6e4e78260d"
+    },
+    {
+      "path": "cold-frame-samples.json",
+      "bytes": 3058,
+      "sha256": "6d2a2f435696bc005f0563416598d608df9b2f290210b8845396577e661cec81"
+    },
+    {
+      "path": "recovered-frame-samples.json",
+      "bytes": 2362,
+      "sha256": "9ba480bcfcb1def5476f984fb80bdb6298a8ae43a105f4019dbf044468d90f13"
+    },
+    {
+      "path": "CAPTURE_METHOD.md",
+      "bytes": 2588,
+      "sha256": "af54aafb147275a00d844302bcf04b95673fd38154bf717869c6e75ddf479397"
+    },
+    {
+      "path": "VIDEO_QA.json",
+      "bytes": 1001,
+      "sha256": "0d13418e96e59f4d5de3c9735c705cbb041b674acac443c30b9e619605400751"
+    },
+    {
+      "path": "ENVIRONMENT.json",
+      "bytes": 1034,
+      "sha256": "1e12c3bfd5a4479e6230658f6cbace6e01ad3ad2134f3e8a24fe062a61b0bdfd"
+    },
+    {
+      "path": "capture_live.py",
+      "bytes": 10026,
+      "sha256": "08a3b90c4b614a42bd2365baee6253c7f0c0e6cd5b35180abe3863580483ae78"
+    },
+    {
+      "path": "bind_loopback.c",
+      "bytes": 1682,
+      "sha256": "ee19770807d940bc03ae1875ad8aa1836dc18625c61c1758d8ccb3fc60fe8f56"
+    },
+    {
+      "path": "index.html",
+      "bytes": 3248,
+      "sha256": "e94e7ad5c477ee354c92e8a17d80f7cfea92e583c3f0bada7223390a5c3f3a6d"
+    }
+  ]
+}

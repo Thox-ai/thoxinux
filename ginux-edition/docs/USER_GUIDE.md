@@ -4,6 +4,8 @@
 
 ThoxOS Ginux Edition runs a ThoxOS userspace (Rocky Linux 10 base with ThoxOS identity and the `thox` command) on Ginux, an independent Rust kernel that speaks the Linux system-call interface. No Linux kernel runs underneath the ThoxOS programs. Ginux runs inside QEMU with the hardware profile it was built for; on KnightHub a small Debian host provides the real drivers and KVM.
 
+Version 0.2.0 adds two host targets beside KnightHub: Azure VM images, one with **ThoxOS Desktop** (the TXF 5.2 desktop, three looks, reached over RDP) and one headless. The Ginux guest is unchanged at 0.1.0.
+
 It is a research preview for demos and exploration. It is not a product OS: Ginux has one CPU, at most 2.75 GiB of RAM, only virtual devices, and no security audit (see [REVIEW.md](REVIEW.md)).
 
 Who it is for: THOX engineering and anyone giving a "Linux userspace without Linux" demo.
@@ -99,9 +101,51 @@ First boot grows the root partition to fill the SSD. tty1 is the ThoxOS console 
 
 Host commands: `systemctl status 'thoxos-g-*'`, `journalctl -u thoxos-g-console -b`, `sudo -u thoxos thoxos-g doctor`. `/etc/thoxos-g/README.host` lists them on the machine.
 
+### ThoxOS Desktop
+
+Desktop images (Azure desktop, or KnightHub built with `DESKTOP=desktop`) boot to a ThoxOS splash and a branded login: LightDM on the screen, xrdp for RDP. Every user gets the same desktop:
+
+| Item | Where |
+|---|---|
+| ThoxOS on Ginux | Dock, first icon: a terminal boots the user's own Ginux VM into the ThoxOS shell |
+| ThoxOS System Boot | Launcher: the systemd boot of ThoxOS on Ginux |
+| Ask THOX | Dock, or type `?` then a question in the launcher |
+| ThoxOS Looks | Dock: switch between TXF Slate, Porcelain and Console Pro |
+| About this system | Dock: ThoxOS identity, kernel, Ginux runtime, look and AI route |
+| AI chip | Top bar: LOCAL, HOSTED or AI OFF |
+
+![ThoxOS Desktop, TXF Slate look, About this system (QEMU capture over RDP)](previews/azure/rdp-slate-about.png)
+
+Looks from the command line: `thoxos-look list`, `thoxos-look set porcelain`, `sudo thoxos-look system-default console-pro`, `thoxos-look off` (keep your own XFCE settings). Details, provenance and the state of each TXF surface: [DESKTOP.md](DESKTOP.md).
+
+![Porcelain look with the file manager (QEMU capture over RDP)](previews/azure/rdp-porcelain-files.png)
+
+### Azure
+
+Build the VHD, publish it to an Azure Compute Gallery, deploy a VM from it, connect over RDP or SSH:
+
+```bash
+bash installer/build-host-image.sh --target azure --desktop desktop \
+    --demo-image thoxos-g/demo:0.1.0 --host-image thoxos-g/azure-desktop-host:0.2.0 --size 8G --out build/azure
+azure/publish-image.sh --vhd build/azure/thoxos-ginux-azure-desktop-0.2.0.vhd --resource-group thoxos-images --location eastus
+az deployment group create --resource-group thoxos-demo --template-file azure/azuredeploy.json \
+    --parameters imageVersionId=IMAGE_VERSION_ID allowedSourceCidr=YOUR.IP/32 adminPasswordOrKey=PASSWORD desktopLook=slate
+```
+
+Use `--desktop headless` for the SSH-only image. The VM size must support nested virtualization (default `Standard_D4s_v5`) for Ginux to run under KVM; otherwise QEMU falls back to software emulation. Azure Virtual Desktop cannot host this image (its session hosts are Windows only); [AZURE.md](AZURE.md) maps Microsoft's golden-image guide step by step and covers parameters, hosted AI and troubleshooting.
+
+On a desktop image `thoxos-ginux shell`, `thoxos-ginux system` and `thoxos-ginux doctor` run Ginux for the calling user, with state in `~/.local/state/thoxos-g`. The KnightHub tty1 console service is off on desktop images.
+
 ## Configuration
 
 `/etc/thoxos-g/thoxos-g.conf` (KEY=VALUE); environment variables of the same name override it.
+
+Docker modes use the same explicit runtime-setting allowlist, including `web`
+and `exec`. Pass supported settings with `docker run -e NAME=value`; values are
+preserved as single arguments, including paths containing spaces. The runtime
+child receives those settings and its home, terminal and language defaults after
+the privilege change. Web credentials and unrelated container variables are not
+forwarded to it. `shell` and `--shell` still force the shell domain.
 
 | Setting | Default | Meaning |
 |---|---|---|
@@ -116,6 +160,7 @@ Host commands: `systemctl status 'thoxos-g-*'`, `journalctl -u thoxos-g-console 
 | `THOXOS_G_DNS` | `10.0.2.2` | DNS server given to Ginux (host forwarder) |
 | `THOXOS_G_BOOT_TIMEOUT` | `300` (Docker), `600` (KnightHub) | Seconds to wait for each boot milestone |
 | `THOXOS_G_STATE_DIR` | `/var/lib/thoxos-g/state` | ESP copy, firmware variables, volume |
+| `THOXOS_G_STATE_DIR` on desktop images | `~/.local/state/thoxos-g` | Set by `thoxos-ginux` for each user |
 | `THOXOS_G_USERSPACE_MANIFEST` | `/usr/share/thoxos-g/userspace-manifest.json` | Manifest of the served userspace; a change replaces the volume |
 
 ## Troubleshooting
@@ -130,6 +175,9 @@ Host commands: `systemctl status 'thoxos-g-*'`, `journalctl -u thoxos-g-console 
 | Boot is slow | No KVM. In Docker add `--device /dev/kvm` (`make demo` does when present) |
 | `registry did not become ready` | See `/var/log/thoxos-g-registry.log` in the container |
 | SSD not in the boot menu | Secure Boot is on, or the firmware hides USB boot; enable USB boot and disable Secure Boot |
+| Azure deployment ends with `OSProvisioningTimedOut` | cloud-init did not report ready; read the serial log in boot diagnostics |
+| "Ginux runs without KVM (slow)" on Azure | VM size without nested virtualization, or the user is not in `kvm`; use a Dsv5 size |
+| `thox ask` cannot reach `127.0.0.1:11434` on Azure | No hosted model configured: fill `/etc/thoxos/ai-relay.env` and `sudo systemctl restart thox-ai-relay` |
 | Writer refuses the disk | Read the message: mounted, not USB, too small, or labeled THOXOS. Each has its own flag or fix |
 
 ## FAQ
@@ -139,5 +187,9 @@ Host commands: `systemctl status 'thoxos-g-*'`, `journalctl -u thoxos-g-console 
 **Can I use the 500 GB THOXOS SSD?** It carries ThoxOS Vibe. The writer refuses it unless you pass `--erase-existing-thoxos`, which destroys Vibe. Use a spare SSD.
 
 **Is it secure?** It is a research kernel with no audit and a development signing key. No ports from the guest are exposed; keep it that way.
+
+**Can it run in Azure Virtual Desktop?** Not as a session host: AVD session hosts run Windows. It runs as an Azure VM you reach over RDP; a Windows host pool can publish a RemoteApp that connects to it.
+
+**Which AI does `thox ask` use on Azure?** None until an administrator configures the hosted relay after deployment. Follow [AZURE.md](AZURE.md#hosted-ai-routing) to edit the restricted host file `/etc/thoxos/ai-relay.env`. Model keys are not accepted in ARM parameters or custom data. Hosted endpoint acceptance remains unrun.
 
 **Where does my data live?** In `volume.raw` under the state directory on the host.

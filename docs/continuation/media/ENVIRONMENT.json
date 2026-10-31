@@ -1,0 +1,31 @@
+{
+  "uid_map": "0 0 1",
+  "gid_map": "0 0 1",
+  "qemu_version": "8.2.2 Ubuntu1.18",
+  "ovmf_version": "2024.02-2ubuntu0.9",
+  "xvfb_version": "21.1.12-1ubuntu1.6",
+  "xterm_version": "390-1ubuntu3",
+  "acceleration": "TCG",
+  "guest_memory": "2GiB",
+  "vcpus": 1,
+  "IOMMU": "intel-iommu,intremap=off,aw-bits=48",
+  "framebuffer": "actual Xvfb XWD backing pixels,1920x1080,10fps",
+  "inputs": "automated paced commands to live guest stdin",
+  "product_launcher": "not executed; UID0-only namespace; direct QEMU harness preserves guest configuration",
+  "docker_diagnostics": {
+    "docker_dockerd_dind": "not installed",
+    "socket": "absent",
+    "kvm": "absent",
+    "user_namespace": "EPERM",
+    "mount_namespace": "EPERM"
+  },
+  "network_scope": "X11 authenticated MIT-MAGIC-COOKIE-1; bind restricted to loopback by scoped shim; no public listener",
+  "not_run": [
+    "Docker execution",
+    "KVM",
+    "current desktop execution",
+    "Azure server deployment",
+    "MeshStack integration",
+    "physical hardware boot"
+  ]
+}

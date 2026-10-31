@@ -1,0 +1,73 @@
+#!/usr/bin/python3
+# Copyright (c) 2026 THOX.ai LLC. Licensed under the Apache License, Version 2.0.
+"""thoxos-ai-chip: the LOCAL / HOSTED / AI OFF chip in the ThoxOS top bar.
+
+Prints xfce4-genmon-plugin markup. Route detection, in order:
+  HOSTED  the thox-ai-relay service is active (hosted model through the relay)
+  LOCAL   something answers on 127.0.0.1:11434 (Ollama or another local server)
+  AI OFF  nothing is configured
+Colors come from /usr/share/thox/txf/txf-tokens.json.
+"""
+
+from __future__ import annotations
+
+import json
+import socket
+import subprocess
+import sys
+from typing import Callable, Optional
+
+TOKENS = "/usr/share/thox/txf/txf-tokens.json"
+DEFAULTS = {"primary": "#05A451", "hosted": "#FBBF24", "elevated": "#27272A", "fg2": "#A1A1AA", "canvas": "#09090B"}
+
+
+def colors(path: str = TOKENS) -> dict[str, str]:
+    try:
+        with open(path, encoding="utf-8") as handle:
+            dark = json.load(handle).get("dark", {})
+    except (OSError, json.JSONDecodeError):
+        dark = {}
+    return {key: str(dark.get(key, value)) for key, value in DEFAULTS.items()}
+
+
+def relay_active(run: Callable = subprocess.run) -> bool:
+    try:
+        result = run(["systemctl", "is-active", "--quiet", "thox-ai-relay.service"], timeout=3, check=False)
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+    return result.returncode == 0
+
+
+def local_listening(host: str = "127.0.0.1", port: int = 11434, timeout: float = 0.3) -> bool:
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            return True
+    except OSError:
+        return False
+
+
+def route(run: Callable = subprocess.run, probe: Callable[[], bool] = local_listening) -> str:
+    if relay_active(run):
+        return "HOSTED"
+    if probe():
+        return "LOCAL"
+    return "AI OFF"
+
+
+def markup(state: str, palette: Optional[dict[str, str]] = None) -> str:
+    c = palette or colors()
+    bg, fg = {
+        "HOSTED": (c["hosted"], c["canvas"]),
+        "LOCAL": (c["primary"], "#FFFFFF"),
+    }.get(state, (c["elevated"], c["fg2"]))
+    tip = {
+        "HOSTED": "THOX AI: hosted model through thox-ai-relay on 127.0.0.1:11434",
+        "LOCAL": "THOX AI: local model server on 127.0.0.1:11434",
+    }.get(state, "THOX AI: no model endpoint configured (see /etc/thoxos/ai-relay.env)")
+    return (f"<txt><span background='{bg}' foreground='{fg}' font_family='JetBrains Mono' "
+            f"weight='bold' size='small'> {state} </span></txt><tool>{tip}</tool>")
+
+
+if __name__ == "__main__":
+    print(markup(route()))
+    sys.exit(0)

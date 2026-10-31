@@ -1,0 +1,291 @@
+{
+  "meta": {
+    "docType": "Report",
+    "title": "ThoxOS Ginux Edition 0.2.0",
+    "subtitle": "Azure images with ThoxOS Desktop: cold-built Ginux kernel, cloud host kernel, three TXF looks, real screenshots",
+    "date": "2026-10-29",
+    "version": "0.2.0",
+    "owner": "Odette Lark, memory-sync node and fleet librarian",
+    "audience": "Tommy Xaypanya (CTO), Craig Ross (CEO)",
+    "classification": "Internal",
+    "closing": "Research preview. Not for production use.",
+    "erratum": "Continuation erratum, 2026-10-30 America/Chicago: the current source removes hosted-AI deployment parameters and refuses relay redirects. Hosted AI stays off until an administrator configures the restricted host file after provisioning. The 2026-10-29 PDF and DOCX remain historical build reports; their prior AI-parameter instructions are superseded. The captured images and original build checks below are historical evidence, not a rebuild or Azure deployment of this correction."
+  },
+  "lede": "Continuation erratum, 2026-10-30 America/Chicago: the current source removes hosted-AI deployment parameters and refuses relay redirects. Hosted AI stays off until an administrator configures the restricted host file after provisioning. The 2026-10-29 PDF and DOCX remain historical build reports; their prior AI-parameter instructions are superseded. The captured images and original build checks below are historical evidence, not a rebuild or Azure deployment of this correction. ThoxOS Ginux Edition now builds Azure VM images. The desktop image boots a Debian 13 host with the Azure cloud kernel into ThoxOS Desktop, the TXF 5.2 desktop with three looks, and each RDP user runs ThoxOS on the Ginux kernel from the dock. Booted in QEMU the way Azure provisions a VM, it passed 23 of 23 checks, and every screenshot here comes from that run. Azure Virtual Desktop cannot host Linux session hosts, so the image follows Microsoft's golden-image flow as a standard Azure VM. Nothing has run on Azure yet.",
+  "kpis": [
+    {
+      "label": "Azure bench checks",
+      "value": "23 of 23",
+      "note": "desktop VHD in QEMU, cloud-init"
+    },
+    {
+      "label": "Boot to SSH",
+      "value": "43 s",
+      "note": "software emulation, 2 vCPU"
+    },
+    {
+      "label": "Looks over RDP",
+      "value": "3 of 3",
+      "note": "Slate, Porcelain, Console Pro"
+    },
+    {
+      "label": "Automated tests",
+      "value": "137",
+      "note": "pytest; shellcheck clean"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What shipped",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Host images move to 0.2.0; the Ginux guest stays 0.1.0. One Dockerfile builds every host root, with a target (KnightHub or Azure) and a desktop option (headless or ThoxOS Desktop)."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Component",
+            "What it is"
+          ],
+          "widths": [
+            2,
+            5
+          ],
+          "rows": [
+            [
+              "Ginux kernel",
+              "Cold rebuild from gmkurtzer/ginux 36503bd with patches 0001-0003: GINUX.EFI 12,497,920 bytes, SHA-256 6ff22d32...56a1 (1 min 59 s for the whole demo image without cache)"
+            ],
+            [
+              "Azure host kernel",
+              "Debian 13 linux-image-cloud-amd64 6.12.113 with hv_vmbus, hv_storvsc and hv_netvsc in the initrd"
+            ],
+            [
+              "Azure desktop VHD",
+              "8 GiB fixed VHD, MiB-aligned, footer checked; ThoxOS Desktop over RDP, LightDM on the console. SHA-256 d6134d1a...80a7"
+            ],
+            [
+              "Azure headless VHD",
+              "Same host without the desktop, for SSH and the serial console. SHA-256 aa01d70c...b13d"
+            ],
+            [
+              "ThoxOS Desktop",
+              "TXF 5.2 on XFCE 4.20: GTK 3, window, dock, terminal, splash, wallpaper and icon themes generated from the TXF token file; looks TXF Slate, Porcelain and Console Pro; thoxos-look switcher"
+            ],
+            [
+              "Provisioning",
+              "cloud-init 25 with the Azure datasource, Azure Linux Agent 2.12 with provisioning handed to cloud-init, no account or key in the image"
+            ],
+            [
+              "Deployment",
+              "publish-image.sh (page blob, Compute Gallery, generalized V2 image) and azuredeploy.json (VM, NSG limited to one source range, VNet, public IP, first-boot settings)"
+            ],
+            [
+              "Hosted AI",
+              "thox-ai-relay on host loopback 11434: thox ask on the host and inside ThoxOS on Ginux reaches an operator-configured model such as Azure OpenAI; the key stays on the host"
+            ],
+            [
+              "KnightHub",
+              "Same Dockerfile; 0.2.0 SSD image rebuilt (SHA-256 fc6246a4...3c3d) and can carry the desktop too"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Azure Virtual Desktop and this image",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Microsoft's guide prepares a Windows golden image for AVD host pools. AVD session hosts run Windows 11 or 10 Enterprise and Windows Server only, so a Linux image cannot join a host pool. The ThoxOS image follows the same golden-image steps and deploys as a standard Azure VM reached over RDP."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Guide step (Windows)",
+            "ThoxOS image (Linux)"
+          ],
+          "widths": [
+            3,
+            4
+          ],
+          "rows": [
+            [
+              "Windows 10 Enterprise multi-session",
+              "Debian 13 with the Azure cloud kernel"
+            ],
+            [
+              "Generation 1 VM, fixed VHD",
+              "Generation 2 (UEFI), fixed VHD built offline, MiB-aligned"
+            ],
+            [
+              "Office, FSLogix, Defender, Windows Update",
+              "Hyper-V drivers, cloud-init, Azure agent, serial console, PTP time"
+            ],
+            [
+              "Sysprep generalize",
+              "Never booted before upload: empty machine-id, no host keys, no account"
+            ],
+            [
+              "Upload and create an image",
+              "Page blob and Azure Compute Gallery image version"
+            ],
+            [
+              "Host pool",
+              "azuredeploy.json VM; a Windows host pool can publish a RemoteApp to it if AVD is required"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "Security type",
+          "text": "Standard, not Trusted Launch: the systemd-boot loader is unsigned. A signed loader is queued before Trusted Launch can be claimed."
+        }
+      ]
+    },
+    {
+      "heading": "Validation",
+      "blocks": [
+        {
+          "type": "table",
+          "columns": [
+            "Check",
+            "Result",
+            "Status"
+          ],
+          "widths": [
+            3,
+            5,
+            1
+          ],
+          "rows": [
+            [
+              "Desktop VHD booted in QEMU like Azure provisions it (cloud-init, NoCloud seed)",
+              "23 of 23 checks: SSH after 43 s, cloud-init done, no failed units, per-machine keys and machine ID, Hyper-V initrd, agent settings",
+              "Verified"
+            ],
+            [
+              "Console",
+              "Plymouth ThoxOS splash and LightDM greeter captured from the VGA console",
+              "Verified"
+            ],
+            [
+              "RDP",
+              "Branded xrdp login; one session per look, look confirmed through xfconf",
+              "Verified"
+            ],
+            [
+              "ThoxOS on Ginux in the desktop",
+              "User's Ginux VM pulled ThoxOS (110 MB, 446 s nested); uname reports Ginux 6.12.0-ginux.0.1; thox status answered",
+              "Verified"
+            ],
+            [
+              "Headless VHD",
+              "13 of 13 checks; ThoxOS on Ginux booted with systemd to the login prompt for the administrator (853 s nested)",
+              "Verified"
+            ],
+            [
+              "KnightHub 0.2.0 SSD image",
+              "6 of 6 host checks as a USB disk in QEMU after moving to the shared Dockerfile",
+              "Verified"
+            ],
+            [
+              "Unit and static checks",
+              "137 pytest cases, shellcheck clean; full theme generation with the real fonts in the build container",
+              "Verified"
+            ],
+            [
+              "Azure: gallery, deployment, nested KVM, hosted model",
+              "Not run: no subscription in this runtime",
+              "Pending"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Sixteen defects surfaced in the build and bench runs and were fixed before the final images, among them a 300 s initramfs sleep from rootdelay, a GTK theme setting that made the desktop session spin at full CPU, and a machine ID that every VM would have shared (VALIDATION.md D-01 to D-16). The 0.1.0 KnightHub image very likely carries that last defect too."
+        }
+      ]
+    },
+    {
+      "heading": "Screenshots",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Real captures from the final desktop VHD booted in QEMU with software emulation and reached over RDP. They show the shipped image, not Azure."
+        },
+        {
+          "type": "image",
+          "src": "../previews/azure/boot-splash.png",
+          "alt": "ThoxOS Plymouth splash: green chip mark, progress hairline, slogan and the base-truth footer",
+          "caption": "Boot splash on the VGA console (QEMU)"
+        },
+        {
+          "type": "image",
+          "src": "../previews/azure/lightdm-greeter.png",
+          "alt": "LightDM greeter in the TXF Slate style with the ThoxOS administrator account",
+          "caption": "Console greeter (QEMU)"
+        },
+        {
+          "type": "image",
+          "src": "../previews/azure/rdp-login.png",
+          "alt": "xrdp login screen with the ThoxOS logo over the dark wallpaper",
+          "caption": "RDP login (QEMU capture over RDP)"
+        },
+        {
+          "type": "image",
+          "src": "../previews/azure/rdp-slate-about.png",
+          "alt": "TXF Slate desktop with the About this system window listing ThoxOS Desktop, the cloud kernel, the Ginux runtime, look and AI route",
+          "caption": "TXF Slate with About this system (QEMU capture over RDP)"
+        },
+        {
+          "type": "image",
+          "src": "../previews/azure/rdp-porcelain-files.png",
+          "alt": "Porcelain light look with the file manager showing green folders",
+          "caption": "Porcelain with the file manager (QEMU capture over RDP)"
+        },
+        {
+          "type": "image",
+          "src": "../previews/azure/rdp-console-pro-ginux.png",
+          "alt": "Console Pro look with a terminal running ThoxOS on the Ginux kernel; uname reports Ginux",
+          "caption": "Console Pro with ThoxOS on Ginux in the terminal (QEMU capture over RDP, nested software emulation)"
+        }
+      ]
+    },
+    {
+      "heading": "Deploy on Azure",
+      "blocks": [
+        {
+          "type": "numbered",
+          "items": [
+            "Build the VHD: installer/build-host-image.sh --target azure --desktop desktop (about 2 minutes with a warm Docker cache).",
+            "Publish: azure/publish-image.sh --vhd build/azure/thoxos-ginux-azure-desktop-0.2.0.vhd --resource-group thoxos-images --location eastus. It prints the image version ID.",
+            "Deploy: az deployment group create with azure/azuredeploy.json, the image version ID, allowedSourceCidr set to your address and an administrator password.",
+            "Connect with RDP to the VM's DNS name; pick a look; open ThoxOS on Ginux from the dock.",
+            "Optional: after provisioning, an administrator installs the restricted /etc/thoxos/ai-relay.env file using docs/AZURE.md. Model API keys are not ARM parameters or custom data."
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "Exposure",
+          "text": "SSH and RDP open only to the one source range you pass; there is no default. Ginux has no security audit: keep it a research VM."
+        }
+      ]
+    },
+    {
+      "heading": "Two records, kept apart",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A second runtime answered the same request in pull request #2: an Ubuntu 24.04 marketplace host with a bootstrap artifact, a private VM behind NAT, Trusted Launch, a kernel startup patch with five fixes plus an Azure profile patch, and no desktop. The two records agree that AVD cannot host Ginux and that nothing ran on Azure. They differ on image strategy, security type, exposure and the kernel patch set. RECONCILIATION_2026-10-29.md lists each point for a ruling; neither record was changed to match the other."
+        }
+      ]
+    }
+  ],
+  "nextSteps": [
+    "Tommy: provide a subscription and resource group; Hermes publishes the desktop VHD and deploys it on Standard_D4s_v5 from one source IP.",
+    "Tommy: rule on the two Azure records (RECONCILIATION_2026-10-29.md) and on where the ThoxOS Desktop implementation lives.",
+    "Hermes and Claude: connect an Azure OpenAI deployment through thox-ai-relay and record thox ask from the host and from ThoxOS on Ginux."
+  ]
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ThoxOS Desktop</title>
+<style>
+/* TXF 5.2 start page. Values from /usr/share/thox/txf/txf-tokens.json. */
+:root{--canvas:#09090B;--surface:#18181B;--elevated:#27272A;--border:#3F3F46;--fg:#FAFAFA;--fg2:#A1A1AA;--green:#05A451;--accent:#37C77A;--hosted:#FBBF24;--mesh:#60A5FA;color-scheme:dark}
+@media (prefers-color-scheme:light){:root{--canvas:#FAFAFA;--surface:#FFFFFF;--elevated:#F4F4F5;--border:#D4D4D8;--fg:#09090B;--fg2:#52525B;--green:#047C3D;--accent:#047C3D;color-scheme:light}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--fg);font:15px/1.6 Inter,system-ui,sans-serif;padding:48px max(16px,6vw)}
+main{max-width:880px;margin:0 auto;display:grid;gap:28px}
+header{display:flex;align-items:center;gap:14px}
+header svg{width:40px;height:40px}
+h1{font-size:28px;line-height:1.2;margin:0;text-wrap:balance}
+.sub{color:var(--fg2);margin:4px 0 0;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 18px 16px}
+.card h2{font-size:15px;margin:0 0 6px}
+.card p{margin:0;color:var(--fg2);font-size:14px}
+kbd,code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:var(--elevated);border:1px solid var(--border);border-radius:6px;padding:1px 6px;color:var(--fg)}
+.chip{display:inline-block;font:700 11px "JetBrains Mono",monospace;letter-spacing:.06em;padding:2px 8px;border-radius:999px;background:var(--green);color:#fff;vertical-align:2px}
+.chip.hosted{background:var(--hosted);color:#09090B}
+footer{color:var(--fg2);font-size:12px;font-family:"JetBrains Mono",monospace}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)" aria-hidden="true"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>
+    <div>
+      <h1>ThoxOS Desktop</h1>
+      <p class="sub">GINUX EDITION &middot; DEBIAN 13 (TRIXIE) &middot; TXF 5.2</p>
+    </div>
+  </header>
+  <div class="grid">
+    <section class="card"><h2>ThoxOS on Ginux</h2><p>Open <strong>ThoxOS on Ginux</strong> from the dock. Your own VM boots the Ginux Rust kernel and pulls ThoxOS from this machine's private registry. Try <code>uname -srm</code> and <code>thox status</code>.</p></section>
+    <section class="card"><h2>Ask THOX</h2><p>Type <kbd>?</kbd> and a question in the launcher, or open <strong>Ask THOX</strong>. The top bar chip shows the route: <span class="chip">LOCAL</span> or <span class="chip hosted">HOSTED</span>.</p></section>
+    <section class="card"><h2>Looks</h2><p><strong>TXF Slate</strong> (dark, default), <strong>Porcelain</strong> (light) and <strong>Console Pro</strong> (left dock, mono chrome). Switch with <strong>ThoxOS Looks</strong> or <code>thoxos-look set porcelain</code>.</p></section>
+    <section class="card"><h2>This machine</h2><p><strong>About this system</strong> prints the identity, kernel, Ginux runtime and AI route. <strong>ThoxOS Doctor</strong> checks QEMU, firmware and KVM.</p></section>
+  </div>
+  <footer>Your AI. Your Data. Your Rules.&trade; &middot; Research preview: Ginux is unaudited and not for production use.</footer>
+</main>
+</body>
+</html>

@@ -4,8 +4,9 @@
 # Clones upstream Ginux at the commit pinned in upstream.lock, verifies the
 # checkout, and applies patches/*.patch in order. The result lives in
 # build/ginux-src (or the directory passed as $1). Re-running is cheap: when the
-# tree already sits at the pinned commit with the same patch set applied, the
-# script exits without touching it.
+# tree already sits at the pinned commit with the exact patch set applied, the
+# script exits without touching it. Existing trees are never deleted or reset;
+# source drift is an error, so local work survives a failed integrity check.
 #
 # Usage: scripts/ginux-source.sh [DEST_DIR]
 set -euo pipefail
@@ -20,6 +21,15 @@ fail() {
 
 command -v git >/dev/null 2>&1 || fail "git is required"
 command -v sha256sum >/dev/null 2>&1 || fail "sha256sum is required"
+command -v mktemp >/dev/null 2>&1 || fail "mktemp is required"
+
+work=""
+index=""
+cleanup() {
+    [[ -z "$index" ]] || rm -f -- "$index"
+    [[ -z "$work" ]] || rm -rf -- "$work"
+}
+trap cleanup EXIT
 
 # shellcheck source=/dev/null
 source "$repo_root/upstream.lock"
@@ -40,35 +50,59 @@ patch_set_id="$(
 )"
 marker="$dest/.thoxos-patch-set"
 
-if [[ -f "$marker" ]] && [[ "$(cat "$marker")" == "$patch_set_id" ]]; then
-    echo "ginux-source: $dest already at $GINUX_COMMIT with the current patch set"
+if [[ -e "$dest" || -L "$dest" ]]; then
+    [[ ! -L "$dest" && -d "$dest/.git" && ! -L "$dest/.git" && -f "$marker" && ! -L "$marker" ]] ||
+        fail "$dest exists and is not an owned ThoxOS Ginux checkout; nothing was changed"
+    [[ "$(cat "$marker")" == "$patch_set_id" ]] ||
+        fail "$dest has a different patch set; use a new destination (existing files were preserved)"
+    [[ "$(git -C "$dest" rev-parse HEAD)" == "$GINUX_COMMIT" ]] ||
+        fail "$dest HEAD differs from the pinned source; existing files were preserved"
+    [[ "$(git -C "$dest" remote get-url origin)" == "$GINUX_REPO" ]] ||
+        fail "$dest origin differs from upstream.lock; existing files were preserved"
+
+    # Reconstruct the requested patched index separately. Neither the user's
+    # index nor working files are changed by this verification.
+    index="$(mktemp)"
+    GIT_INDEX_FILE="$index" git -C "$dest" read-tree "$GINUX_COMMIT"
+    for patch in "${patches[@]}"; do
+        GIT_INDEX_FILE="$index" git -C "$dest" apply --cached --check "$patch" ||
+            fail "cannot verify patch $(basename "$patch") against pinned source"
+        GIT_INDEX_FILE="$index" git -C "$dest" apply --cached "$patch"
+    done
+    GIT_INDEX_FILE="$index" git -C "$dest" diff --no-ext-diff --quiet -- ||
+        fail "$dest contains changed source bytes; use a fresh destination (existing files were preserved)"
+    untracked="$(git -C "$dest" ls-files --others --exclude-standard)"
+    while IFS= read -r path; do
+        # The PKI step intentionally installs this one per-build public root.
+        case "$path" in "" | .thoxos-patch-set | services/network/certs/thoxos-local-root.pem) ;;
+        *) fail "$dest contains untracked source: $path; existing files were preserved" ;;
+        esac
+    done <<< "$untracked"
+    echo "ginux-source: verified $dest at $GINUX_COMMIT with the exact patch set"
     exit 0
 fi
 
-if [[ -e "$dest" ]]; then
-    # Only replace trees this script created; never delete an arbitrary path.
-    [[ -f "$marker" || -d "$dest/.git" ]] || fail "$dest exists and is not a ThoxOS Ginux tree"
-    rm -rf "$dest"
-fi
-
 mkdir -p "$(dirname "$dest")"
-git init -q "$dest"
-git -C "$dest" remote add origin "$GINUX_REPO"
+work="$(mktemp -d "$(dirname "$dest")/.ginux-source.XXXXXXXX")"
+git init -q "$work"
+git -C "$work" remote add origin "$GINUX_REPO"
 # Shallow fetch of the exact pinned commit keeps the download small.
-if ! git -C "$dest" fetch -q --depth 1 origin "$GINUX_COMMIT"; then
+if ! git -C "$work" fetch -q --depth 1 origin "$GINUX_COMMIT"; then
     fail "could not fetch $GINUX_COMMIT from $GINUX_REPO"
 fi
-git -C "$dest" checkout -q --detach FETCH_HEAD
-actual="$(git -C "$dest" rev-parse HEAD)"
+git -C "$work" checkout -q --detach FETCH_HEAD
+actual="$(git -C "$work" rev-parse HEAD)"
 [[ "$actual" == "$GINUX_COMMIT" ]] || fail "checked out $actual, expected $GINUX_COMMIT"
 
 for patch in "${patches[@]}"; do
-    if ! git -C "$dest" apply --check "$patch"; then
+    if ! git -C "$work" apply --check "$patch"; then
         fail "patch does not apply cleanly: $(basename "$patch")"
     fi
-    git -C "$dest" apply "$patch"
+    git -C "$work" apply "$patch"
     echo "ginux-source: applied $(basename "$patch")"
 done
 
-printf '%s\n' "$patch_set_id" >"$marker"
+printf '%s\n' "$patch_set_id" >"$work/.thoxos-patch-set"
+mv -T -- "$work" "$dest"
+work=""
 echo "ginux-source: ready at $dest ($GINUX_COMMIT + ${#patches[@]} ThoxOS patches)"

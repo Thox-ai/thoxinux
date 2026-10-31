@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=ThoxOS look
+Comment=Apply the chosen ThoxOS Desktop look (TXF 5.2)
+Exec=/usr/local/bin/thoxos-look apply --quiet
+OnlyShowIn=XFCE;
+NoDisplay=true
+X-XFCE-Autostart-Override=true
