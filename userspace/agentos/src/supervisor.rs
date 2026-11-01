@@ -11,6 +11,14 @@
 //! Registration verifies the agent identity token first. An unsigned or
 //! unverifiable agent is refused, the refusal is audited, and the agent
 //! is never spawned.
+//!
+//! Shutdown (defect F2): every agent is spawned as the leader of its own
+//! process group. `shutdown_all` marks every agent stop-requested so the
+//! restart policy cannot fire, sends SIGTERM to each live process group,
+//! waits a bounded grace period for the groups to exit, then escalates
+//! to SIGKILL for any survivor and reaps it. The daemon calls this when
+//! it receives SIGTERM or SIGINT, so a bare (non-systemd) run leaves no
+//! supervised agent behind.
 
 use std::collections::HashMap;
 use std::fs::OpenOptions;
@@ -20,6 +28,9 @@ use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
 use serde::Serialize;
+
+#[cfg(unix)]
+use std::os::unix::process::CommandExt;
 
 use crate::audit::AuditLog;
 use crate::identity::TrustStore;
@@ -59,6 +70,33 @@ pub struct Supervisor {
     state_dir: PathBuf,
     audit: Arc<AuditLog>,
     agents: Mutex<HashMap<String, AgentHandle>>,
+}
+
+/// Default grace period between SIGTERM and SIGKILL during daemon
+/// shutdown. Agents that exit on SIGTERM finish well inside it; agents
+/// that ignore SIGTERM are force-killed once it elapses.
+pub const DEFAULT_SHUTDOWN_GRACE: Duration = Duration::from_secs(3);
+
+/// Send `sig` to the process group led by `pid`, falling back to the
+/// single process when the group does not exist (yet). Agents are
+/// spawned with `process_group(0)`, so the group id equals the agent
+/// pid and anything the agent itself forked is signaled with it.
+/// Returns true when a signal was delivered to the group or the pid.
+#[cfg(unix)]
+fn signal_group(pid: u32, sig: libc::c_int) -> bool {
+    // SAFETY: kill(2) with a pid and signal the caller owns the target
+    // of; no memory is touched. A negative pid targets the process
+    // group, the positive form targets the single process.
+    let group_rc = unsafe { libc::kill(-(pid as libc::pid_t), sig) };
+    if group_rc == 0 {
+        return true;
+    }
+    unsafe { libc::kill(pid as libc::pid_t, sig) == 0 }
+}
+
+#[cfg(not(unix))]
+fn signal_group(_pid: u32, _sig: i32) -> bool {
+    false
 }
 
 impl Supervisor {
@@ -174,6 +212,11 @@ impl Supervisor {
             .map_err(|e| format!("cannot clone journal handle: {e}"))?;
         let manifest = &handle.manifest;
         let mut cmd = Command::new(&manifest.command[0]);
+        // Each agent leads its own process group so shutdown can signal
+        // the whole group (the agent plus anything it forked) without
+        // touching the daemon group.
+        #[cfg(unix)]
+        cmd.process_group(0);
         cmd.args(&manifest.command[1..])
             .envs(manifest.env.iter())
             .env("THOX_AGENT_NAME", name)
@@ -216,12 +259,134 @@ impl Supervisor {
         handle.stop_requested = true;
         handle.restart_at = None;
         if let Some(mut child) = handle.child.take() {
+            // SIGKILL semantics as before, but delivered to the whole
+            // process group so helpers the agent forked die with it.
+            #[cfg(unix)]
+            signal_group(child.id(), libc::SIGKILL);
             let _ = child.kill();
             let _ = child.wait();
         }
         handle.state = AgentState::Stopped;
         let _ = self.audit.append("thox-agentd", "agent.stop", name, "ok", "stopped by request");
         Ok(())
+    }
+
+    /// Terminate every supervised agent. Used by the daemon on shutdown
+    /// (SIGTERM or SIGINT) so no agent is orphaned when the daemon exits
+    /// outside a systemd control group.
+    ///
+    /// Sequence: mark all agents stop-requested (restart policy must not
+    /// resurrect them), SIGTERM every live process group, poll for exit
+    /// until `grace` elapses, then SIGKILL the surviving groups and reap
+    /// them. Returns the number of agents that had a live child when the
+    /// shutdown began.
+    pub fn shutdown_all(&self, grace: Duration) -> usize {
+        // Phase 1: suppress restarts and collect live pids, then SIGTERM
+        // each process group. Signaling happens after the lock is
+        // released so a slow syscall never blocks the monitor thread.
+        let mut live: Vec<(String, u32)> = Vec::new();
+        {
+            let mut agents = self.agents.lock().expect("supervisor mutex");
+            for (name, handle) in agents.iter_mut() {
+                handle.stop_requested = true;
+                handle.restart_at = None;
+                if handle.state == AgentState::Restarting {
+                    handle.state = AgentState::Stopped;
+                }
+                if let Some(child) = handle.child.as_ref() {
+                    live.push((name.clone(), child.id()));
+                }
+            }
+        }
+        if live.is_empty() {
+            return 0;
+        }
+        let total = live.len();
+        #[cfg(unix)]
+        for (_, pid) in &live {
+            signal_group(*pid, libc::SIGTERM);
+        }
+        #[cfg(not(unix))]
+        for (name, _) in &live {
+            let _ = self.stop(name);
+        }
+        let _ = self.audit.append(
+            "thox-agentd",
+            "daemon.shutdown",
+            "",
+            "ok",
+            &format!(
+                "SIGTERM sent to {total} agent process group(s); grace {} ms",
+                grace.as_millis()
+            ),
+        );
+
+        // Phase 2: bounded grace period. Poll try_wait under short lock
+        // holds; exited children are reaped and recorded here rather
+        // than by the monitor tick, which now sees stop_requested.
+        let deadline = Instant::now() + grace;
+        loop {
+            let mut remaining = 0usize;
+            {
+                let mut agents = self.agents.lock().expect("supervisor mutex");
+                for handle in agents.values_mut() {
+                    let exited = match handle.child.as_mut() {
+                        Some(child) => match child.try_wait() {
+                            Ok(Some(status)) => Some(status.code()),
+                            Ok(None) => None,
+                            Err(_) => Some(None),
+                        },
+                        None => continue,
+                    };
+                    match exited {
+                        Some(code) => {
+                            handle.child = None;
+                            handle.last_exit_code = code;
+                            handle.state = AgentState::Stopped;
+                        }
+                        None => remaining += 1,
+                    }
+                }
+            }
+            if remaining == 0 || Instant::now() >= deadline {
+                break;
+            }
+            std::thread::sleep(Duration::from_millis(25));
+        }
+
+        // Phase 3: SIGKILL survivors (whole group plus the child handle
+        // itself, covering a group that was never created) and reap.
+        let mut survivors: Vec<(String, u32)> = Vec::new();
+        {
+            let agents = self.agents.lock().expect("supervisor mutex");
+            for (name, handle) in agents.iter() {
+                if let Some(child) = handle.child.as_ref() {
+                    survivors.push((name.clone(), child.id()));
+                }
+            }
+        }
+        if !survivors.is_empty() {
+            #[cfg(unix)]
+            for (_, pid) in &survivors {
+                signal_group(*pid, libc::SIGKILL);
+            }
+            let mut agents = self.agents.lock().expect("supervisor mutex");
+            for (name, handle) in agents.iter_mut() {
+                if let Some(mut child) = handle.child.take() {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    handle.state = AgentState::Stopped;
+                    let _ = self.audit.append(
+                        "thox-agentd",
+                        "daemon.shutdown",
+                        name,
+                        "ok",
+                        "agent did not exit within the grace period; SIGKILL sent",
+                    );
+                }
+            }
+        }
+        total
     }
 
     pub fn status(&self, name: &str) -> Option<AgentStatus> {

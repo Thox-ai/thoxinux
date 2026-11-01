@@ -13,11 +13,21 @@
 //!
 //! Defaults come from THOX_AGENTOS_HOME when set, else ~/.local/share and
 //! ~/.config under the home directory (see thox-agentos util module).
+//!
+//! Shutdown: SIGTERM and SIGINT ask the daemon to stop. The accept loop
+//! polls a flag set by the signal handler, then the supervisor
+//! terminates every supervised agent (SIGTERM to each agent process
+//! group, bounded grace period, SIGKILL for survivors) before the
+//! daemon exits. This fixes defect F2: previously the daemon had no
+//! signal handling at all, so a bare run orphaned its agents and only
+//! the systemd control-group kill masked the bug.
 
 use std::io::{BufRead, BufReader, Write};
 use std::os::unix::net::UnixListener;
 use std::path::PathBuf;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use std::time::Duration;
 
 use serde_json::{json, Value};
 
@@ -25,8 +35,35 @@ use thox_agentos::audit::AuditLog;
 use thox_agentos::broker::Broker;
 use thox_agentos::identity::TrustStore;
 use thox_agentos::manifest::Manifest;
-use thox_agentos::supervisor::Supervisor;
+use thox_agentos::supervisor::{Supervisor, DEFAULT_SHUTDOWN_GRACE};
 use thox_agentos::util::{config_dir, base_dir, tail_lines};
+
+/// Set by the SIGTERM and SIGINT handlers; polled by the accept loop.
+/// The handler does nothing else: all shutdown work happens on the main
+/// thread, outside signal context.
+static SHUTDOWN_REQUESTED: AtomicBool = AtomicBool::new(false);
+
+extern "C" fn on_shutdown_signal(_sig: libc::c_int) {
+    SHUTDOWN_REQUESTED.store(true, Ordering::SeqCst);
+}
+
+/// Install handlers for SIGTERM and SIGINT. Installed before any agent
+/// is spawned, so a shutdown request can never arrive in a window where
+/// agents exist but nobody is listening for the signal.
+fn install_signal_handlers() {
+    // SAFETY: the handler only stores to a static AtomicBool, which is
+    // async-signal-safe. sa_mask is emptied and no SA_RESTART is set;
+    // the listener is nonblocking and polled, so no syscall needs to
+    // resume after the handler runs.
+    unsafe {
+        let mut sa: libc::sigaction = std::mem::zeroed();
+        sa.sa_sigaction = on_shutdown_signal as *const () as libc::sighandler_t;
+        libc::sigemptyset(&mut sa.sa_mask);
+        sa.sa_flags = 0;
+        libc::sigaction(libc::SIGTERM, &sa, std::ptr::null_mut());
+        libc::sigaction(libc::SIGINT, &sa, std::ptr::null_mut());
+    }
+}
 
 struct Config {
     state_dir: PathBuf,
@@ -242,6 +279,7 @@ fn handle(sup: &Arc<Supervisor>, trust: &TrustStore, agents_dir: &PathBuf, req: 
 }
 
 fn main() {
+    install_signal_handlers();
     let cfg = parse_args();
     std::fs::create_dir_all(&cfg.state_dir).expect("create state dir");
     std::fs::create_dir_all(cfg.state_dir.join("run")).expect("create run dir");
@@ -276,9 +314,15 @@ fn main() {
         eprintln!("thox-agentd: {note}");
     }
     let _ = audit.append("thox-agentd", "daemon.start", cfg.socket.to_str().unwrap_or(""), "ok", "daemon started");
-    for stream in listener.incoming() {
-        match stream {
-            Ok(stream) => {
+    // Nonblocking accept loop so the main thread can observe shutdown
+    // requests between connections. Behavior per connection is unchanged
+    // from the previous blocking `listener.incoming()` loop.
+    listener
+        .set_nonblocking(true)
+        .expect("set listener nonblocking");
+    while !SHUTDOWN_REQUESTED.load(Ordering::SeqCst) {
+        match listener.accept() {
+            Ok((stream, _addr)) => {
                 let sup = sup.clone();
                 // Reload the trust store per connection so key rotation on
                 // disk takes effect without a daemon restart.
@@ -299,7 +343,27 @@ fn main() {
                     }
                 });
             }
-            Err(e) => eprintln!("thox-agentd: accept failed: {e}"),
+            Err(e) if e.kind() == std::io::ErrorKind::WouldBlock => {
+                std::thread::sleep(Duration::from_millis(25));
+            }
+            Err(e) => {
+                eprintln!("thox-agentd: accept failed: {e}");
+                std::thread::sleep(Duration::from_millis(25));
+            }
         }
     }
+    // Shutdown requested (SIGTERM or SIGINT). Terminate every supervised
+    // agent before exiting so none is orphaned (defect F2), then remove
+    // the control socket so a later start is not confused by a stale one.
+    eprintln!("thox-agentd: shutdown requested; terminating supervised agents");
+    let stopped = sup.shutdown_all(DEFAULT_SHUTDOWN_GRACE);
+    let _ = audit.append(
+        "thox-agentd",
+        "daemon.stop",
+        cfg.socket.to_str().unwrap_or(""),
+        "ok",
+        &format!("daemon stopped; {stopped} supervised agent(s) terminated"),
+    );
+    eprintln!("thox-agentd: stopped; {stopped} supervised agent(s) terminated");
+    std::fs::remove_file(&cfg.socket).ok();
 }
