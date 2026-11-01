@@ -97,3 +97,20 @@ Per-area status for the surfaces the ThoxOS agent runtime depends on
 The full row-level audit record (all 375 rows with statuses, the 23-row ABI
 surface table, and the agent-path evidence) is preserved with the run evidence
 and in the upstream ledger at the pinned commit.
+
+
+## Drift note (added 2026-10-31, Wave 3)
+
+Upstream Ginux moves daily, so its compatibility totals drift away from
+this pin quickly. The two number sets in circulation, with their dates:
+
+| Source | Date read | Complete | Partial | Policy-denied | Unsupported | Missing |
+|---|---|---|---|---|---|---|
+| Pin `36503bda` (this fork's base, audited) | 2026-10-31 | 82 | 245 | 48 | 0 | 0 |
+| Upstream `main` (for comparison only) | 2026-10-31 | 53 | 257 | 48 | 17 | 0 |
+
+Upstream's own totals line changed again during the 2026-10-31 audit
+window, so the `main` row is a snapshot, not a stable reference. ThoxInux
+plans, tests, and publishes only against the pin. Any future re-sync
+re-audits the new pin and replaces this table; numbers from different
+commits are never mixed in one claim.

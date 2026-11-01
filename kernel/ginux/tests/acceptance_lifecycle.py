@@ -52,7 +52,13 @@ def boot(label, commands, expected_boot):
     try:
         startup = wait(0)
         assert expected_boot in startup, startup
-        assert 'THOX Azure Compute Edition (QEMU/TCG)' in startup, startup
+        # Accepted THOX build-profile banners. The Azure candidate line
+        # printed the first; the unified ThoxInux series prints the
+        # second (thox-identity patch). Either proves a THOX payload;
+        # the exact profile is recorded in lifecycle-results.json.
+        thox_profiles = ('THOX Azure Compute Edition (QEMU/TCG)',
+                         'ThoxInux unified (standalone UEFI)')
+        assert any(profile in startup for profile in thox_profiles), startup
         for command, expected in commands:
             cursor = len(output)
             proc.stdin.write((command + '\n').encode())

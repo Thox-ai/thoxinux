@@ -25,7 +25,17 @@ cd kernel/ginux
 scripts/run-vm.sh
 ```
 
-Load-bearing configuration, learned from the predecessor evidence and enforced by the launcher: 2 GiB RAM, 1 vCPU, `intel-iommu,intremap=off,aw-bits=48`. QEMU defaults (39-bit address width) fail the kernel's 48-bit contract, and a 4 GiB attempt fails EFI identity-map placement. Do not "fix" these by changing the kernel; they are the tested profile. Expected console: the ThoxInux identity block, the upstream "Ginux controller v0 (ring 3)" banner byte-identical, then the controller prompt. Try `help`, `status`, and the domain commands the prompt lists.
+Load-bearing configuration, learned from the predecessor evidence and enforced by the launcher: 2 GiB RAM, 1 vCPU, `intel-iommu,intremap=off,aw-bits=48`. QEMU defaults (39-bit address width) fail the kernel's 48-bit contract, and a 4 GiB attempt fails EFI identity-map placement. Do not "fix" these by changing the kernel; they are the tested profile.
+
+> Annotation (2026-10-31, Wave 3 doc correction): one element of this
+> profile is disputed by our own evidence. The claim that `aw-bits=48` is
+> load-bearing comes from the predecessor handoff, but in the D14 evidence
+> rerun the full 22-command lifecycle suite passed under both TCG and KVM
+> in runs whose QEMU invocation (upstream `run.sh`) passes no `aw-bits`
+> argument at all. The launcher profile above remains the tested
+> configuration for `scripts/run-vm.sh`, and the 2 GiB memory limit,
+> 1 vCPU, and `intremap=off` stand as documented. Whether `aw-bits=48` is
+> strictly required has not been isolated; do not assert it as proven. Expected console: the ThoxInux identity block, the upstream "Ginux controller v0 (ring 3)" banner byte-identical, then the controller prompt. Try `help`, `status`, and the domain commands the prompt lists.
 
 ## 3. Run the userspace demo (Docker)
 
