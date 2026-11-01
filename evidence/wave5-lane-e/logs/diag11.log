@@ -1,0 +1,4 @@
+thoxos-g-demo: dns 127.0.0.1:53 and registry https://registry.thoxos.internal (127.0.0.1:443) ready
+diag11: prompt after: python3 /opt/agentos/m1.py; echo m1-exit=$?
+diag11: prompt after: python3 /opt/agentos/m2.py; echo m2-exit=$?
+diag11: prompt after: python3 /opt/agentos/m3.py; echo m3-exit=$?

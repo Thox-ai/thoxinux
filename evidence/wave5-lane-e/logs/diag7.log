@@ -1,0 +1,6 @@
+thoxos-g-demo: dns 127.0.0.1:53 and registry https://registry.thoxos.internal (127.0.0.1:443) ready
+diag7: prompt after: python3 /opt/agentos/manifest.py; echo m-exit=$?
+diag7: prompt after: head -c 200 /opt/agentos/driver1.py; echo read-done
+diag7: prompt after: python3 -c "import subprocess, runpy, socket; print('imports
+diag7: prompt after: python3 /opt/agentos/driver1.py; echo d1-exit=$?
+diag7: no controller return

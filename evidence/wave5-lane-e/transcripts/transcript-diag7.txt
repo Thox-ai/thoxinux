@@ -1,0 +1,132 @@
+BdsDxe: loading Boot0001 "UEFI QEMU HARDDISK QM00011 " from PciRoot(0x0)/Pci(0x1F,0x2)/Sata(0x5,0xFFFF,0x0)
+BdsDxe: starting Boot0001 "UEFI QEMU HARDDISK QM00011 " from PciRoot(0x0)/Pci(0x1F,0x2)/Sata(0x5,0xFFFF,0x0)
+Ginux booted
+ginux: booting
+ginux: memory protections ready
+ginux: memory manager ready
+ginux: boot devices ready
+ginux: control runtime ready
+ginux: platform, security, devices, and runtime ready
+ginux: persistent storage initialized (generation 1, 134217720 data sectors)
+ginux: timing boot-to-controller: 99 ms
+
+ginux: launching embedded controller in ring 3
+
+Ginux controller v0 (ring 3)
+ThoxOS Ginux Edition 0.1.0 | THOX.ai | research preview
+Type 'help' for commands.
+ginux: Linux live sysinfo accounting validated
+ginux: Linux getrandom contract validated
+ginux: Linux resource-limit queries validated
+ginux: Linux process identity validated
+ginux: Linux timekeeping validated
+ginux: Linux runtime pipe accounting validated
+eth0: automatic DHCP configuration
+eth0: requesting DHCP lease
+eth0: DHCP configured 10.0.2.15/24 via 10.0.2.2 DNS 10.0.2.3
+ginux> domain list
+NAME            STATE       PERSONALITY  INIT                  CPU  MEM-MIB  AUTO   NETWORKS          IMAGE
+ginux> network set eth0 dns 10.0.2.2
+eth0: DNS configured
+ginux> domain new thoxos-shell
+thoxos-shell: created (image required)
+ginux> domain set thoxos-shell image=registry.thoxos.internal/thoxos/userspace:0.1.0 init=/usr/local/bin/thox-shell memory-mib=2048
+thoxos-shell: settings accepted; configured
+ginux> domain start thoxos-shell --attach
+ginux: checking OCI cache registry.thoxos.internal/thoxos/userspace:0.1.0
+ginux: OCI cache miss; pulling image
+ginux: pulling OCI image registry.thoxos.internal/thoxos/userspace:0.1.0
+ginux: OCI pulling image manifest
+ginux: OCI pulling image configuration
+ginux: OCI manifest selected for linux/amd64
+ginux: OCI image configuration verified
+ginux: OCI layer 1/10: pulling sha256:680255317b2bf819a9aacf943f74c7961014777852de844381ee00aeb2087da8 (98489347 bytes)
+ginux: OCI layer 1/10: verified sha256:680255317b2bf819a9aacf943f74c7961014777852de844381ee00aeb2087da8 (98489347 bytes)
+ginux: OCI layer 2/10: pulling sha256:3819a8ed03adcb5f96eb43eb5025696dd81e6affe1036bf2a1111ebc535e11b4 (11264263 bytes)
+ginux: OCI layer 2/10: verified sha256:3819a8ed03adcb5f96eb43eb5025696dd81e6affe1036bf2a1111ebc535e11b4 (11264263 bytes)
+ginux: OCI layer 3/10: pulling sha256:3699d5bfc77b05ad7f719d4a65ca98233e022d82468986d129bdd288374eb21e (15624 bytes)
+ginux: OCI layer 3/10: verified sha256:3699d5bfc77b05ad7f719d4a65ca98233e022d82468986d129bdd288374eb21e (15624 bytes)
+ginux: OCI layer 4/10: pulling sha256:5b15b2c71f9f5bb232befae29f6e8c0041d300e66aff344ba5e01ead9d352730 (8908 bytes)
+ginux: OCI layer 4/10: verified sha256:5b15b2c71f9f5bb232befae29f6e8c0041d300e66aff344ba5e01ead9d352730 (8908 bytes)
+ginux: OCI layer 5/10: pulling sha256:ce48d9e7ebe35799d1781f622dc6832e34d63d74c0114391e5b88911977c6671 (10571196 bytes)
+ginux: OCI layer 5/10: verified sha256:ce48d9e7ebe35799d1781f622dc6832e34d63d74c0114391e5b88911977c6671 (10571196 bytes)
+ginux: OCI layer 6/10: pulling sha256:0c688b499fd19cb8404207113245a383371080295311b70bd4220c52d5acdead (1279 bytes)
+ginux: OCI layer 6/10: verified sha256:0c688b499fd19cb8404207113245a383371080295311b70bd4220c52d5acdead (1279 bytes)
+ginux: OCI layer 7/10: pulling sha256:69c42924c10ab43da3b5c2f3a5f0f5318ae65bfa953e278466e6d69f4ae6594a (7052 bytes)
+ginux: OCI layer 7/10: verified sha256:69c42924c10ab43da3b5c2f3a5f0f5318ae65bfa953e278466e6d69f4ae6594a (7052 bytes)
+ginux: OCI layer 8/10: pulling sha256:7dd43fff78f12cc7fdb960f070cf47911684af47f7ccd0662e91665f3b4ad640 (788 bytes)
+ginux: OCI layer 8/10: verified sha256:7dd43fff78f12cc7fdb960f070cf47911684af47f7ccd0662e91665f3b4ad640 (788 bytes)
+ginux: OCI layer 9/10: pulling sha256:71fc40fa1171fc640e139d44422ea416152fed349b2eb0ce93f89fcc2efc02b5 (556 bytes)
+ginux: OCI layer 9/10: verified sha256:71fc40fa1171fc640e139d44422ea416152fed349b2eb0ce93f89fcc2efc02b5 (556 bytes)
+ginux: OCI layer 10/10: pulling sha256:e1708aa830b3f730bffc5205d934c43903afb33a43407c7648e7130588ce8a0a (1674 bytes)
+ginux: OCI layer 10/10: verified sha256:e1708aa830b3f730bffc5205d934c43903afb33a43407c7648e7130588ce8a0a (1674 bytes)
+ginux: timing OCI transfer: 2883 ms
+ginux: OCI cache stored 10 layers (120360687 bytes)
+ginux: OCI unpacking image filesystem
+ginux: timing OCI unpack/publish: 1379 ms
+ginux: timing OCI total: 18382 ms
+ginux: OCI image ready
+ginux: local configuration committed (generation 1)
+ginux: starting configured runtime domain
+ginux: entering configured Linux init
+ginux: timing domain-start-to-Linux-init-entry: 2 ms
+
+ThoxOS 0.1.0 Ginux Edition  (Rocky Linux 10 userspace on the Ginux kernel)
+Your AI. Your Data. Your Rules.™
+Research preview. Not for production use.
+
+
+  ThoxOS 0.1.0 Ginux Edition
+  Linux userspace, no Linux kernel underneath.
+
+  thox status        identity, kernel and AI endpoint
+  thox ask "..."     ask the configured THOX model endpoint
+
+  Research preview built on Ginux (Apache-2.0). Not for production use.
+
+thoxos:~# python3 /opt/agentos/manifest.py; echo m-exit=$?
+ginux: timing Linux-init-to-console: 95 ms
+{
+  "autostart": true,
+  "command": [
+    "/opt/agentos-bin/thox-reporter"
+  ],
+  "env": {
+    "THOX_AGENTD_SOCKET": "/opt/agentos/state/run/agentd.sock"
+  },
+  "identity_token": "eyJhZ2VudCI6InJlcG9ydGVy...[truncated]",
+  "name": "reporter",
+  "permissions": {
+    "exec_allow": [],
+    "fs_read": [
+      "/proc",
+      "/etc",
+      "/usr/lib"
+    ],
+    "fs_write": [],
+    "network_egress": false
+  },
+  "restart": {
+    "backoff_ms": 1000,
+    "max_restarts": 3,
+    "policy": "on-failure"
+  }
+}
+m-exit=0
+/bin/bash: line 1: echo: write error: Function not implemented
+thoxos:~# head -c 200 /opt/agentos/driver1.py; echo read-done
+#!/usr/bin/env python3
+# Wave 5 Lane E guest driver, phase 1 of 2: identity, payload, the
+# in-guest seed attempt, and the reporter manifest. Written to make
+# exactly ONE fork (the seed attempt): everead-done
+/bin/bash: line 1: echo: write error: Function not implemented
+thoxos:~# python3 -c "import subprocess, runpy, socket; print('imports-ok')"; echo imp-exit=$?
+imports-ok
+imp-exit=0
+/bin/bash: line 1: echo: write error: Function not implemented
+thoxos:~# python3 /opt/agentos/driver1.py; echo d1-exit=$?
+ginux: fatal exception vector: 8
+ginux: exception error code: 0
+ginux: exception instruction: 1828873799
+ginux: exception Linux snapshot/fork/pid: 9 14 11
+GINUX_KERNEL_PANIC

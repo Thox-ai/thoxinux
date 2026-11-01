@@ -1,0 +1,15 @@
+[Unit]
+Description=ThoxInux Wave 5 Lane E thox-agentd under systemd (system domain)
+After=multi-user.target
+Wants=multi-user.target
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/mkdir -p /opt/agentos/state/run
+ExecStart=/opt/agentos-bin/thox-agentd --state-dir /opt/agentos/state --agents-dir /opt/agentos/config/agents --trust-dir /opt/agentos/config/trust
+StandardOutput=journal+console
+StandardError=journal+console
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

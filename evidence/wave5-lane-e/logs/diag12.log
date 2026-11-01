@@ -1,0 +1,3 @@
+thoxos-g-demo: dns 127.0.0.1:53 and registry https://registry.thoxos.internal (127.0.0.1:443) ready
+diag12: prompt after: python3 -c "import subprocess; r = subprocess.run(['/opt/age
+diag12: TIMEOUT after: python3 -c "import subprocess; r = subprocess.run(['/opt/age: timed out waiting for '# '

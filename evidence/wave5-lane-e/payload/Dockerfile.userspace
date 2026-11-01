@@ -1,0 +1,9 @@
+FROM thoxos-g/userspace:0.1.0
+COPY payload/opt/agentos-bin/ /opt/agentos-bin/
+COPY payload/opt/agentos-src/ /opt/agentos-src/
+COPY payload/opt/agentos/ /opt/agentos/
+COPY payload/opt/agentos-config/ /opt/agentos/config/
+COPY payload/opt/agentos/deny.py /opt/agentos-src-deny.py
+RUN chmod 0755 /opt/agentos-bin/* /opt/agentos/guest-run.sh && ls -l /opt/agentos-bin /opt/agentos /opt/agentos/config/agents
+COPY payload/etc/systemd/system/ /etc/systemd/system/
+RUN mkdir -p /etc/systemd/system/multi-user.target.wants && ln -s ../agentos-daemon.service /etc/systemd/system/multi-user.target.wants/agentos-daemon.service && ln -s ../agentos-loop.service /etc/systemd/system/multi-user.target.wants/agentos-loop.service && ls -l /etc/systemd/system/multi-user.target.wants/

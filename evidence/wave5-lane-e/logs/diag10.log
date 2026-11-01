@@ -1,0 +1,5 @@
+thoxos-g-demo: dns 127.0.0.1:53 and registry https://registry.thoxos.internal (127.0.0.1:443) ready
+diag10: prompt after: python3 /opt/agentos/t512.py; echo t512-exit=$?
+diag10: prompt after: python3 /opt/agentos/t1024.py; echo t1024-exit=$?
+diag10: prompt after: python3 /opt/agentos/t1536.py; echo t1536-exit=$?
+diag10: prompt after: python3 /opt/agentos/t2048.py; echo t2048-exit=$?

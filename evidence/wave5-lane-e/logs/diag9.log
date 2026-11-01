@@ -1,0 +1,7 @@
+thoxos-g-demo: dns 127.0.0.1:53 and registry https://registry.thoxos.internal (127.0.0.1:443) ready
+diag9: prompt after: python3 /opt/agentos/procscan.py; echo p-exit=$?
+diag9: prompt after: printf 'print("guestfile-ok")
+' > /tmp/t.py; python3 /tmp/t.
+diag9: prompt after: cp /opt/agentos/driver1.py /tmp/d1.py; python3 /tmp/d1.py; e
+diag9: prompt after: python3 /opt/agentos/driver1.py; echo d1-exit=$?
+diag9: no controller return
