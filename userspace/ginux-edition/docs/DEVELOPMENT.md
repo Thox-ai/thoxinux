@@ -89,6 +89,25 @@ Three layers in one slice:
 
 Behind a TLS-inspecting proxy add `EXTRA_CA=/path/ca.pem`; the CA reaches only the RUN steps that fetch (BuildKit secret).
 
+### make test policy: green does not depend on who runs it
+
+`make test` is expected to exit 0 both as root and as an unprivileged
+user. Two findings are settled as repo policy, not as host luck:
+
+- Entrypoint tests are root-required. `tests/test_entrypoint_environment.py`
+  runs the real `docker/entrypoint.sh`, which writes
+  `/var/log/thoxos-g-registry.log`, runs `usermod`/`groupadd` and `chown`,
+  and drops privileges with `setpriv` to the `thoxos` user. The module
+  therefore carries a pytest `skipif` on `os.geteuid() != 0` whose reason
+  names that privilege requirement. Under root those tests run in full;
+  as an unprivileged user they skip with that reason instead of failing.
+  No assertion is deleted or weakened by the skip.
+- ShellCheck SC2329 is dispositioned in `.shellcheckrc` in this
+  directory. SC2329 reports a function as never invoked when it is in
+  fact invoked indirectly; see the comment in that file for the
+  `run_step` dispatch case in `scripts/local-ci.sh`. ShellCheck still
+  runs as part of `make test` and must pass; only SC2329 is disabled.
+
 ## Patch workflow
 
 1. `bash scripts/ginux-source.sh build/ginux-src` (pinned commit plus current patches).

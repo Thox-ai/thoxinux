@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import platform
 import selectors
 import subprocess
 import time
@@ -18,6 +19,40 @@ SOURCE = args.source_dir.resolve()
 ROOT = args.output_dir.resolve()
 if ROOT.exists():
     parser.error('Choose a new output directory; preserve prior state/evidence')
+
+
+def resolve_accelerator():
+    """Return the accelerator upstream tools/qemu/run.sh will actually use.
+
+    run.sh takes QEMU_ACCEL when it is set and accepts only tcg or kvm.
+    Otherwise common.sh default_accelerator picks kvm on Linux x86_64
+    when /dev/kvm is readable and writable, and tcg everywhere else.
+    Mirror that selection exactly so the record names the real run,
+    instead of a hardcoded accelerator.
+    """
+    requested = os.environ.get('QEMU_ACCEL')
+    if requested is not None:
+        accelerator = requested.strip().lower()
+        if accelerator not in ('tcg', 'kvm'):
+            parser.error('QEMU_ACCEL must be tcg or kvm')
+        return accelerator, 'QEMU_ACCEL environment variable'
+    if (platform.system() == 'Linux' and platform.machine() == 'x86_64'
+            and os.access('/dev/kvm', os.R_OK | os.W_OK)):
+        return 'kvm', 'auto-detected: /dev/kvm readable and writable on Linux x86_64'
+    return 'tcg', 'auto-detected: no usable /dev/kvm, upstream default'
+
+
+def memory_label():
+    """Format the GINUX_MEMORY value run.sh will use (its default is 1G)."""
+    raw = os.environ.get('GINUX_MEMORY', '1G').strip()
+    if raw.endswith('G'):
+        return raw[:-1] + ' GiB'
+    if raw.endswith('M'):
+        return raw[:-1] + ' MiB'
+    return raw
+
+
+ACCELERATOR, ACCELERATOR_SOURCE = resolve_accelerator()
 expected_efi = SOURCE / 'build/esp/EFI/BOOT/BOOTX64.EFI'
 if args.efi.read_bytes() != expected_efi.read_bytes():
     parser.error('Provided EFI must match the built EFI used by upstream run.sh')
@@ -105,7 +140,9 @@ results.append(boot('recovered', [state('configured'),
     ('domain stop thoxprobe', 'stopped'), state('stopped')], 'persistent storage recovered'))
 record = {'test': 'real embedded minimal-system-v0 lifecycle', 'efi_sha256': EFI_SHA,
           'upstream': '36503bda2d87465765e1b94e65f9d100f27ed5be',
-          'profile': 'QEMU TCG, Q35/OVMF, 1 vCPU, 2 GiB, 48-bit IOMMU',
+          'accelerator': ACCELERATOR,
+          'accelerator_source': ACCELERATOR_SOURCE,
+          'profile': f'QEMU {ACCELERATOR.upper()}, Q35/OVMF, 1 vCPU, {memory_label()}, 48-bit IOMMU',
           'harness': 'pinned upstream tools/qemu/run.sh with explicit hardware environment',
           'results': results,
           'logs': {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()

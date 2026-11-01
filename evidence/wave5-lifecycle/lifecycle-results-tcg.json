@@ -1,0 +1,29 @@
+{
+  "test": "real embedded minimal-system-v0 lifecycle",
+  "efi_sha256": "85722bd41426491bf86f810bbdd25f951c53afc49e1bf32ad5b34c63ab4420ae",
+  "upstream": "36503bda2d87465765e1b94e65f9d100f27ed5be",
+  "accelerator": "tcg",
+  "accelerator_source": "QEMU_ACCEL environment variable",
+  "profile": "QEMU TCG, Q35/OVMF, 1 vCPU, 2 GiB, 48-bit IOMMU",
+  "harness": "pinned upstream tools/qemu/run.sh with explicit hardware environment",
+  "results": [
+    {
+      "boot": "cold",
+      "result": "passed",
+      "commands": 17
+    },
+    {
+      "boot": "recovered",
+      "result": "passed",
+      "commands": 5
+    }
+  ],
+  "logs": {
+    "lifecycle-cold.log": "237079ac489a1d74dff99eac5e87affd03cddbb4ee030e1bebc423031e25086a",
+    "lifecycle-recovered.log": "77d975306132da6fa4c1549f82702aadb6fa733866f268f6d60c62be84648436"
+  },
+  "claim_limits": [
+    "Local QEMU proof; not Azure-host, Docker, KVM, AVD or physical acceptance",
+    "Embedded init only; no arbitrary Linux workload qualification"
+  ]
+}
