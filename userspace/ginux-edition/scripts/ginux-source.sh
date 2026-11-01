@@ -2,7 +2,7 @@
 # ThoxOS Ginux Edition: prepare the patched Ginux source tree.
 #
 # Clones upstream Ginux at the commit pinned in upstream.lock, verifies the
-# checkout, and applies patches/*.patch in order. The result lives in
+# checkout, and applies patches-legacy-edition/*.patch in order. The result lives in
 # build/ginux-src (or the directory passed as $1). Re-running is cheap: when the
 # tree already sits at the pinned commit with the exact patch set applied, the
 # script exits without touching it. Existing trees are never deleted or reset;
@@ -37,9 +37,9 @@ source "$repo_root/upstream.lock"
 [[ "${GINUX_COMMIT:-}" =~ ^[0-9a-f]{40}$ ]] || fail "GINUX_COMMIT must be a full 40-character SHA"
 
 shopt -s nullglob
-patches=("$repo_root"/patches/*.patch)
+patches=("$repo_root"/patches-legacy-edition/*.patch)
 shopt -u nullglob
-((${#patches[@]} > 0)) || fail "no patches found in $repo_root/patches"
+((${#patches[@]} > 0)) || fail "no patches found in $repo_root/patches-legacy-edition"
 
 # Identity of the requested tree: pinned commit plus the exact patch bytes.
 patch_set_id="$(

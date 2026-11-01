@@ -36,8 +36,8 @@ def source(tmp_path: Path) -> dict:
     module = tmp_path / "module"
     (module / "scripts").mkdir(parents=True)
     shutil.copy2(SCRIPT, module / "scripts/ginux-source.sh")
-    (module / "patches").mkdir()
-    (module / "patches/0001-kernel.patch").write_text(patch)
+    (module / "patches-legacy-edition").mkdir()
+    (module / "patches-legacy-edition/0001-kernel.patch").write_text(patch)
     (module / "upstream.lock").write_text(
         f"GINUX_REPO='{upstream}'\nGINUX_COMMIT={commit}\n"
     )
@@ -87,7 +87,7 @@ def test_foreign_repository_is_never_deleted(source):
 def test_stale_patch_marker_preserves_existing_source(source):
     dest = initial(source)
     before = (dest / "kernel.rs").read_bytes()
-    (source["module"] / "patches/0001-kernel.patch").write_text("different patch bytes\n")
+    (source["module"] / "patches-legacy-edition/0001-kernel.patch").write_text("different patch bytes\n")
     result = prepare(source)
     assert result.returncode != 0
     assert "different patch set" in result.stderr
@@ -167,7 +167,7 @@ def test_symlink_destination_is_refused(source):
 
 
 def test_failed_patch_leaves_no_partial_destination(source):
-    (source["module"] / "patches/0001-kernel.patch").write_text("invalid patch\n")
+    (source["module"] / "patches-legacy-edition/0001-kernel.patch").write_text("invalid patch\n")
     result = prepare(source)
     assert result.returncode != 0
     assert not source["dest"].exists()

@@ -40,7 +40,7 @@ RUN --mount=type=secret,id=extra_ca,required=false with-extra-ca sh -euc '\
       rm /tmp/rustup-init'
 WORKDIR /work
 COPY upstream.lock ./upstream.lock
-COPY patches ./patches
+COPY patches-legacy-edition ./patches-legacy-edition
 COPY scripts ./scripts
 RUN --mount=type=secret,id=extra_ca,required=false with-extra-ca bash scripts/ginux-source.sh /work/ginux-src
 COPY --from=pki /pki/thoxos-local-root.pem /work/ginux-src/services/network/certs/thoxos-local-root.pem
