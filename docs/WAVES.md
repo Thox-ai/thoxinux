@@ -254,3 +254,253 @@ re-audit defining Wave 5.
 8. Evidence hygiene: the lifecycle suite's lifecycle-results.json
    hardcodes its profile string as "QEMU TCG" even for KVM runs; make
    the record name the accelerator actually used.
+
+## Wave 5: results (complete 2026-10-31, item 5 closed as a proven kernel blocker)
+
+1. Controlled-build release procedure and v0.9.1: DONE (commits
+   bef51fd, 8943889). upstream.env pins GINUX_SOURCE_DATE_EPOCH=
+   1793077647 (the pin commit timestamp); build-unified.sh exports
+   SOURCE_DATE_EPOCH from the pin unless caller-set, and defaults to
+   the pinned in-repo registry anchor (kernel/ginux/registry-anchor/
+   thoxos-local-root.pem, cert-only, SHA-256 8ba5d94f...) instead of a
+   fresh per-build CA; THOX_BUILD_FRESH_CA=1 is the development
+   opt-out. write-build-receipt.py records identity_patch_sha256
+   instead of the nonexistent legacy banner patch; builds now exit 0
+   (three verification builds, all exit 0). Procedure documented in
+   kernel/ginux/docs/RELEASE-BUILD.md. Reproducibility proven with
+   one correction to the Wave 3 record: two new-default builds at a
+   fixed non-canonical path were byte-identical to each other
+   (965791ad...) but differed from the Wave 3 controlled hash in
+   exactly 8 bytes, one cluster at offset 1652532-1652539, the first
+   8 bytes of the RSDS debug GUID. A third build at the canonical
+   Wave 3 path (/mnt/d/thoxinux-build/repro/run-fixed/src) reproduced
+   1bc1c7af33470edc009fa5756d3fe6063573660e07e157d19397afc680a7bb89
+   exactly. Conclusion: the absolute build path leaks into the EFI
+   through the RSDS GUID (a hash over linker debug data embedding
+   absolute paths), a channel the Wave 3 strings scan could not see;
+   same-path is a hard control and RELEASE-BUILD.md now records it.
+   v0.9.1 PUBLISHED as a public pre-release at
+   https://github.com/Thox-ai/thoxinux/releases/tag/v0.9.1 with
+   GINUX.EFI (the canonical-path bytes, 1bc1c7af...), SHA256SUMS and
+   build-receipt.json beside it; the asset was downloaded back
+   anonymously and hash-verified. v0.9.1 differs from Payload U only
+   in the 14 build-control bytes (TimeDateStamp plus RSDS cluster)
+   measured in Wave 3; it was not separately lifecycle-run and the
+   release notes say so. Demo image decision: KEEP THE SPLIT. The
+   demo PKI is per-build by design (its registry TLS leaf is signed
+   by a fresh root embedded in the demo EFI) and cannot sign under
+   the pinned unified anchor, whose private key does not exist; the
+   legacy series also carries different identity and startup
+   semantics, and the edition suite (173 tests) is pinned to it.
+   Revisit only as a designed PKI and identity migration.
+2. make test green policy: DONE (commit fa0921d). SC2329 at
+   scripts/local-ci.sh:101 is a false positive (the function is
+   invoked through run_step dispatch, which ShellCheck cannot
+   follow); disposition is a scoped userspace/ginux-edition/
+   .shellcheckrc disabling SC2329 only, with the reasoning in its
+   comments, no script change. The entrypoint environment tests are
+   now marked root-required in code (skipif on euid, reason naming
+   the /var/log write, usermod and setpriv) and documented in the
+   edition DEVELOPMENT.md. Verified: as root, make test exits 0
+   (pytest 171 passed, 2 skipped); as the unprivileged user, make
+   test exits 0 (163 passed, 10 skipped, the 8 entrypoint tests
+   skipping with the stated reason). Green no longer depends on who
+   runs it. Coordinator re-verified the root run on the merged tree:
+   exit 0, 171 passed, 2 skipped.
+3. boot/ssd payload kit: PARTIAL, with the build half blocked on
+   host disk space (commit b1e600f). The kit format was recovered
+   from install_host.verify_kit (a module-ginux directory: artifacts
+   GINUX.EFI, GINUX_LICENSE, GINUX_NOTICE, build-receipt.json,
+   SHA256SUMS, plus scripts/run-vm.sh; the kit carries no userspace,
+   which the builder clones from its pinned host source). A current
+   kit was assembled from the unified build (Payload U artifacts)
+   by the committed assembler boot/ssd/assemble_payload_kit.py; the
+   kit itself lives on disk at /mnt/d/w5-c-kit (the EFI is already
+   the published v0.9.0 asset; binaries stay out of git). One honest
+   caveat recorded in the kit receipt: no build-time receipt exists
+   for Payload U (the D14 receipt step failed on the legacy banner
+   filename after copying the EFI), so the assembler generates a
+   receipt of kind wave5-kit-assembly binding only measured hashes.
+   The kit passes the real verify_kit. build_external_ssd.py
+   prepare: PASS, exit 0 (all four pinned blobs verified, kit staged,
+   status prepared-not-built; the same prepare under /mnt/d did not
+   finish in 20 minutes on DrvFs, on ext4 it takes seconds). The
+   full --build is BLOCKED: command 1 of 2 (cargo test --workspace)
+   exited 101 when the KnightHub root filesystem hit 100 percent
+   (11 GiB free at start, the debug target alone grew to 11 GiB; ld
+   died with bus error, no space left). The 125 GiB gate measures
+   only the --out filesystem while the cargo target and Docker
+   volumes live on the root; at close-out the root had 0 bytes free.
+   No .img was produced by this path and none is claimed. Unblock:
+   about 40 GiB free on the root, or relocate the cargo target and
+   Docker data root to a /mnt/d-backed volume, then rerun. Carried
+   to Wave 6. Also recorded: the Wave 2 edition SSD image file no
+   longer exists on disk (logs and summary only); its recorded hash
+   stands unverified-again, and the previous output of the pinned
+   external builder (2026-10-25) was layout-verified read-only in
+   this wave (36,508,287,488 bytes, GPT 1 GiB ESP, 24 GiB root
+   x86-64, 1 GiB xbootldr, 8 GiB root ARM-64).
+4. Upstream re-sync evaluation: DONE, recommendation HOLD (commit
+   1fb3e57, docs/UPSTREAM-RESYNC-EVAL.md). Upstream main is
+   759cf2e221b459b0195c3fa7ed909688b755e74e (2026-10-31), 138 commits
+   past the pin, 330 files changed (about half of them upstream gate
+   evidence data). The dispatcher was restructured: the monolithic
+   cpu.rs (44,324 lines at the pin) is now 42,752 lines plus a new
+   cpu/ submodule (9 files, 8,237 lines; linux_abi.rs holds all 375
+   constants, linux_syscall.rs the dispatch). ABI contract surfaces
+   did not move: services/protocol, crates/protocol-state and
+   crates/native-abi are unchanged. Patch dry-runs on pristine main:
+   thox-identity APPLIES CLEAN; thox-registry-anchor APPLIES CLEAN
+   with offsets; thox-kernel-startup CONFLICTS (5 of 8 files);
+   thox-qemu-tools CONFLICTS (1 of 4 hunks). Fresh syscall audit at
+   main, same method as at the pin, four counts agreeing: 53
+   Complete / 257 Partial / 48 Policy-denied / 17 Unsupported of 375;
+   the table size and number set are identical to the pin, and all
+   29 status changes are re-scoring (the socket family to Partial,
+   17 obsolete calls to Unsupported), zero dispatch lost. Decision:
+   hold the pin for v0.9.1 and Wave 5; run the re-sync as its own
+   wave (Wave 6 item 1) with full lifecycle re-proof, on the monthly
+   cadence or sooner on a security fix, a defect hit, or about 150
+   more upstream commits.
+5. AgentOS on the Ginux kernel guest: BLOCKED on a proven kernel
+   defect, AgentOS exonerated (commit f32251c, evidence in
+   evidence/wave5-lane-e/). Route: agentos binaries baked into a
+   variant demo image (thoxos-g/demo-agentos:0.1.0-w5e from the
+   Wave 2 demo image, same EFI lineage) and booted under QEMU/KVM
+   on the real Ginux kernel (6.12.0-ginux.0.1; guest EFI SHA-256
+   21d12d86631df7947a9bd7389b664106676c6f97a18e44d38d9ddb906b00f7b4,
+   which supersedes the af58ecc7 figure in the Wave 2 summary
+   because the demo image was rebuilt in this wave's window).
+   Progress past the Wave 3 container proof: an ELF blocker was
+   found and fixed by build flag only (Ginux's relocatable exec plan
+   rejects default Rust binaries, rejection code 7; upstream
+   parse_relocatable requires exactly one PF_WRITE PT_LOAD;
+   RUSTFLAGS -z norelro fixes the layout; no source or policy
+   changes). thox-agentd then ran in-guest: socket present,
+   thox-agent list and status OK. The loop could not be completed:
+   with the daemon and reporter resident and writing state, the
+   domain faults at the next process-lifecycle activity across 17
+   attempts in both domains (three kernel signatures recorded
+   verbatim in the evidence: fatal exception vector 8 with
+   GINUX_KERNEL_PANIC; a Linux user fault at an identical RIP in
+   both domains; and a resume FS mismatch ending in domain marked
+   failed, including one death inside a 25-second idle window and
+   one where systemd started the daemon unit cleanly and the domain
+   still failed when the loop unit started). Bisects exonerate
+   AgentOS and the harness: fork/exec, redirects, script sizes and
+   Python-to-agent exec all pass in-guest, and the system domain
+   boots cleanly to graphical.target on the same image until the
+   daemon tree is resident. In-guest audit excerpts were never
+   captured because the domain died before the audit dump step in
+   every attempt; the Wave 3 container audit proof remains a
+   container proof and is not restated as this result. Candidate
+   unblocks and the rerun harness (harness/w5_session11.py) are
+   recorded in the evidence RESULTS.md: an upstream fix to domain
+   snapshot/resume bookkeeping for resident state-writing daemons,
+   or AgentOS state on non-snapshotted storage if a future edition
+   provides it. Carried to Wave 6, gated on the re-sync.
+   Secondary finding: the shipped first-boot-seed.sh cannot run
+   in the shell domain (bash command substitution returns empty
+   there); the baked seed was produced by the same script in the
+   variant container with guest paths, unmodified logic.
+6. ARM64 scoping: DONE (commit 1fb3e57, docs/ARM64-SCOPING.md).
+   Measured at upstream main 759cf2e2: one arch only (arch/x86_64,
+   18 files, 60,224 lines, 54 percent of kernel/src), plus 20
+   x86-64 assembly files (14,673 lines) and 17 files outside the
+   arch tree still referencing x86_64; roughly 75,000 lines define
+   the machine contract. The toolchain is not a blocker (Rust
+   1.99.0 ships aarch64-unknown-uefi; only build wiring is x86-only)
+   and the host test story exists (qemu-system-aarch64 plus AAVMF on
+   KnightHub). The aarch64 Linux ABI uses the asm-generic syscall
+   table, so the 375-entry table and ledger are re-derived, not
+   carried. THOX identity and registry-anchor patches are portable
+   as-is; kernel-startup splits. Effort sized relatively per
+   component in the doc; the five decision inputs for Tommy are
+   listed there, target hardware class first. No dates or
+   commitments stated.
+7. Installer dry-run hardening: DONE (commit b1e600f). Finding:
+   no dry-run mode exists (install_host.py rejects --dry-run at
+   argparse, exit 2; the edition install-to-ssd.sh rejects it,
+   exit 1); none was added in this wave. The closest non-writing
+   paths were exercised: preflight clean; install_host.py
+   --stage-root with the real kit exits 0 (staging_only true,
+   physical_write false, 9 files); native install refused without
+   sudo; and the install-to-ssd.sh refusal matrix as root against
+   image files and loop devices only, every case refusing before
+   any write (not root; regular file as device; nonexistent
+   device; loop without --allow-internal; undersized loop; wrong
+   confirmation token, with the backing file hash verified
+   unchanged; the running root disk, caught by the mounted
+   filesystems guard). boot/ssd tests grew 15 to 32, all passing
+   (14 new GuardRefusalTests driving real guard code, 3
+   KitAssemblyTests); coordinator re-verified 32 passed on the
+   merged tree. Guard logic was not modified anywhere. One guard
+   observation documented, not fixed: under WSL the root-disk
+   derivation in install-to-ssd.sh never fires (empty PKNAME), and
+   the mounted-filesystems guard catches the target instead;
+   defence in depth held.
+8. Evidence hygiene: DONE (commit 8b11ee7). acceptance_lifecycle.py
+   now resolves the accelerator exactly as the run does (QEMU_ACCEL
+   env validated, else the same auto-detection as run.sh) and
+   lifecycle-results.json records accelerator, accelerator_source
+   and a profile string built from the real accelerator and memory
+   (invalid QEMU_ACCEL errors before any output is created).
+   Re-runs against Payload U: TCG 22/22 with profile "QEMU TCG,
+   Q35/OVMF, 1 vCPU, 2 GiB, 48-bit IOMMU"; KVM 22/22 with profile
+   "QEMU KVM, Q35/OVMF, 1 vCPU, 2 GiB, 48-bit IOMMU". The records
+   now differ correctly; both JSONs are committed under
+   evidence/wave5-lifecycle/.
+
+Wave 5 close state: public main and staging main carry all five lane
+merges plus the Wave 6 starter item below. Founder-gated items are
+unchanged: named spare SSD, Azure subscription, Phase 3 firm and
+budget, Secure Boot signing. The ARM64 decision inputs (Wave 5
+item 6) are a new founder-facing item, Tommy's call, no gate on
+other work.
+
+## Wave 6: defined at Wave 5 close
+
+Starter item EXECUTED at Wave 5 close (commit 48628ea):
+write-build-receipt.py now records build provenance (build_path,
+source_date_epoch, registry_anchor_sha256) so a published EFI hash
+can be reproduced independently from the receipt alone; verified
+standalone against a fixture tree (SDE and anchor hash land
+exactly), and RELEASE-BUILD.md documents the new fields.
+
+1. Upstream re-sync wave (from the Wave 5 item 4 recommendation):
+   rebase the unified series onto upstream main (759cf2e2 or its
+   successor at wave start), resolving the kernel-startup conflicts
+   against the restructured dispatcher (5 of 8 files) and the one
+   qemu-tools hunk; re-run the full lifecycle suite TCG and KVM
+   against the re-synced build; publish the fresh audit (53
+   Complete figures at main) in docs/COMPATIBILITY.md with the pin
+   figures preserved and labelled; re-baseline the controlled build
+   (new pin timestamp as SOURCE_DATE_EPOCH, anchor decision
+   recorded) and cut v0.9.2 from it.
+2. Unblock build_external_ssd.py --build end to end: free about
+   40 GiB on the KnightHub root or relocate the cargo target and
+   Docker data root to a /mnt/d-backed volume (root was at 0 bytes
+   free at Wave 5 close); fix the 125 GiB gate to measure the
+   filesystems the build actually consumes; rerun the identical
+   command with the Wave 5 payload kit and produce the external
+   SSD image file, layout-verified. Image files only; no physical
+   writes.
+3. AgentOS guest loop retry, gated on item 1's re-synced kernel:
+   rerun evidence/wave5-lane-e/harness/w5_session11.py against the
+   new build before touching AgentOS code; if the domain
+   snapshot/resume fault persists, file the minimal reproduction
+   from the Lane E evidence as an upstream-facing defect record in
+   docs/. The -z norelro build flag gets documented in the agentos
+   build docs either way (Ginux guest binaries require it).
+4. Installer dry-run mode: add the additive --dry-run flag to
+   install_host.py and install-to-ssd.sh (defaults off, cannot
+   write when set, refusal guards run first), with tests in
+   boot/ssd/tests/; in the same pass fix the two documented guard
+   observations (the free-space gate filesystems from item 2, and
+   the install-to-ssd.sh root-disk derivation under WSL).
+5. Demo image EFI provenance: the demo image was rebuilt during
+   Wave 5 and its EFI hash moved (af58ecc7 to 21d12d86) without a
+   ledger entry at the time; add the demo build to the same receipt
+   discipline as the release build (build receipt with hashes
+   committed beside the image build record) so demo bytes are never
+   again identified only by a summary line.
