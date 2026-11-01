@@ -20,9 +20,21 @@ no manual arguments beyond source and output directories.
    certificate only, no private key; see that directory's README.md).
    The script logs `registry anchor mode=pinned-default`.
 3. Fixed build path: use the same absolute source path for every
-   verification build (for example `/mnt/d/w5-d-build/src`), wiped and
-   recreated between runs. Wave 3 found no build-path strings in the
-   EFI, but the control is kept so the procedure matches the proof.
+   verification build, wiped and recreated between runs. The canonical
+   release path is `/mnt/d/thoxinux-build/repro/run-fixed/src`, the
+   path Wave 3 used for its controlled builds. Wave 5 measured why the
+   path matters: two new-default builds at a different fixed path were
+   byte-identical to each other but differed from the Wave 3 hash in
+   exactly 8 bytes, a single cluster at file offset 1652532-1652539,
+   the first 8 bytes of the RSDS debug GUID, with identical
+   TimeDateStamp and identical intermediates (initramfs, generated
+   boot code, network service). A third build with the new defaults at
+   the canonical path reproduced the Wave 3 hash exactly. The path
+   therefore leaks through the RSDS GUID (a hash over linker debug
+   data that embeds absolute paths), not through any path string in
+   the EFI; Wave 3's strings scan could not see this channel. Same
+   path is a hard requirement, and matching a published hash requires
+   the canonical path.
 
 ## Opt-outs and overrides
 
@@ -41,7 +53,7 @@ no manual arguments beyond source and output directories.
 ## Build
 
 ```bash
-kernel/ginux/scripts/build-unified.sh /path/to/fixed/src /path/to/out
+kernel/ginux/scripts/build-unified.sh /mnt/d/thoxinux-build/repro/run-fixed/src /path/to/out
 ```
 
 A successful run exits 0. The output directory contains `GINUX.EFI`,
@@ -58,9 +70,9 @@ a release build is now a real failure.
 
 ## Verification procedure
 
-1. Build once from a clean tree at the fixed path. Record the exit
+1. Build once from a clean tree at the canonical path. Record the exit
    code, duration, and `sha256sum GINUX.EFI`.
-2. Wipe the source and output trees. Build again at the same fixed
+2. Wipe the source and output trees. Build again at the same canonical
    path with the same defaults and no manual control arguments.
 3. Compare: the two EFI SHA-256 values must be identical, and
    `cmp GINUX.EFI <second-build>/GINUX.EFI` must report no differences.
