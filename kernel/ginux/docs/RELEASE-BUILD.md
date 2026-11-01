@@ -61,7 +61,12 @@ A successful run exits 0. The output directory contains `GINUX.EFI`,
 covering all four. The receipt records the EFI SHA-256, the upstream
 commit, toolchain versions, every patch hash in `patches/series`
 (including `thox-identity.patch` under `identity_patch_sha256`), and
-the Cargo lockfile hash.
+the Cargo lockfile hash. Since Wave 6 the receipt also records the
+build provenance needed to reproduce the bytes independently:
+`build_path` (the canonical source path, a hard control, see the
+path section above), `source_date_epoch`, and
+`registry_anchor_sha256`, the hash of the anchor PEM actually
+installed into the source tree at build time.
 
 Historical note: before Wave 5 the receipt step referenced a legacy
 `thox-banner.patch` that does not exist in the unified series, so the

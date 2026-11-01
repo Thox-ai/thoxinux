@@ -3,6 +3,7 @@
 import datetime
 import hashlib
 import json
+import os
 import pathlib
 import subprocess
 import sys
@@ -29,5 +30,9 @@ receipt = {
     "efi_size_bytes": (out / "GINUX.EFI").stat().st_size,
     "artifacts": {name: sha(out / name) for name in ("GINUX.EFI", "GINUX_LICENSE", "GINUX_NOTICE")},
     "physical_hardware_test": "not_run",
+    "build_path": str(source.resolve()),
+    "source_date_epoch": os.environ.get("SOURCE_DATE_EPOCH"),
+    "registry_anchor_sha256": sha(anchor) if (anchor := (source / "services/network/certs/thoxos-local-root.pem")).is_file() else None,
+    "build_script": "kernel/ginux/scripts/build-unified.sh",
 }
 (out / "build-receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
