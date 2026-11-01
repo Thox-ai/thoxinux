@@ -1,0 +1,32 @@
+thox-agentos live smoke, KnightHub (WSL2), 2026-10-31
+Environment: cargo 1.99.1, state dir on native ext4 (see F3 in
+../../.agents/HANDOFF.md for why). Full log: AGENTOS-REPORT.md smoke.log
+(258 lines) in the run evidence.
+
+Daemon:
+  registered agent reporter
+  autostarted agent reporter
+  listening on <state>/run/agentd.sock
+
+CLI (all exit 0):
+  thox-agent status
+    reporter: state "running", live pid, restarts: 0
+  thox-agent logs reporter
+    STATUS os="Ubuntu 26.04 LTS" uptime_seconds=16343 source=broker
+    (the reporter's only data path is broker-mediated fs.read of
+     /etc/os-release and /proc/uptime; every call is audit-logged)
+  thox-agent audit
+    identity.verify allow
+    agent.start ok
+    daemon.start
+    tool.fs.read allow /proc/uptime
+    tool.fs.read allow /etc/os-release
+  thox-agent model show
+    {"model": null, "ok": true}   (empty slot on fresh state, correct)
+  thox-agent stop reporter  -> state "stopped", pid null
+  thox-agent start reporter -> running, fresh STATUS lines resume
+
+Tests: cargo test, 9 passed / 0 failed / 0 ignored (integration suite:
+identity refusal x3, capability denial for fs/exec/network, audit
+monotonicity, model swap + rollback + bad-digest safety, supervisor
+restart policy x2).

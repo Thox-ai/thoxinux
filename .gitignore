@@ -1,5 +1,6 @@
-module-ginux/artifacts/GINUX.EFI
-module-ginux/.work/
+kernel/ginux/artifacts/GINUX.EFI
+kernel/ginux/.work/
 **/__pycache__/
 *.pyc
 docs/azure/qa/*.png
+userspace/agentos/target/

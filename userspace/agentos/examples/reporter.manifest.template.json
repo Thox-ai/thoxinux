@@ -1,0 +1,1 @@
+{"autostart":true,"command":["__REPORTER_BIN__"],"env":{"THOX_AGENTD_SOCKET":"__SOCKET__"},"identity_token":"__TOKEN__","name":"reporter","permissions":{"exec_allow":[],"fs_read":["/proc","/etc","/usr/lib"],"fs_write":[],"network_egress":false},"restart":{"backoff_ms":1000,"max_restarts":3,"policy":"on-failure"}}

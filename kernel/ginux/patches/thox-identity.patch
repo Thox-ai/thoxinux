@@ -1,0 +1,26 @@
+diff --git a/control-plane/runtime/src/main.rs b/control-plane/runtime/src/main.rs
+index b8ae06a..eea0779 100644
+--- a/control-plane/runtime/src/main.rs
++++ b/control-plane/runtime/src/main.rs
+@@ -514,6 +514,21 @@ extern "C" fn ginux_controller_main() -> ! {
+     }
+     let mut line = [0_u8; MAX_LINE];
+ 
++    // THOX.ai LLC modification: ThoxInux identity. The upstream banner below
++    // stays byte-identical; upstream ABI and prompt are retained.
++    write(console, b"\r\nThoxInux 0.9.0 | ThoxOS Core | THOX.ai LLC\r\n");
++    write(
++        console,
++        b"Engineering preview: physical hardware unvalidated.\r\n",
++    );
++    write(
++        console,
++        b"Based on Ginux by Gregory M. Kurtzer and contributors.\r\n",
++    );
++    write(
++        console,
++        b"Build profile: ThoxInux unified (standalone UEFI)\r\n",
++    );
+     write(console, b"\r\nGinux controller v0 (ring 3)\r\n");
+     write(console, b"Type 'help' for commands.\r\n");
+     if !linux_sysinfo_contract(console) {

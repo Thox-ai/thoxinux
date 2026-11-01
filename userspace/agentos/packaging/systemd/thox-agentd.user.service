@@ -1,0 +1,15 @@
+[Unit]
+Description=ThoxOS agent supervisor daemon (thox-agentd, user instance)
+After=default.target
+
+[Service]
+Type=simple
+# User install layout: state in ~/.local/share/thox-agentos, manifests
+# and trust store in ~/.config/thox-agentos. The socket default inside
+# the daemon matches the CLI default, so no --socket flag is needed.
+ExecStart=%h/.local/bin/thox-agentd
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

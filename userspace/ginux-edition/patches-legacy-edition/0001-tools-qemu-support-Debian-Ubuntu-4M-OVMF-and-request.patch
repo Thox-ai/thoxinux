@@ -1,0 +1,77 @@
+From 81eed8faff27ab2d63f077a3e3b75e155dc8ef17 Mon Sep 17 00:00:00 2001
+From: Odette Lark <sadie@thox.ai>
+Date: Wed, 28 Oct 2026 22:24:06 -0500
+Subject: [PATCH 1/3] tools/qemu: support Debian/Ubuntu 4M OVMF and request
+ 48-bit IOMMU width
+
+QEMU releases before 9.1 default intel-iommu to aw-bits=39, which the
+kernel rejects during inactive DMA translation construction. Request
+aw-bits=48 when the device exposes the property, and discover the
+OVMF_CODE_4M/OVMF_VARS_4M firmware names used by Debian and Ubuntu.
+---
+ tools/qemu/common.sh | 20 ++++++++++++++++++--
+ tools/qemu/run.sh    |  3 ++-
+ 2 files changed, 20 insertions(+), 3 deletions(-)
+
+diff --git a/tools/qemu/common.sh b/tools/qemu/common.sh
+index 6bdcf8c..03390be 100755
+--- a/tools/qemu/common.sh
++++ b/tools/qemu/common.sh
+@@ -33,7 +33,9 @@ find_ovmf_code() {
+         /opt/homebrew/opt/qemu/share/qemu/edk2-x86_64-code.fd \
+         /usr/local/share/qemu/edk2-x86_64-code.fd \
+         /usr/share/OVMF/OVMF_CODE.fd \
+-        /usr/share/edk2/x64/OVMF_CODE.fd
++        /usr/share/OVMF/OVMF_CODE_4M.fd \
++        /usr/share/edk2/x64/OVMF_CODE.fd \
++        /usr/share/edk2/x64/OVMF_CODE.4m.fd
+ }
+ 
+ find_ovmf_vars() {
+@@ -46,7 +48,21 @@ find_ovmf_vars() {
+         /opt/homebrew/opt/qemu/share/qemu/edk2-i386-vars.fd \
+         /usr/local/share/qemu/edk2-i386-vars.fd \
+         /usr/share/OVMF/OVMF_VARS.fd \
+-        /usr/share/edk2/x64/OVMF_VARS.fd
++        /usr/share/OVMF/OVMF_VARS_4M.fd \
++        /usr/share/edk2/x64/OVMF_VARS.fd \
++        /usr/share/edk2/x64/OVMF_VARS.4m.fd
++}
++
++# The kernel requires a 48-bit (4-level) DMA remapping width. QEMU releases
++# before 9.1 default intel-iommu to aw-bits=39, so request 48 explicitly when
++# the device advertises the property.
++intel_iommu_device() {
++    local qemu="$1"
++    if "$qemu" -device intel-iommu,help 2>/dev/null | grep -q 'aw-bits'; then
++        printf 'intel-iommu,intremap=off,aw-bits=48\n'
++    else
++        printf 'intel-iommu,intremap=off\n'
++    fi
+ }
+ 
+ default_accelerator() {
+diff --git a/tools/qemu/run.sh b/tools/qemu/run.sh
+index 94263c2..f90fe6e 100755
+--- a/tools/qemu/run.sh
++++ b/tools/qemu/run.sh
+@@ -8,6 +8,7 @@ qemu="$(find_qemu)"
+ ovmf_code="$(find_ovmf_code)"
+ ovmf_vars_template="$(find_ovmf_vars)"
+ accelerator="${QEMU_ACCEL:-$(default_accelerator)}"
++iommu_device="$(intel_iommu_device "$qemu")"
+ if [[ "$accelerator" == "tcg" ]]; then
+     default_cpu_model="max,+smep,+smap,+umip"
+ else
+@@ -69,7 +70,7 @@ exec "$qemu" \
+     -serial stdio \
+     -no-reboot \
+     -net none \
+-    -device "intel-iommu,intremap=off" \
++    -device "$iommu_device" \
+     -device "virtio-blk-pci,drive=ginux-volume,disable-legacy=on,iommu_platform=on,serial=ginux-volume" \
+     -netdev "$qemu_netdev" \
+     ${network_capture[@]+"${network_capture[@]}"} \
+-- 
+2.43.0
+

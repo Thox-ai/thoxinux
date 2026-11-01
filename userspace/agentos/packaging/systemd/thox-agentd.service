@@ -1,0 +1,18 @@
+[Unit]
+Description=ThoxOS agent supervisor daemon (thox-agentd)
+Documentation=file:///usr/local/share/doc/thox-agentos/USER_GUIDE.md
+After=network.target
+
+[Service]
+Type=simple
+# System install layout. The user unit (thox-agentd.user.service) mirrors
+# this under the caller's home directory.
+ExecStart=/usr/local/bin/thox-agentd --state-dir /var/lib/thox-agentos --agents-dir /etc/thox-agentos/agents --trust-dir /etc/thox-agentos/trust --socket /run/thox-agentos/agentd.sock
+RuntimeDirectory=thox-agentos
+StateDirectory=thox-agentos
+ConfigurationDirectory=thox-agentos
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
