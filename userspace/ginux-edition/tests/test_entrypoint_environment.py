@@ -2,6 +2,13 @@
 
 The privilege stub records argv, then uses a genuinely empty child environment.
 This checks shell argument forwarding, not actual setpriv or container isolation.
+
+Root-required: every test in this module runs the real entrypoint, which
+writes /var/log/thoxos-g-registry.log, runs usermod/groupadd and chown, and
+drops privileges with setpriv to the thoxos user. As an unprivileged user
+those steps cannot succeed, so the module is skipped with the reason below
+instead of failing; no assertion is changed by the skip. See
+docs/DEVELOPMENT.md, "Build and test", for the make test policy.
 """
 
 from __future__ import annotations
@@ -15,6 +22,15 @@ import sys
 from pathlib import Path
 
 import pytest
+
+pytestmark = pytest.mark.skipif(
+    os.geteuid() != 0,
+    reason=(
+        "root required: the real entrypoint writes "
+        "/var/log/thoxos-g-registry.log, runs usermod/groupadd and chown, "
+        "and drops privileges with setpriv to the thoxos user"
+    ),
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 ENTRYPOINT = ROOT / "docker" / "entrypoint.sh"

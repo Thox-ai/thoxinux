@@ -1,0 +1,28 @@
+# ShellCheck policy for ThoxOS Ginux Edition (userspace/ginux-edition).
+#
+# SC2329 (info): "This function is never invoked. Check usage (or
+# ignored if invoked indirectly)."
+#
+# Disposition: disabled in this directory only, because the finding is
+# a false positive for the indirect-dispatch pattern used here.
+# scripts/local-ci.sh defines full_generation() and passes its name as
+# a plain argument to run_step, which executes it through "$@":
+#
+#     run_step "desktop theme generation in debian:trixie" full_generation
+#
+# ShellCheck cannot follow that indirection, so it reports the
+# function as dead code. The same site already carries an inline
+# "shellcheck disable=SC2317" for the same reason: a command reached
+# only through run_step looks unreachable to static analysis.
+# Deleting or inlining the function to satisfy the checker would be a
+# real change chasing a non-bug, so the honest fix is this scoped,
+# recorded disposition.
+#
+# Scope: this file applies to the shell sources checked from this
+# directory (make test runs shellcheck on scripts/, docker/,
+# installer/, azure/, desktop/ and tests/e2e/ sources). Only SC2329
+# is disabled. Every other ShellCheck check stays enabled and must
+# pass as part of make test. If a future function in this tree is
+# genuinely never invoked, delete it rather than relying on this
+# disposition to hide it.
+disable=SC2329
