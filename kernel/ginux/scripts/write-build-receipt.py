@@ -21,7 +21,7 @@ receipt = {
     "upstream_repository": "https://github.com/gmkurtzer/ginux",
     "upstream_commit": subprocess.check_output(["git", "-C", str(source), "rev-parse", "HEAD"], text=True).strip(),
     "rustc": subprocess.check_output(["rustc", "--version"], cwd=source, text=True).strip(),
-    "banner_patch_sha256": sha(module / "patches/thox-banner.patch"),
+    "identity_patch_sha256": sha(module / "patches/thox-identity.patch"),
     "source_patches": {name: sha(module / "patches" / name) for name in patch_names},
     "clang": subprocess.check_output(["clang", "--version"], text=True).splitlines()[0],
     "cargo_lock_sha256": sha(source / "Cargo.lock"),
