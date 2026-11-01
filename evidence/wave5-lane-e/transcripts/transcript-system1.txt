@@ -1,0 +1,174 @@
+BdsDxe: loading Boot0001 "UEFI QEMU HARDDISK QM00011 " from PciRoot(0x0)/Pci(0x1F,0x2)/Sata(0x5,0xFFFF,0x0)
+BdsDxe: starting Boot0001 "UEFI QEMU HARDDISK QM00011 " from PciRoot(0x0)/Pci(0x1F,0x2)/Sata(0x5,0xFFFF,0x0)
+Ginux booted
+ginux: booting
+ginux: memory protections ready
+ginux: memory manager ready
+ginux: boot devices ready
+ginux: control runtime ready
+ginux: platform, security, devices, and runtime ready
+ginux: persistent storage initialized (generation 1, 134217720 data sectors)
+ginux: timing boot-to-controller: 110 ms
+
+ginux: launching embedded controller in ring 3
+
+Ginux controller v0 (ring 3)
+ThoxOS Ginux Edition 0.1.0 | THOX.ai | research preview
+Type 'help' for commands.
+ginux: Linux live sysinfo accounting validated
+ginux: Linux getrandom contract validated
+ginux: Linux resource-limit queries validated
+ginux: Linux process identity validated
+ginux: Linux timekeeping validated
+ginux: Linux runtime pipe accounting validated
+eth0: automatic DHCP configuration
+eth0: requesting DHCP lease
+eth0: DHCP configured 10.0.2.15/24 via 10.0.2.2 DNS 10.0.2.3
+ginux> domain list
+NAME            STATE       PERSONALITY  INIT                  CPU  MEM-MIB  AUTO   NETWORKS          IMAGE
+ginux> network set eth0 dns 10.0.2.2
+eth0: DNS configured
+ginux> domain new thoxos
+thoxos: created (image required)
+ginux> domain set thoxos image=registry.thoxos.internal/thoxos/userspace:0.1.0 init=/sbin/init memory-mib=2048
+thoxos: settings accepted; configured
+ginux> domain start thoxos --attach
+ginux: checking OCI cache registry.thoxos.internal/thoxos/userspace:0.1.0
+ginux: OCI cache miss; pulling image
+ginux: pulling OCI image registry.thoxos.internal/thoxos/userspace:0.1.0
+ginux: OCI pulling image manifest
+ginux: OCI pulling image configuration
+ginux: OCI manifest selected for linux/amd64
+ginux: OCI image configuration verified
+ginux: OCI layer 1/12: pulling sha256:680255317b2bf819a9aacf943f74c7961014777852de844381ee00aeb2087da8 (98489347 bytes)
+ginux: OCI layer 1/12: verified sha256:680255317b2bf819a9aacf943f74c7961014777852de844381ee00aeb2087da8 (98489347 bytes)
+ginux: OCI layer 2/12: pulling sha256:3819a8ed03adcb5f96eb43eb5025696dd81e6affe1036bf2a1111ebc535e11b4 (11264263 bytes)
+ginux: OCI layer 2/12: verified sha256:3819a8ed03adcb5f96eb43eb5025696dd81e6affe1036bf2a1111ebc535e11b4 (11264263 bytes)
+ginux: OCI layer 3/12: pulling sha256:3699d5bfc77b05ad7f719d4a65ca98233e022d82468986d129bdd288374eb21e (15624 bytes)
+ginux: OCI layer 3/12: verified sha256:3699d5bfc77b05ad7f719d4a65ca98233e022d82468986d129bdd288374eb21e (15624 bytes)
+ginux: OCI layer 4/12: pulling sha256:5b15b2c71f9f5bb232befae29f6e8c0041d300e66aff344ba5e01ead9d352730 (8908 bytes)
+ginux: OCI layer 4/12: verified sha256:5b15b2c71f9f5bb232befae29f6e8c0041d300e66aff344ba5e01ead9d352730 (8908 bytes)
+ginux: OCI layer 5/12: pulling sha256:ce48d9e7ebe35799d1781f622dc6832e34d63d74c0114391e5b88911977c6671 (10571196 bytes)
+ginux: OCI layer 5/12: verified sha256:ce48d9e7ebe35799d1781f622dc6832e34d63d74c0114391e5b88911977c6671 (10571196 bytes)
+ginux: OCI layer 6/12: pulling sha256:0c688b499fd19cb8404207113245a383371080295311b70bd4220c52d5acdead (1279 bytes)
+ginux: OCI layer 6/12: verified sha256:0c688b499fd19cb8404207113245a383371080295311b70bd4220c52d5acdead (1279 bytes)
+ginux: OCI layer 7/12: pulling sha256:d311067ff35475f7e640505c0c72044464790703bbb22ddc72034e552e8c9fb5 (8064 bytes)
+ginux: OCI layer 7/12: verified sha256:d311067ff35475f7e640505c0c72044464790703bbb22ddc72034e552e8c9fb5 (8064 bytes)
+ginux: OCI layer 8/12: pulling sha256:d9ebd670eb8c40ab075bb8024f4961e414071970341cc8db381caa6fbdad4007 (787 bytes)
+ginux: OCI layer 8/12: verified sha256:d9ebd670eb8c40ab075bb8024f4961e414071970341cc8db381caa6fbdad4007 (787 bytes)
+ginux: OCI layer 9/12: pulling sha256:3d1960ef778a241dceffd29bd4d41cbd6f01836df25c94643d0a1adb3a8230d8 (555 bytes)
+ginux: OCI layer 9/12: verified sha256:3d1960ef778a241dceffd29bd4d41cbd6f01836df25c94643d0a1adb3a8230d8 (555 bytes)
+ginux: OCI layer 10/12: pulling sha256:cbec07be04bb939c30ceb49a8f358fa3706a01d648c53ae421dc3cce97831557 (1675 bytes)
+ginux: OCI layer 10/12: verified sha256:cbec07be04bb939c30ceb49a8f358fa3706a01d648c53ae421dc3cce97831557 (1675 bytes)
+ginux: OCI layer 11/12: pulling sha256:0871217f511e2a6fd4eb402c1d2fd7545b4b05aa997ea9265762df4c6263c832 (425 bytes)
+ginux: OCI layer 11/12: verified sha256:0871217f511e2a6fd4eb402c1d2fd7545b4b05aa997ea9265762df4c6263c832 (425 bytes)
+ginux: OCI layer 12/12: pulling sha256:ca31d9fa93625021fd46c89127c38903beba959fa4026733482adfe124512005 (230 bytes)
+ginux: OCI layer 12/12: verified sha256:ca31d9fa93625021fd46c89127c38903beba959fa4026733482adfe124512005 (230 bytes)
+ginux: timing OCI transfer: 2863 ms
+ginux: OCI cache stored 12 layers (120362353 bytes)
+ginux: OCI unpacking image filesystem
+ginux: timing OCI unpack/publish: 1321 ms
+ginux: timing OCI total: 17421 ms
+ginux: OCI image ready
+ginux: local configuration committed (generation 1)
+ginux: starting configured runtime domain
+ginux: entering configured Linux init
+ginux: timing domain-start-to-Linux-init-entry: 1 ms
+systemd 257-23.el10_2.2.rocky.0.1-gb237c67 running in system mode (+PAM +AUDIT +SELINUX -APPARMOR +IMA +IPE +SMACK +SECCOMP -GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN -IPTC +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT -QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF +XKBCOMMON +UTMP +SYSVINIT +LIBARCHIVE)
+Detected virtualization kvm.
+Detected architecture x86-64.
+
+Welcome to ThoxOS 0.1.0 Ginux Edition!
+
+Failed to open netlink, ignoring: Address family not supported by protocol
+Failed to create timezone change event source: Bad file descriptor
+bpf-restrict-fs: BPF LSM hook not enabled in the kernel, BPF LSM not supported.
+Read-only bind remount failed, ignoring: No such file or directory
+/etc/rc.d/rc.local is not marked executable, skipping.
+Failed to acquire watch file descriptor: Operation not permitted
+-.mount: Deactivated successfully.
+systemd-remount-fs.service: Failed to open /etc/systemd/system/systemd-remount-fs.service: No such file or directory
+systemd-udevd.service: Failed to open /etc/systemd/system/systemd-udevd.service: No such file or directory
+systemd-machine-id-commit.service: Failed to open /etc/systemd/system/systemd-machine-id-commit.service: No such file or directory
+sys-fs-fuse-connections.mount: Failed to open /etc/systemd/system/sys-fs-fuse-connections.mount: No such file or directory
+dev-hugepages.mount: Failed to open /etc/systemd/system/dev-hugepages.mount: No such file or directory
+systemd-logind.service: Failed to open /etc/systemd/system/systemd-logind.service: No such file or directory
+Queued start job for default target graphical.target.
+[  OK  ] Created slice system-getty.slice - Slice /system/getty.
+[  OK  ] Created slice system-modprobe.slice - Slice /system/modprobe.
+[  OK  ] Started systemd-ask-password-conso…equests to Console Directory Watch.
+[  OK  ] Started systemd-ask-password-wall.…d Requests to Wall Directory Watch.
+[  OK  ] Reached target local-fs.target - Local File Systems.
+[  OK  ] Reached target network-online.target - Network is Online.
+[  OK  ] Reached target paths.target - Path Units.
+[  OK  ] Reached target remote-fs.target - Remote File Systems.
+[  OK  ] Reached target slices.target - Slice Units.
+[  OK  ] Reached target swap.target - Swaps.
+[  OK  ] Listening on systemd-creds.socket - Credential Encryption/Decryption.
+[  OK  ] Listening on systemd-initctl.socke…- initctl Compatibility Named Pipe.
+[  OK  ] Listening on systemd-journald-dev-…socket - Journal Socket (/dev/log).
+[  OK  ] Listening on systemd-journald.socket - Journal Sockets.
+[  OK  ] Listening on systemd-sysext.socket… System Extension Image Management.
+[  OK  ] Listening on systemd-userdbd.socket - User Database Manager Socket.
+         Starting modprobe@configfs.service - Ginux Built-in Kernel Facility...
+systemd-journal-flush.service: Failed to add control inotify watch descriptor for control group /system.slice/systemd-journal-flush.service to hash map: File exists
+         Starting systemd-journal-flush.service - Ginux Volatile Journal...
+systemd-journald.service: unit configures an IP firewall, but the local system does not support BPF/cgroup firewalling.
+systemd-journald.service: (This warning is only shown for the first unit using IP firewalling.)
+systemd-journald.service: Failed to add control inotify watch descriptor for control group /system.slice/systemd-journald.service to hash map: File exists
+         Starting systemd-journald.service - Journal Service...
+systemd-network-generator.service: Failed to add control inotify watch descriptor for control group /system.slice/systemd-network-generator.service to hash map: File exists
+         Starting systemd-network-generator…k units from Kernel command line...
+Collecting audit messages is disabled.
+Failed to register hostname fd in event loop, ignoring: Operation not permitted
+Failed to determine peer credentials: Transport endpoint is not connected
+[  OK  ] Started systemd-journald.service - Journal Service.
+[  OK  ] Finished systemd-network-generator…ork units from Kernel command line.
+[  OK  ] Reached target network-pre.target - Preparation for Network.
+         Starting systemd-tmpfiles-setup.se…ate System Files and Directories...
+[  OK  ] Finished modprobe@configfs.service - Ginux Built-in Kernel Facility.
+[  OK  ] Finished systemd-journal-flush.service - Ginux Volatile Journal.
+[  OK  ] Finished systemd-tmpfiles-setup.se…reate System Files and Directories.
+         Starting systemd-update-utmp.servi…ord System Boot/Shutdown in UTMP...
+[  OK  ] Finished systemd-update-utmp.servi…ecord System Boot/Shutdown in UTMP.
+[  OK  ] Reached target sysinit.target - System Initialization.
+[  OK  ] Started dnf-makecache.timer - dnf makecache --timer.
+[  OK  ] Started fstrim.timer - Discard unused filesystem blocks once a week.
+[  OK  ] Started systemd-tmpfiles-clean.tim…y Cleanup of Temporary Directories.
+[  OK  ] Reached target timers.target - Timer Units.
+[  OK  ] Listening on dbus.socket - D-Bus System Message Bus Socket.
+[  OK  ] Listening on systemd-hostnamed.socket - Hostname Service Socket.
+[  OK  ] Reached target sockets.target - Socket Units.
+[  OK  ] Reached target basic.target - Basic System.
+         Starting systemd-user-sessions.service - Permit User Sessions...
+[  OK  ] Finished systemd-user-sessions.service - Permit User Sessions.
+[  OK  ] Started console-getty.service - Ginux Domain Console Login.
+[  OK  ] Reached target getty.target - Login Prompts.
+[  OK  ] Reached target multi-user.target - Multi-User System.
+[  OK  ] Reached target graphical.target - Graphical Interface.
+         Starting agentos-w5e.service - Tho…op (evidence run, system domain)...
+         Starting systemd-update-utmp-runle…- Record Runlevel Change in UTMP...
+ginux: Linux user fault vector/error/address/rip:14 6 18446744073709551497 549756868485
+ginux: Linux fault pid/page/stack-low/stack-top/brk-limit/occupied/frame/file/protection/registry-frame: 25 18446744073709547520 8884224 8916544 8454144 0 0 0 0 0 
+ginux: Linux user fault rax/rbx/rcx/rdx/rdi/rsi/rsp/rbp/r12/r13/r14/r15: 0 0 549756868485 549761116920 1 0 549761116864 549761116976 549756868384 0 549761116920 9223372036854775807
+ginux: Linux init recent syscall/result pairs: 13/0 13/0 13/0 13/0 13/0 13/0 14/0 436/0 436/0 59/0 12/8388608 9/549755813888 21/18446744073709551614 257/3 5/0 9/549755822080 3/0 257/3 0/832 5/0 9/549755830272 9/549755846656 9/549755990016 9/549756006400 9/549756010496 3/0 257/3 0/832 17/784 5/0 17/784 9/549756014592 9/549756178432 9/549757554688 9/549757894656 9/549757919232 3/0 9/549757952000 158/0 218/27 273/0 334/18446744073709551594 10/0 10/0 10/0 302/0 11/0 7/0 13/0 318/8 12/8388608 12/8388608 9/549757960192 257/18446744073709551614 13/0 131/0 9/549759008768 10/0 131/0 13/0 13/0 13/0 13/0 13/0 83/18446744073709551599 332/0 83/18446744073709551599 332/0 83/18446744073709551599 332/0 332/18446744073709551614 257/3 3/0 318/16 332/0 257/3 5/0 217/80 257/4 332/18446744073709551614 0/32 0/32 0/0 3/0 217/0 3/0 83/0 13/0 14/0 9/549759021056 10/0 14/0 435/0 273/0 14/0 9/549761122304 11/0 11/0 10/0 204/18446744073709551613 131/0 230/28 14/0 332/18446744073709551614 41/3 49/0 50/18446744073709551594 72/1 3/0 1/25 1/34 1/2 1/16 1/11 1/2 1/1 1/1 231/18446744073709547520 14/0 3/0 3/0 0/0 3/0 1/14 262/18446744073709551614 230/0 262/18446744073709551614 230/0
+ginux: Linux resume FS mismatch expected/returned/saved/restored: 549764910720 549761119936 549774136576 1 
+ginux: scheduled process return failed child/parent/resumed/dispatch: 25 1 0 0
+ginux: Linux user fault vector/error/address/rip:14 6 3814 549756868485
+ginux: Linux fault pid/page/stack-low/stack-top/brk-limit/occupied/frame/file/protection/registry-frame: 1 0 8888320 8916544 8454144 0 0 0 0 0 
+ginux: Linux user fault rax/rbx/rcx/rdx/rdi/rsi/rsp/rbp/r12/r13/r14/r15: 0 0 549756868485 0 0 0 549761116864 0 0 0 0 0
+ginux: Linux init recent syscall/result pairs: 13/0 13/0 13/0 13/0 13/0 13/0 14/0 436/0 436/0 59/0 12/8388608 9/549755813888 21/0 257/3 5/0 9/549755822080 3/0 257/3 0/832 5/0 9/549755830272 9/549755846656 9/549755990016 9/549756006400 9/549756010496 3/0 257/3 0/832 17/784 5/0 17/784 9/549756014592 9/549756178432 9/549757554688 9/549757894656 9/549757919232 3/0 9/549757952000 158/0 218/27 273/0 334/18446744073709551594 10/0 10/0 10/0 302/0 11/0 7/0 13/0 318/8 12/8388608 12/8388608 9/549757960192 257/18446744073709551614 13/0 131/0 9/549759008768 10/0 131/0 13/0 13/0 13/0 13/0 13/0 83/18446744073709551599 332/0 83/18446744073709551599 332/0 83/18446744073709551599 332/0 332/18446744073709551614 257/3 3/0 318/16 332/0 257/3 5/0 217/80 257/4 332/18446744073709551614 0/32 0/32 0/0 3/0 217/0 3/0 83/0 13/0 14/0 9/549759021056 10/0 14/0 435/0 273/0 14/0 9/549761122304 11/0 11/0 10/0 204/18446744073709551613 131/0 230/28 14/0 332/18446744073709551614 41/3 49/0 50/18446744073709551594 72/1 3/0 1/25 1/34 1/2 1/16 1/11 1/2 1/1 1/1 231/18446744073709547520 14/0 3/0 3/0 0/0 3/0 1/14 262/18446744073709551614 230/0 262/18446744073709551614 230/0
+ginux: scheduled process return failed child/parent/resumed/dispatch: 1 15 1 0
+ginux: Linux user fault vector/error/address/rip:14 5 335544320 549756868485
+ginux: Linux fault pid/page/stack-low/stack-top/brk-limit/occupied/frame/file/protection/registry-frame: 15 335544320 8888320 8916544 8454144 0 0 0 0 0 
+ginux: Linux user fault rax/rbx/rcx/rdx/rdi/rsi/rsp/rbp/r12/r13/r14/r15: 0 335544320 549756868485 335544320 335544320 335544320 549761116864 335544320 335544320 335544320 335544320 335544320
+ginux: Linux init recent syscall/result pairs: 13/0 13/0 13/0 13/0 13/0 13/0 14/0 436/0 436/0 59/0 12/8388608 9/549755813888 21/0 257/3 5/0 9/549755822080 3/0 257/3 0/832 5/0 9/549755830272 9/549755846656 9/549755990016 9/549756006400 9/549756010496 3/0 257/3 0/832 17/784 5/0 17/784 9/549756014592 9/549756178432 9/549757554688 9/549757894656 9/549757919232 3/0 9/549757952000 158/0 218/27 273/0 334/18446744073709551594 10/0 10/0 10/0 302/0 11/0 7/0 13/0 318/8 12/8388608 12/8388608 9/549757960192 257/18446744073709551614 13/0 131/0 9/549759008768 10/0 131/0 13/0 13/0 13/0 13/0 13/0 83/18446744073709551599 332/0 83/18446744073709551599 332/0 83/18446744073709551599 332/0 332/18446744073709551614 257/3 3/0 318/16 332/0 257/3 5/0 217/80 257/4 332/18446744073709551614 0/32 0/32 0/0 3/0 217/0 3/0 83/0 13/0 14/0 9/549759021056 10/0 14/0 435/0 273/0 14/0 9/549761122304 11/0 11/0 10/0 204/18446744073709551613 131/0 230/28 14/0 332/18446744073709551614 41/3 49/0 50/18446744073709551594 72/1 3/0 1/25 1/34 1/2 1/16 1/11 1/2 1/1 1/1 231/18446744073709547520 14/0 3/0 3/0 0/0 3/0 1/14 262/18446744073709551614 230/0 262/18446744073709551614 230/0
+ginux: Linux resume FS mismatch expected/returned/saved/restored: 549766462848 549771546688 549774136576 1 
+ginux: scheduled process return failed child/parent/resumed/dispatch: 15 1 0 0
+ginux: live process registry finish state: 1 115 5
+ginux: Linux runtime cleanup failed
+ginux: Linux init recent syscall/result pairs: 13/0 13/0 13/0 13/0 13/0 13/0 14/0 436/0 436/0 59/0 12/8388608 9/549755813888 21/0 257/3 5/0 9/549755822080 3/0 257/3 0/832 5/0 9/549755830272 9/549755846656 9/549755990016 9/549756006400 9/549756010496 3/0 257/3 0/832 17/784 5/0 17/784 9/549756014592 9/549756178432 9/549757554688 9/549757894656 9/549757919232 3/0 9/549757952000 158/0 218/27 273/0 334/18446744073709551594 10/0 10/0 10/0 302/0 11/0 7/0 13/0 318/8 12/8388608 12/8388608 9/549757960192 257/18446744073709551614 13/0 131/0 9/549759008768 10/0 131/0 13/0 13/0 13/0 13/0 13/0 83/18446744073709551599 332/0 83/18446744073709551599 332/0 83/18446744073709551599 332/0 332/18446744073709551614 257/3 3/0 318/16 332/0 257/3 5/0 217/80 257/4 332/18446744073709551614 0/32 0/32 0/0 3/0 217/0 3/0 83/0 13/0 14/0 9/549759021056 10/0 14/0 435/0 273/0 14/0 9/549761122304 11/0 11/0 10/0 204/18446744073709551613 131/0 230/28 14/0 332/18446744073709551614 41/3 49/0 50/18446744073709551594 72/1 3/0 1/25 1/34 1/2 1/16 1/11 1/2 1/1 1/1 231/18446744073709547520 14/0 3/0 3/0 0/0 3/0 1/14 262/18446744073709551614 230/0 262/18446744073709551614 230/0
+ginux: Linux init setup failed at stage 7
+ginux: Linux init execution failed; domain marked failed
+thoxos: failed
+ginux> 

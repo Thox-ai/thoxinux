@@ -1,0 +1,15 @@
+[Unit]
+Description=ThoxInux Wave 5 Lane E AgentOS loop driver (system domain)
+After=agentos-daemon.service multi-user.target
+Requires=agentos-daemon.service
+Wants=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/agentos/driver3.py
+StandardOutput=journal+console
+StandardError=journal+console
+TimeoutStartSec=1200
+
+[Install]
+WantedBy=multi-user.target

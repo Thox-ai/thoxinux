@@ -1,0 +1,16 @@
+thoxos-g-demo: dns 127.0.0.1:53 and registry https://registry.thoxos.internal (127.0.0.1:443) ready
+e2e: qemu argv: qemu-system-x86_64 -machine q35,accel=kvm -cpu host,+smep,+smap,+umip -smp 1 -m 2G -display none -monitor none -chardev stdio,id=thoxos-console,signal=off -serial chardev:thoxos-console -no-reboot -net none -rtc base=utc -device intel-iommu,intremap=off,aw-bits=48 -device virtio-blk-pci,drive=ginux-volume,disable-legacy=on,iommu_platform=on,serial=ginux-volume -netdev user,id=ginux-net,restrict=off -device virtio-net-pci,netdev=ginux-net,disable-legacy=on,iommu_platform=on,mac=52:54:00:12:34:56,addr=0x3 -drive if=none,id=ginux-volume,format=raw,file=/var/lib/thoxos-g/state/volume.raw -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd -drive if=pflash,format=raw,file=/var/lib/thoxos-g/state/ovmf-vars.fd -drive if=none,id=ginux-esp,format=raw,file=fat:rw:/var/lib/thoxos-g/state/esp -device ide-hd,drive=ginux-esp,bootindex=1
+e2e: ok    grep PRETTY_NAME /etc/os-release
+e2e: ok    uname -srm
+e2e: ok    thox version
+e2e: ok    thox status
+e2e: ok    ls /opt/agentos-bin
+e2e: sent  export THOX_AGENTOS_HOME=/opt/agentos/state
+e2e: sent  export THOX_AGENTOS_CONFIG=/opt/agentos/config
+e2e: ok    sh /opt/agentos-src/scripts/first-boot-seed.sh /opt/agentos-bin > /opt/agentos/seed.log 2>&1; echo seed-exit=$?
+e2e: ok    cat /opt/agentos/seed.log; echo seedlog-done
+e2e: ok    python3 /opt/agentos/manifest.py; echo manifest-done
+e2e: loop line -> LOOP_END
+e2e: ok    cat /opt/agentos/state/audit.log; echo postaudit-done
+e2e: ok    echo GUEST_LOOP_DONE
+e2e: shell exit returned to the controller

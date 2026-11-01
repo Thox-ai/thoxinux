@@ -1,0 +1,5 @@
+FROM thoxos-g/demo:0.1.0
+RUN rm -rf /var/lib/thoxos-g/registry && rm -f /usr/share/thoxos-g/userspace-manifest.json
+COPY seed/registry /var/lib/thoxos-g/registry
+COPY seed/manifest.json /usr/share/thoxos-g/userspace-manifest.json
+RUN chmod -R a-w /var/lib/thoxos-g/registry && ls /var/lib/thoxos-g/registry/docker/registry/v2/repositories/thoxos/userspace/_manifests/tags/ 2>/dev/null || ls -R /var/lib/thoxos-g/registry | head -40

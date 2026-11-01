@@ -1,0 +1,9 @@
+private key (keep secret): /opt/agentos/config/keys/issuer.key
+public key: /opt/agentos/config/keys/issuer.pub
+install the public key in the trust store as <key-id>.pub
+seed: created issuer key pair in /opt/agentos/config/keys
+seed: trust store now holds issuer key id 'thox'
+seed: wrote agent manifest /opt/agentos/config/agents/reporter.json
+seed: done. Start the daemon with:
+  /opt/agentos-bin/thox-agentd --state-dir /opt/agentos/state --agents-dir /opt/agentos/config/agents --trust-dir /opt/agentos/config/trust
+container-seed-exit=0

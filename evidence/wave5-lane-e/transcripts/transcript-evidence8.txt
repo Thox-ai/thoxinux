@@ -1,0 +1,163 @@
+BdsDxe: loading Boot0001 "UEFI QEMU HARDDISK QM00011 " from PciRoot(0x0)/Pci(0x1F,0x2)/Sata(0x5,0xFFFF,0x0)
+BdsDxe: starting Boot0001 "UEFI QEMU HARDDISK QM00011 " from PciRoot(0x0)/Pci(0x1F,0x2)/Sata(0x5,0xFFFF,0x0)
+Ginux booted
+ginux: booting
+ginux: memory protections ready
+ginux: memory manager ready
+ginux: boot devices ready
+ginux: control runtime ready
+ginux: platform, security, devices, and runtime ready
+ginux: persistent storage initialized (generation 1, 134217720 data sectors)
+ginux: timing boot-to-controller: 105 ms
+
+ginux: launching embedded controller in ring 3
+
+Ginux controller v0 (ring 3)
+ThoxOS Ginux Edition 0.1.0 | THOX.ai | research preview
+Type 'help' for commands.
+ginux: Linux live sysinfo accounting validated
+ginux: Linux getrandom contract validated
+ginux: Linux resource-limit queries validated
+ginux: Linux process identity validated
+ginux: Linux timekeeping validated
+ginux: Linux runtime pipe accounting validated
+eth0: automatic DHCP configuration
+eth0: requesting DHCP lease
+eth0: DHCP configured 10.0.2.15/24 via 10.0.2.2 DNS 10.0.2.3
+ginux> domain list
+NAME            STATE       PERSONALITY  INIT                  CPU  MEM-MIB  AUTO   NETWORKS          IMAGE
+ginux> network set eth0 dns 10.0.2.2
+eth0: DNS configured
+ginux> domain new thoxos-shell
+thoxos-shell: created (image required)
+ginux> domain set thoxos-shell image=registry.thoxos.internal/thoxos/userspace:0.1.0 init=/usr/local/bin/thox-shell memory-mib=2048
+thoxos-shell: settings accepted; configured
+ginux> domain start thoxos-shell --attach
+ginux: checking OCI cache registry.thoxos.internal/thoxos/userspace:0.1.0
+ginux: OCI cache miss; pulling image
+ginux: pulling OCI image registry.thoxos.internal/thoxos/userspace:0.1.0
+ginux: OCI pulling image manifest
+ginux: OCI pulling image configuration
+ginux: OCI manifest selected for linux/amd64
+ginux: OCI image configuration verified
+ginux: OCI layer 1/12: pulling sha256:680255317b2bf819a9aacf943f74c7961014777852de844381ee00aeb2087da8 (98489347 bytes)
+ginux: OCI layer 1/12: verified sha256:680255317b2bf819a9aacf943f74c7961014777852de844381ee00aeb2087da8 (98489347 bytes)
+ginux: OCI layer 2/12: pulling sha256:3819a8ed03adcb5f96eb43eb5025696dd81e6affe1036bf2a1111ebc535e11b4 (11264263 bytes)
+ginux: OCI layer 2/12: verified sha256:3819a8ed03adcb5f96eb43eb5025696dd81e6affe1036bf2a1111ebc535e11b4 (11264263 bytes)
+ginux: OCI layer 3/12: pulling sha256:3699d5bfc77b05ad7f719d4a65ca98233e022d82468986d129bdd288374eb21e (15624 bytes)
+ginux: OCI layer 3/12: verified sha256:3699d5bfc77b05ad7f719d4a65ca98233e022d82468986d129bdd288374eb21e (15624 bytes)
+ginux: OCI layer 4/12: pulling sha256:5b15b2c71f9f5bb232befae29f6e8c0041d300e66aff344ba5e01ead9d352730 (8908 bytes)
+ginux: OCI layer 4/12: verified sha256:5b15b2c71f9f5bb232befae29f6e8c0041d300e66aff344ba5e01ead9d352730 (8908 bytes)
+ginux: OCI layer 5/12: pulling sha256:ce48d9e7ebe35799d1781f622dc6832e34d63d74c0114391e5b88911977c6671 (10571196 bytes)
+ginux: OCI layer 5/12: verified sha256:ce48d9e7ebe35799d1781f622dc6832e34d63d74c0114391e5b88911977c6671 (10571196 bytes)
+ginux: OCI layer 6/12: pulling sha256:0c688b499fd19cb8404207113245a383371080295311b70bd4220c52d5acdead (1279 bytes)
+ginux: OCI layer 6/12: verified sha256:0c688b499fd19cb8404207113245a383371080295311b70bd4220c52d5acdead (1279 bytes)
+ginux: OCI layer 7/12: pulling sha256:9c0d2a1c940be8e2013acd1bf95bb1ef5b54922c8d2473aaab4e8b54bf7b61fc (9627 bytes)
+ginux: OCI layer 7/12: verified sha256:9c0d2a1c940be8e2013acd1bf95bb1ef5b54922c8d2473aaab4e8b54bf7b61fc (9627 bytes)
+ginux: OCI layer 8/12: pulling sha256:7f14a6c5b1198c53ac09089dd17278ea5af0744e6fa01c6b654cc7415de3b5eb (788 bytes)
+ginux: OCI layer 8/12: verified sha256:7f14a6c5b1198c53ac09089dd17278ea5af0744e6fa01c6b654cc7415de3b5eb (788 bytes)
+ginux: OCI layer 9/12: pulling sha256:1f805beafa23c399b428da0096799eba568984b98750c7f0263eef2bc310d6fd (558 bytes)
+ginux: OCI layer 9/12: verified sha256:1f805beafa23c399b428da0096799eba568984b98750c7f0263eef2bc310d6fd (558 bytes)
+ginux: OCI layer 10/12: pulling sha256:c844d930b238b60ab1eddaec5779cc332d5e638758abc487e23c19721470ddf2 (1678 bytes)
+ginux: OCI layer 10/12: verified sha256:c844d930b238b60ab1eddaec5779cc332d5e638758abc487e23c19721470ddf2 (1678 bytes)
+ginux: OCI layer 11/12: pulling sha256:211b4298a27d80e67ebde6f21879cc9711b4e73ad1ef2bc96d99d9cf8903f1f3 (431 bytes)
+ginux: OCI layer 11/12: verified sha256:211b4298a27d80e67ebde6f21879cc9711b4e73ad1ef2bc96d99d9cf8903f1f3 (431 bytes)
+ginux: OCI layer 12/12: pulling sha256:db037a030e1b792ab240513455f6bb6cbe331f545c2c404aaa573b52266d9205 (230 bytes)
+ginux: OCI layer 12/12: verified sha256:db037a030e1b792ab240513455f6bb6cbe331f545c2c404aaa573b52266d9205 (230 bytes)
+ginux: timing OCI transfer: 3001 ms
+ginux: OCI cache stored 12 layers (120363929 bytes)
+ginux: OCI unpacking image filesystem
+ginux: timing OCI unpack/publish: 1454 ms
+ginux: timing OCI total: 18931 ms
+ginux: OCI image ready
+ginux: local configuration committed (generation 1)
+ginux: starting configured runtime domain
+ginux: entering configured Linux init
+ginux: timing domain-start-to-Linux-init-entry: 1 ms
+
+ThoxOS 0.1.0 Ginux Edition  (Rocky Linux 10 userspace on the Ginux kernel)
+Your AI. Your Data. Your Rules.™
+Research preview. Not for production use.
+
+
+  ThoxOS 0.1.0 Ginux Edition
+  Linux userspace, no Linux kernel underneath.
+
+  thox status        identity, kernel and AI endpoint
+  thox ask "..."     ask the configured THOX model endpoint
+
+  Research preview built on Ginux (Apache-2.0). Not for production use.
+
+thoxos:~# grep PRETTY_NAME /etc/os-release
+ginux: timing Linux-init-to-console: 93 ms
+PRETTY_NAME="ThoxOS 0.1.0 Ginux Edition"
+thoxos:~# uname -srm
+Ginux 6.12.0-ginux.0.1 x86_64
+thoxos:~# thox version
+0.1.0
+thoxos:~# thox status
+os        ThoxOS 0.1.0 Ginux Edition
+base      Rocky Linux 10
+kernel    Ginux 6.12.0-ginux.0.1 (#1)
+host      ginux
+arch      x86_64
+ai        not configured: THOX_AI_MODEL is not set (see /etc/thoxos/ai.env)
+thoxos:~# ls /opt/agentos-bin
+thox-agent
+thox-agentd
+thox-reporter
+thoxos:~# export THOX_AGENTOS_HOME=/opt/agentos/state
+thoxos:~# export THOX_AGENTOS_CONFIG=/opt/agentos/config
+thoxos:~# sh /opt/agentos-src/scripts/first-boot-seed.sh /opt/agentos-bin > /opt/agentos/seed.log 2>&1; echo seed-exit=$?
+seed-exit=1
+/bin/bash: line 1: echo: write error: Function not implemented
+thoxos:/# cat /opt/agentos/seed.log; echo seedlog-done
+/opt/agentos-src/scripts/first-boot-seed.sh: line 17: cd: /..: Function not implemented
+seedlog-done
+/bin/bash: line 1: echo: write error: Function not implemented
+thoxos:/# python3 /opt/agentos/manifest.py; echo manifest-done
+{
+  "autostart": true,
+  "command": [
+    "/opt/agentos-bin/thox-reporter"
+  ],
+  "env": {
+    "THOX_AGENTD_SOCKET": "/opt/agentos/state/run/agentd.sock"
+  },
+  "identity_token": "eyJhZ2VudCI6InJlcG9ydGVy...[truncated]",
+  "name": "reporter",
+  "permissions": {
+    "exec_allow": [],
+    "fs_read": [
+      "/proc",
+      "/etc",
+      "/usr/lib"
+    ],
+    "fs_write": [],
+    "network_egress": false
+  },
+  "restart": {
+    "backoff_ms": 1000,
+    "max_restarts": 3,
+    "policy": "on-failure"
+  }
+}
+manifest-done
+/bin/bash: line 1: echo: write error: Function not implemented
+thoxos:/# mkdir -p /opt/agentos/state/run; /opt/agentos-bin/thox-agentd --state-dir /opt/agentos/state --agents-dir /opt/agentos/config/agents --trust-dir /opt/agentos/config/trust > /opt/agentos/daemon.out 2>&1 & echo $! > /opt/agentos/daemon.pid; echo daemon-launched
+/bin/bash: line 1: /opt/agentos/daemon.pid: Function not implemented
+daemon-launched
+/bin/bash: line 1: echo: write error: Function not implemented
+thoxos:/opt/agentos/state# python3 /opt/agentos/driver3.py; echo driver3-exit=$?
+ginux: Linux child exec precondition rejected
+thox-shell: [Errno 11] Resource temporarily unavailable: '/bin/bash'
+thoxos:/opt/agentos/state# cat /opt/agentos/state/audit.log; echo postaudit-done
+ginux: Linux child exec precondition rejected
+thox-shell: [Errno 11] Resource temporarily unavailable: '/bin/bash'
+thoxos:/opt/agentos/state# echo GUEST_LOOP_DONE
+ginux: Linux child exec precondition rejected
+thox-shell: [Errno 11] Resource temporarily unavailable: '/bin/bash'
+thoxos:/opt/agentos/state# exit
+ginux: Linux init execution failed; domain marked failed
+thoxos-shell: failed
+ginux> 
