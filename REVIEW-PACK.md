@@ -183,3 +183,28 @@ remaining confirmation to collect and is listed as OPEN, not claimed.
 - Docker-dependent paths unproven this run (section 7).
 - aw-bits=48 documentation discrepancy to annotate (section 4).
 - No physical hardware validation of any ThoxInux artifact exists yet.
+
+## Addendum: Wave 1 of the D16 continuous program (2026-10-31)
+
+Appended under D16; the original pack above is not rewritten.
+
+- **Section 9 gate 2 (public flip) and section 2:** CLOSED by D15 and
+  this wave. The public repo carries the real tree, and release v0.9.0
+  is published on it as a pre-release with the staging assets verified
+  byte-identical at every hop (GINUX.EFI SHA-256 85722bd4...). Release
+  URL: https://github.com/Thox-ai/thoxinux/releases/tag/v0.9.0
+- **Section 10, Payload U direct lifecycle run (run2):** CLOSED. 22/22
+  under TCG and 22/22 under KVM against Payload U itself. The suite's
+  hardcoded Azure banner was the only blocker (stale harness
+  expectation; the guest booted cleanly); the committed suite now
+  accepts either known THOX profile banner and was re-run to the same
+  22/22 results. Section 5's statement is confirmed for Payload U: the
+  unified series addresses the minimal-domain start failure. Full
+  record: docs/WAVES.md, Wave 1.
+- **Section 10, aw-bits=48 annotation:** DONE (docs/QUICKSTART.md,
+  commit 722c262), together with a dated drift note in
+  docs/COMPATIBILITY.md.
+- Still open after Wave 1: F2 (Wave 3), reproducibility (Wave 3),
+  Docker-dependent paths (Wave 2), physical hardware validation
+  (founder gate: named spare SSD), Azure (founder gate: subscription),
+  Phase 3 review (founder gate: firm and budget).

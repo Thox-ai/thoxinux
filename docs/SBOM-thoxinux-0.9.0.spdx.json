@@ -1,0 +1,2837 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "thoxinux-0.9.0-sbom",
+  "documentNamespace": "https://thox.ai/spdx/thoxinux-0.9.0-d51a1659-978d-4158-8495-048aa6fc0775",
+  "creationInfo": {
+    "created": "2026-11-01T00:15:10Z",
+    "creators": [
+      "Tool: thox-sbom-generator (cargo metadata based)",
+      "Organization: THOX.ai"
+    ]
+  },
+  "packages": [
+    {
+      "name": "ThoxInux GINUX.EFI (Payload U)",
+      "SPDXID": "SPDXRef-Package-thoxinux-ginux-efi-0.9.0",
+      "versionInfo": "0.9.0",
+      "downloadLocation": "https://github.com/Thox-ai/thoxinux/releases/tag/v0.9.0",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "Organization: THOX.ai",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "85722bd41426491bf86f810bbdd25f951c53afc49e1bf32ad5b34c63ab4420ae"
+        }
+      ],
+      "description": "Unified ThoxInux kernel image: Ginux fork at upstream pin 36503bda2d87465765e1b94e65f9d100f27ed5be plus the THOX patch series (kernel-startup, thox-identity, qemu-tools, registry-anchor). Engineering preview, unsigned, Secure Boot off posture (D14)."
+    },
+    {
+      "name": "adler2",
+      "SPDXID": "SPDXRef-Package-adler2-2.0.1-ginux-unified",
+      "versionInfo": "2.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "0BSD OR MIT OR Apache-2.0",
+      "licenseDeclared": "0BSD OR MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/adler2@2.0.1"
+        }
+      ]
+    },
+    {
+      "name": "aead",
+      "SPDXID": "SPDXRef-Package-aead-0.5.2-ginux-unified",
+      "versionInfo": "0.5.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/aead@0.5.2"
+        }
+      ]
+    },
+    {
+      "name": "aes",
+      "SPDXID": "SPDXRef-Package-aes-0.8.4-ginux-unified",
+      "versionInfo": "0.8.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/aes@0.8.4"
+        }
+      ]
+    },
+    {
+      "name": "aes-gcm",
+      "SPDXID": "SPDXRef-Package-aes-gcm-0.10.3-ginux-unified",
+      "versionInfo": "0.10.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/aes-gcm@0.10.3"
+        }
+      ]
+    },
+    {
+      "name": "autocfg",
+      "SPDXID": "SPDXRef-Package-autocfg-1.5.1-ginux-unified",
+      "versionInfo": "1.5.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/autocfg@1.5.1"
+        }
+      ]
+    },
+    {
+      "name": "base16ct",
+      "SPDXID": "SPDXRef-Package-base16ct-0.2.0-ginux-unified",
+      "versionInfo": "0.2.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/base16ct@0.2.0"
+        }
+      ]
+    },
+    {
+      "name": "base64ct",
+      "SPDXID": "SPDXRef-Package-base64ct-1.8.3-ginux-unified",
+      "versionInfo": "1.8.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/base64ct@1.8.3"
+        }
+      ]
+    },
+    {
+      "name": "bitflags",
+      "SPDXID": "SPDXRef-Package-bitflags-1.3.2-ginux-unified",
+      "versionInfo": "1.3.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT/Apache-2.0",
+      "licenseDeclared": "MIT/Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/bitflags@1.3.2"
+        }
+      ]
+    },
+    {
+      "name": "block-buffer",
+      "SPDXID": "SPDXRef-Package-block-buffer-0.10.4-ginux-unified",
+      "versionInfo": "0.10.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/block-buffer@0.10.4"
+        }
+      ]
+    },
+    {
+      "name": "block-buffer",
+      "SPDXID": "SPDXRef-Package-block-buffer-0.12.1-ginux-unified",
+      "versionInfo": "0.12.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/block-buffer@0.12.1"
+        }
+      ]
+    },
+    {
+      "name": "byteorder",
+      "SPDXID": "SPDXRef-Package-byteorder-1.5.0-ginux-unified",
+      "versionInfo": "1.5.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Unlicense OR MIT",
+      "licenseDeclared": "Unlicense OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/byteorder@1.5.0"
+        }
+      ]
+    },
+    {
+      "name": "cfg-if",
+      "SPDXID": "SPDXRef-Package-cfg-if-1.0.5-ginux-unified",
+      "versionInfo": "1.0.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/cfg-if@1.0.5"
+        }
+      ]
+    },
+    {
+      "name": "cipher",
+      "SPDXID": "SPDXRef-Package-cipher-0.4.4-ginux-unified",
+      "versionInfo": "0.4.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/cipher@0.4.4"
+        }
+      ]
+    },
+    {
+      "name": "const-oid",
+      "SPDXID": "SPDXRef-Package-const-oid-0.9.6-ginux-unified",
+      "versionInfo": "0.9.6",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/const-oid@0.9.6"
+        }
+      ]
+    },
+    {
+      "name": "const-oid",
+      "SPDXID": "SPDXRef-Package-const-oid-0.10.2-ginux-unified",
+      "versionInfo": "0.10.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/const-oid@0.10.2"
+        }
+      ]
+    },
+    {
+      "name": "cpufeatures",
+      "SPDXID": "SPDXRef-Package-cpufeatures-0.2.17-ginux-unified",
+      "versionInfo": "0.2.17",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/cpufeatures@0.2.17"
+        }
+      ]
+    },
+    {
+      "name": "cpufeatures",
+      "SPDXID": "SPDXRef-Package-cpufeatures-0.3.1-ginux-unified",
+      "versionInfo": "0.3.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/cpufeatures@0.3.1"
+        }
+      ]
+    },
+    {
+      "name": "crypto-bigint",
+      "SPDXID": "SPDXRef-Package-crypto-bigint-0.5.5-ginux-unified",
+      "versionInfo": "0.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/crypto-bigint@0.5.5"
+        }
+      ]
+    },
+    {
+      "name": "crypto-common",
+      "SPDXID": "SPDXRef-Package-crypto-common-0.1.7-ginux-unified",
+      "versionInfo": "0.1.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/crypto-common@0.1.7"
+        }
+      ]
+    },
+    {
+      "name": "crypto-common",
+      "SPDXID": "SPDXRef-Package-crypto-common-0.2.2-ginux-unified",
+      "versionInfo": "0.2.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/crypto-common@0.2.2"
+        }
+      ]
+    },
+    {
+      "name": "ctr",
+      "SPDXID": "SPDXRef-Package-ctr-0.9.2-ginux-unified",
+      "versionInfo": "0.9.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ctr@0.9.2"
+        }
+      ]
+    },
+    {
+      "name": "curve25519-dalek",
+      "SPDXID": "SPDXRef-Package-curve25519-dalek-5.0.0-ginux-unified",
+      "versionInfo": "5.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/curve25519-dalek@5.0.0"
+        }
+      ]
+    },
+    {
+      "name": "curve25519-dalek-derive",
+      "SPDXID": "SPDXRef-Package-curve25519-dalek-derive-0.1.1-ginux-unified",
+      "versionInfo": "0.1.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT/Apache-2.0",
+      "licenseDeclared": "MIT/Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/curve25519-dalek-derive@0.1.1"
+        }
+      ]
+    },
+    {
+      "name": "der",
+      "SPDXID": "SPDXRef-Package-der-0.7.10-ginux-unified",
+      "versionInfo": "0.7.10",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/der@0.7.10"
+        }
+      ]
+    },
+    {
+      "name": "der",
+      "SPDXID": "SPDXRef-Package-der-0.8.2-ginux-unified",
+      "versionInfo": "0.8.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/der@0.8.2"
+        }
+      ]
+    },
+    {
+      "name": "der_derive",
+      "SPDXID": "SPDXRef-Package-der-derive-0.8.0-ginux-unified",
+      "versionInfo": "0.8.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/der_derive@0.8.0"
+        }
+      ]
+    },
+    {
+      "name": "deranged",
+      "SPDXID": "SPDXRef-Package-deranged-0.5.9-ginux-unified",
+      "versionInfo": "0.5.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/deranged@0.5.9"
+        }
+      ]
+    },
+    {
+      "name": "digest",
+      "SPDXID": "SPDXRef-Package-digest-0.10.7-ginux-unified",
+      "versionInfo": "0.10.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/digest@0.10.7"
+        }
+      ]
+    },
+    {
+      "name": "digest",
+      "SPDXID": "SPDXRef-Package-digest-0.11.3-ginux-unified",
+      "versionInfo": "0.11.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/digest@0.11.3"
+        }
+      ]
+    },
+    {
+      "name": "ecdsa",
+      "SPDXID": "SPDXRef-Package-ecdsa-0.16.9-ginux-unified",
+      "versionInfo": "0.16.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ecdsa@0.16.9"
+        }
+      ]
+    },
+    {
+      "name": "ed25519",
+      "SPDXID": "SPDXRef-Package-ed25519-3.0.0-ginux-unified",
+      "versionInfo": "3.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ed25519@3.0.0"
+        }
+      ]
+    },
+    {
+      "name": "ed25519-dalek",
+      "SPDXID": "SPDXRef-Package-ed25519-dalek-3.0.0-ginux-unified",
+      "versionInfo": "3.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ed25519-dalek@3.0.0"
+        }
+      ]
+    },
+    {
+      "name": "elliptic-curve",
+      "SPDXID": "SPDXRef-Package-elliptic-curve-0.13.8-ginux-unified",
+      "versionInfo": "0.13.8",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/elliptic-curve@0.13.8"
+        }
+      ]
+    },
+    {
+      "name": "embedded-io",
+      "SPDXID": "SPDXRef-Package-embedded-io-0.7.1-ginux-unified",
+      "versionInfo": "0.7.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/embedded-io@0.7.1"
+        }
+      ]
+    },
+    {
+      "name": "embedded-io-async",
+      "SPDXID": "SPDXRef-Package-embedded-io-async-0.7.0-ginux-unified",
+      "versionInfo": "0.7.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/embedded-io-async@0.7.0"
+        }
+      ]
+    },
+    {
+      "name": "embedded-tls",
+      "SPDXID": "SPDXRef-Package-embedded-tls-0.19.0-ginux-unified",
+      "versionInfo": "0.19.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/embedded-tls@0.19.0"
+        }
+      ]
+    },
+    {
+      "name": "ff",
+      "SPDXID": "SPDXRef-Package-ff-0.13.1-ginux-unified",
+      "versionInfo": "0.13.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT/Apache-2.0",
+      "licenseDeclared": "MIT/Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ff@0.13.1"
+        }
+      ]
+    },
+    {
+      "name": "fiat-crypto",
+      "SPDXID": "SPDXRef-Package-fiat-crypto-0.3.0-ginux-unified",
+      "versionInfo": "0.3.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0 OR BSD-1-Clause",
+      "licenseDeclared": "MIT OR Apache-2.0 OR BSD-1-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/fiat-crypto@0.3.0"
+        }
+      ]
+    },
+    {
+      "name": "generic-array",
+      "SPDXID": "SPDXRef-Package-generic-array-0.14.7-ginux-unified",
+      "versionInfo": "0.14.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/generic-array@0.14.7"
+        }
+      ]
+    },
+    {
+      "name": "ghash",
+      "SPDXID": "SPDXRef-Package-ghash-0.5.1-ginux-unified",
+      "versionInfo": "0.5.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ghash@0.5.1"
+        }
+      ]
+    },
+    {
+      "name": "ginux-boot",
+      "SPDXID": "SPDXRef-Package-ginux-boot-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-command",
+      "SPDXID": "SPDXRef-Package-ginux-command-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-controller-runtime",
+      "SPDXID": "SPDXRef-Package-ginux-controller-runtime-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-image-store",
+      "SPDXID": "SPDXRef-Package-ginux-image-store-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-kernel",
+      "SPDXID": "SPDXRef-Package-ginux-kernel-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-manifest-tool",
+      "SPDXID": "SPDXRef-Package-ginux-manifest-tool-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-native-abi",
+      "SPDXID": "SPDXRef-Package-ginux-native-abi-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-network-service-runtime",
+      "SPDXID": "SPDXRef-Package-ginux-network-service-runtime-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-oci",
+      "SPDXID": "SPDXRef-Package-ginux-oci-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-oci-cache",
+      "SPDXID": "SPDXRef-Package-ginux-oci-cache-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-protocol-service-runtime",
+      "SPDXID": "SPDXRef-Package-ginux-protocol-service-runtime-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-protocol-state",
+      "SPDXID": "SPDXRef-Package-ginux-protocol-state-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-runtime-memory",
+      "SPDXID": "SPDXRef-Package-ginux-runtime-memory-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-volume-format",
+      "SPDXID": "SPDXRef-Package-ginux-volume-format-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-volume-service",
+      "SPDXID": "SPDXRef-Package-ginux-volume-service-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "ginux-volume-service-runtime",
+      "SPDXID": "SPDXRef-Package-ginux-volume-service-runtime-0.1.0-ginux-unified",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "group",
+      "SPDXID": "SPDXRef-Package-group-0.13.0-ginux-unified",
+      "versionInfo": "0.13.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT/Apache-2.0",
+      "licenseDeclared": "MIT/Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/group@0.13.0"
+        }
+      ]
+    },
+    {
+      "name": "hash32",
+      "SPDXID": "SPDXRef-Package-hash32-0.3.1-ginux-unified",
+      "versionInfo": "0.3.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/hash32@0.3.1"
+        }
+      ]
+    },
+    {
+      "name": "heapless",
+      "SPDXID": "SPDXRef-Package-heapless-0.9.2-ginux-unified",
+      "versionInfo": "0.9.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/heapless@0.9.2"
+        }
+      ]
+    },
+    {
+      "name": "hkdf",
+      "SPDXID": "SPDXRef-Package-hkdf-0.12.4-ginux-unified",
+      "versionInfo": "0.12.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/hkdf@0.12.4"
+        }
+      ]
+    },
+    {
+      "name": "hmac",
+      "SPDXID": "SPDXRef-Package-hmac-0.12.1-ginux-unified",
+      "versionInfo": "0.12.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/hmac@0.12.1"
+        }
+      ]
+    },
+    {
+      "name": "hybrid-array",
+      "SPDXID": "SPDXRef-Package-hybrid-array-0.4.15-ginux-unified",
+      "versionInfo": "0.4.15",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/hybrid-array@0.4.15"
+        }
+      ]
+    },
+    {
+      "name": "inout",
+      "SPDXID": "SPDXRef-Package-inout-0.1.4-ginux-unified",
+      "versionInfo": "0.1.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/inout@0.1.4"
+        }
+      ]
+    },
+    {
+      "name": "lazy_static",
+      "SPDXID": "SPDXRef-Package-lazy-static-1.5.1-ginux-unified",
+      "versionInfo": "1.5.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/lazy_static@1.5.1"
+        }
+      ]
+    },
+    {
+      "name": "libc",
+      "SPDXID": "SPDXRef-Package-libc-0.2.190-ginux-unified",
+      "versionInfo": "0.2.190",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/libc@0.2.190"
+        }
+      ]
+    },
+    {
+      "name": "libm",
+      "SPDXID": "SPDXRef-Package-libm-0.2.16-ginux-unified",
+      "versionInfo": "0.2.16",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/libm@0.2.16"
+        }
+      ]
+    },
+    {
+      "name": "managed",
+      "SPDXID": "SPDXRef-Package-managed-0.8.0-ginux-unified",
+      "versionInfo": "0.8.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "0BSD",
+      "licenseDeclared": "0BSD",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/managed@0.8.0"
+        }
+      ]
+    },
+    {
+      "name": "miniz_oxide",
+      "SPDXID": "SPDXRef-Package-miniz-oxide-0.9.1-ginux-unified",
+      "versionInfo": "0.9.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Zlib OR Apache-2.0",
+      "licenseDeclared": "MIT OR Zlib OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/miniz_oxide@0.9.1"
+        }
+      ]
+    },
+    {
+      "name": "num-bigint-dig",
+      "SPDXID": "SPDXRef-Package-num-bigint-dig-0.8.6-ginux-unified",
+      "versionInfo": "0.8.6",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT/Apache-2.0",
+      "licenseDeclared": "MIT/Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/num-bigint-dig@0.8.6"
+        }
+      ]
+    },
+    {
+      "name": "num-conv",
+      "SPDXID": "SPDXRef-Package-num-conv-0.2.2-ginux-unified",
+      "versionInfo": "0.2.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/num-conv@0.2.2"
+        }
+      ]
+    },
+    {
+      "name": "num-integer",
+      "SPDXID": "SPDXRef-Package-num-integer-0.1.47-ginux-unified",
+      "versionInfo": "0.1.47",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/num-integer@0.1.47"
+        }
+      ]
+    },
+    {
+      "name": "num-iter",
+      "SPDXID": "SPDXRef-Package-num-iter-0.1.46-ginux-unified",
+      "versionInfo": "0.1.46",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/num-iter@0.1.46"
+        }
+      ]
+    },
+    {
+      "name": "num-traits",
+      "SPDXID": "SPDXRef-Package-num-traits-0.2.19-ginux-unified",
+      "versionInfo": "0.2.19",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/num-traits@0.2.19"
+        }
+      ]
+    },
+    {
+      "name": "opaque-debug",
+      "SPDXID": "SPDXRef-Package-opaque-debug-0.3.1-ginux-unified",
+      "versionInfo": "0.3.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/opaque-debug@0.3.1"
+        }
+      ]
+    },
+    {
+      "name": "p256",
+      "SPDXID": "SPDXRef-Package-p256-0.13.2-ginux-unified",
+      "versionInfo": "0.13.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/p256@0.13.2"
+        }
+      ]
+    },
+    {
+      "name": "p384",
+      "SPDXID": "SPDXRef-Package-p384-0.13.1-ginux-unified",
+      "versionInfo": "0.13.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/p384@0.13.1"
+        }
+      ]
+    },
+    {
+      "name": "pkcs1",
+      "SPDXID": "SPDXRef-Package-pkcs1-0.7.5-ginux-unified",
+      "versionInfo": "0.7.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/pkcs1@0.7.5"
+        }
+      ]
+    },
+    {
+      "name": "pkcs8",
+      "SPDXID": "SPDXRef-Package-pkcs8-0.10.2-ginux-unified",
+      "versionInfo": "0.10.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/pkcs8@0.10.2"
+        }
+      ]
+    },
+    {
+      "name": "polyval",
+      "SPDXID": "SPDXRef-Package-polyval-0.6.2-ginux-unified",
+      "versionInfo": "0.6.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/polyval@0.6.2"
+        }
+      ]
+    },
+    {
+      "name": "portable-atomic",
+      "SPDXID": "SPDXRef-Package-portable-atomic-1.15.0-ginux-unified",
+      "versionInfo": "1.15.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/portable-atomic@1.15.0"
+        }
+      ]
+    },
+    {
+      "name": "powerfmt",
+      "SPDXID": "SPDXRef-Package-powerfmt-0.2.1-ginux-unified",
+      "versionInfo": "0.2.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/powerfmt@0.2.1"
+        }
+      ]
+    },
+    {
+      "name": "ppv-lite86",
+      "SPDXID": "SPDXRef-Package-ppv-lite86-0.2.21-ginux-unified",
+      "versionInfo": "0.2.21",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ppv-lite86@0.2.21"
+        }
+      ]
+    },
+    {
+      "name": "primeorder",
+      "SPDXID": "SPDXRef-Package-primeorder-0.13.6-ginux-unified",
+      "versionInfo": "0.13.6",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/primeorder@0.13.6"
+        }
+      ]
+    },
+    {
+      "name": "proc-macro2",
+      "SPDXID": "SPDXRef-Package-proc-macro2-1.0.107-ginux-unified",
+      "versionInfo": "1.0.107",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/proc-macro2@1.0.107"
+        }
+      ]
+    },
+    {
+      "name": "quote",
+      "SPDXID": "SPDXRef-Package-quote-1.0.47-ginux-unified",
+      "versionInfo": "1.0.47",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/quote@1.0.47"
+        }
+      ]
+    },
+    {
+      "name": "rand",
+      "SPDXID": "SPDXRef-Package-rand-0.8.8-ginux-unified",
+      "versionInfo": "0.8.8",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/rand@0.8.8"
+        }
+      ]
+    },
+    {
+      "name": "rand_chacha",
+      "SPDXID": "SPDXRef-Package-rand-chacha-0.3.1-ginux-unified",
+      "versionInfo": "0.3.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/rand_chacha@0.3.1"
+        }
+      ]
+    },
+    {
+      "name": "rand_core",
+      "SPDXID": "SPDXRef-Package-rand-core-0.6.4-ginux-unified",
+      "versionInfo": "0.6.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/rand_core@0.6.4"
+        }
+      ]
+    },
+    {
+      "name": "rfc6979",
+      "SPDXID": "SPDXRef-Package-rfc6979-0.4.0-ginux-unified",
+      "versionInfo": "0.4.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/rfc6979@0.4.0"
+        }
+      ]
+    },
+    {
+      "name": "rsa",
+      "SPDXID": "SPDXRef-Package-rsa-0.9.10-ginux-unified",
+      "versionInfo": "0.9.10",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/rsa@0.9.10"
+        }
+      ]
+    },
+    {
+      "name": "rustc_version",
+      "SPDXID": "SPDXRef-Package-rustc-version-0.4.1-ginux-unified",
+      "versionInfo": "0.4.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/rustc_version@0.4.1"
+        }
+      ]
+    },
+    {
+      "name": "ryu",
+      "SPDXID": "SPDXRef-Package-ryu-1.0.23-ginux-unified",
+      "versionInfo": "1.0.23",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR BSL-1.0",
+      "licenseDeclared": "Apache-2.0 OR BSL-1.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ryu@1.0.23"
+        }
+      ]
+    },
+    {
+      "name": "sec1",
+      "SPDXID": "SPDXRef-Package-sec1-0.7.3-ginux-unified",
+      "versionInfo": "0.7.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/sec1@0.7.3"
+        }
+      ]
+    },
+    {
+      "name": "semver",
+      "SPDXID": "SPDXRef-Package-semver-1.0.28-ginux-unified",
+      "versionInfo": "1.0.28",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/semver@1.0.28"
+        }
+      ]
+    },
+    {
+      "name": "serde",
+      "SPDXID": "SPDXRef-Package-serde-1.0.228-ginux-unified",
+      "versionInfo": "1.0.228",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/serde@1.0.228"
+        }
+      ]
+    },
+    {
+      "name": "serde-json-core",
+      "SPDXID": "SPDXRef-Package-serde-json-core-0.7.0-ginux-unified",
+      "versionInfo": "0.7.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/serde-json-core@0.7.0"
+        }
+      ]
+    },
+    {
+      "name": "serde_core",
+      "SPDXID": "SPDXRef-Package-serde-core-1.0.228-ginux-unified",
+      "versionInfo": "1.0.228",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/serde_core@1.0.228"
+        }
+      ]
+    },
+    {
+      "name": "serde_derive",
+      "SPDXID": "SPDXRef-Package-serde-derive-1.0.228-ginux-unified",
+      "versionInfo": "1.0.228",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/serde_derive@1.0.228"
+        }
+      ]
+    },
+    {
+      "name": "sha2",
+      "SPDXID": "SPDXRef-Package-sha2-0.10.9-ginux-unified",
+      "versionInfo": "0.10.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/sha2@0.10.9"
+        }
+      ]
+    },
+    {
+      "name": "sha2",
+      "SPDXID": "SPDXRef-Package-sha2-0.11.0-ginux-unified",
+      "versionInfo": "0.11.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/sha2@0.11.0"
+        }
+      ]
+    },
+    {
+      "name": "signature",
+      "SPDXID": "SPDXRef-Package-signature-2.2.0-ginux-unified",
+      "versionInfo": "2.2.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/signature@2.2.0"
+        }
+      ]
+    },
+    {
+      "name": "signature",
+      "SPDXID": "SPDXRef-Package-signature-3.0.0-ginux-unified",
+      "versionInfo": "3.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/signature@3.0.0"
+        }
+      ]
+    },
+    {
+      "name": "smallvec",
+      "SPDXID": "SPDXRef-Package-smallvec-1.16.3-ginux-unified",
+      "versionInfo": "1.16.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/smallvec@1.16.3"
+        }
+      ]
+    },
+    {
+      "name": "smoltcp",
+      "SPDXID": "SPDXRef-Package-smoltcp-0.14.0-ginux-unified",
+      "versionInfo": "0.14.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "0BSD",
+      "licenseDeclared": "0BSD",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/smoltcp@0.14.0"
+        }
+      ]
+    },
+    {
+      "name": "spin",
+      "SPDXID": "SPDXRef-Package-spin-0.9.9-ginux-unified",
+      "versionInfo": "0.9.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/spin@0.9.9"
+        }
+      ]
+    },
+    {
+      "name": "spki",
+      "SPDXID": "SPDXRef-Package-spki-0.7.3-ginux-unified",
+      "versionInfo": "0.7.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/spki@0.7.3"
+        }
+      ]
+    },
+    {
+      "name": "stable_deref_trait",
+      "SPDXID": "SPDXRef-Package-stable-deref-trait-1.2.1-ginux-unified",
+      "versionInfo": "1.2.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/stable_deref_trait@1.2.1"
+        }
+      ]
+    },
+    {
+      "name": "subtle",
+      "SPDXID": "SPDXRef-Package-subtle-2.6.1-ginux-unified",
+      "versionInfo": "2.6.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/subtle@2.6.1"
+        }
+      ]
+    },
+    {
+      "name": "syn",
+      "SPDXID": "SPDXRef-Package-syn-2.0.119-ginux-unified",
+      "versionInfo": "2.0.119",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/syn@2.0.119"
+        }
+      ]
+    },
+    {
+      "name": "time",
+      "SPDXID": "SPDXRef-Package-time-0.3.55-ginux-unified",
+      "versionInfo": "0.3.55",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/time@0.3.55"
+        }
+      ]
+    },
+    {
+      "name": "time-core",
+      "SPDXID": "SPDXRef-Package-time-core-0.1.9-ginux-unified",
+      "versionInfo": "0.1.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/time-core@0.1.9"
+        }
+      ]
+    },
+    {
+      "name": "typenum",
+      "SPDXID": "SPDXRef-Package-typenum-1.20.1-ginux-unified",
+      "versionInfo": "1.20.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/typenum@1.20.1"
+        }
+      ]
+    },
+    {
+      "name": "unicode-ident",
+      "SPDXID": "SPDXRef-Package-unicode-ident-1.0.26-ginux-unified",
+      "versionInfo": "1.0.26",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "(MIT OR Apache-2.0) AND Unicode-3.0",
+      "licenseDeclared": "(MIT OR Apache-2.0) AND Unicode-3.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/unicode-ident@1.0.26"
+        }
+      ]
+    },
+    {
+      "name": "universal-hash",
+      "SPDXID": "SPDXRef-Package-universal-hash-0.5.1-ginux-unified",
+      "versionInfo": "0.5.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/universal-hash@0.5.1"
+        }
+      ]
+    },
+    {
+      "name": "version_check",
+      "SPDXID": "SPDXRef-Package-version-check-0.9.5-ginux-unified",
+      "versionInfo": "0.9.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT/Apache-2.0",
+      "licenseDeclared": "MIT/Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/version_check@0.9.5"
+        }
+      ]
+    },
+    {
+      "name": "zerocopy",
+      "SPDXID": "SPDXRef-Package-zerocopy-0.8.63-ginux-unified",
+      "versionInfo": "0.8.63",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause OR Apache-2.0 OR MIT",
+      "licenseDeclared": "BSD-2-Clause OR Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/zerocopy@0.8.63"
+        }
+      ]
+    },
+    {
+      "name": "zerocopy-derive",
+      "SPDXID": "SPDXRef-Package-zerocopy-derive-0.8.63-ginux-unified",
+      "versionInfo": "0.8.63",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause OR Apache-2.0 OR MIT",
+      "licenseDeclared": "BSD-2-Clause OR Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/zerocopy-derive@0.8.63"
+        }
+      ]
+    },
+    {
+      "name": "zeroize",
+      "SPDXID": "SPDXRef-Package-zeroize-1.9.0-ginux-unified",
+      "versionInfo": "1.9.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/zeroize@1.9.0"
+        }
+      ]
+    },
+    {
+      "name": "base64",
+      "SPDXID": "SPDXRef-Package-base64-0.22.1-agentos",
+      "versionInfo": "0.22.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/base64@0.22.1"
+        }
+      ]
+    },
+    {
+      "name": "base64ct",
+      "SPDXID": "SPDXRef-Package-base64ct-1.8.3-agentos",
+      "versionInfo": "1.8.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/base64ct@1.8.3"
+        }
+      ]
+    },
+    {
+      "name": "block-buffer",
+      "SPDXID": "SPDXRef-Package-block-buffer-0.10.4-agentos",
+      "versionInfo": "0.10.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/block-buffer@0.10.4"
+        }
+      ]
+    },
+    {
+      "name": "cfg-if",
+      "SPDXID": "SPDXRef-Package-cfg-if-1.0.5-agentos",
+      "versionInfo": "1.0.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/cfg-if@1.0.5"
+        }
+      ]
+    },
+    {
+      "name": "const-oid",
+      "SPDXID": "SPDXRef-Package-const-oid-0.9.6-agentos",
+      "versionInfo": "0.9.6",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/const-oid@0.9.6"
+        }
+      ]
+    },
+    {
+      "name": "cpufeatures",
+      "SPDXID": "SPDXRef-Package-cpufeatures-0.2.17-agentos",
+      "versionInfo": "0.2.17",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/cpufeatures@0.2.17"
+        }
+      ]
+    },
+    {
+      "name": "crypto-common",
+      "SPDXID": "SPDXRef-Package-crypto-common-0.1.7-agentos",
+      "versionInfo": "0.1.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/crypto-common@0.1.7"
+        }
+      ]
+    },
+    {
+      "name": "curve25519-dalek",
+      "SPDXID": "SPDXRef-Package-curve25519-dalek-4.1.3-agentos",
+      "versionInfo": "4.1.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/curve25519-dalek@4.1.3"
+        }
+      ]
+    },
+    {
+      "name": "curve25519-dalek-derive",
+      "SPDXID": "SPDXRef-Package-curve25519-dalek-derive-0.1.1-agentos",
+      "versionInfo": "0.1.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT/Apache-2.0",
+      "licenseDeclared": "MIT/Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/curve25519-dalek-derive@0.1.1"
+        }
+      ]
+    },
+    {
+      "name": "der",
+      "SPDXID": "SPDXRef-Package-der-0.7.10-agentos",
+      "versionInfo": "0.7.10",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/der@0.7.10"
+        }
+      ]
+    },
+    {
+      "name": "digest",
+      "SPDXID": "SPDXRef-Package-digest-0.10.7-agentos",
+      "versionInfo": "0.10.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/digest@0.10.7"
+        }
+      ]
+    },
+    {
+      "name": "ed25519",
+      "SPDXID": "SPDXRef-Package-ed25519-2.2.3-agentos",
+      "versionInfo": "2.2.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ed25519@2.2.3"
+        }
+      ]
+    },
+    {
+      "name": "ed25519-dalek",
+      "SPDXID": "SPDXRef-Package-ed25519-dalek-2.2.0-agentos",
+      "versionInfo": "2.2.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ed25519-dalek@2.2.0"
+        }
+      ]
+    },
+    {
+      "name": "fiat-crypto",
+      "SPDXID": "SPDXRef-Package-fiat-crypto-0.2.9-agentos",
+      "versionInfo": "0.2.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0 OR BSD-1-Clause",
+      "licenseDeclared": "MIT OR Apache-2.0 OR BSD-1-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/fiat-crypto@0.2.9"
+        }
+      ]
+    },
+    {
+      "name": "generic-array",
+      "SPDXID": "SPDXRef-Package-generic-array-0.14.7-agentos",
+      "versionInfo": "0.14.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/generic-array@0.14.7"
+        }
+      ]
+    },
+    {
+      "name": "getrandom",
+      "SPDXID": "SPDXRef-Package-getrandom-0.2.17-agentos",
+      "versionInfo": "0.2.17",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/getrandom@0.2.17"
+        }
+      ]
+    },
+    {
+      "name": "hex",
+      "SPDXID": "SPDXRef-Package-hex-0.4.3-agentos",
+      "versionInfo": "0.4.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/hex@0.4.3"
+        }
+      ]
+    },
+    {
+      "name": "itoa",
+      "SPDXID": "SPDXRef-Package-itoa-1.0.18-agentos",
+      "versionInfo": "1.0.18",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/itoa@1.0.18"
+        }
+      ]
+    },
+    {
+      "name": "libc",
+      "SPDXID": "SPDXRef-Package-libc-0.2.191-agentos",
+      "versionInfo": "0.2.191",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/libc@0.2.191"
+        }
+      ]
+    },
+    {
+      "name": "memchr",
+      "SPDXID": "SPDXRef-Package-memchr-2.8.3-agentos",
+      "versionInfo": "2.8.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Unlicense OR MIT",
+      "licenseDeclared": "Unlicense OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/memchr@2.8.3"
+        }
+      ]
+    },
+    {
+      "name": "pkcs8",
+      "SPDXID": "SPDXRef-Package-pkcs8-0.10.2-agentos",
+      "versionInfo": "0.10.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/pkcs8@0.10.2"
+        }
+      ]
+    },
+    {
+      "name": "proc-macro2",
+      "SPDXID": "SPDXRef-Package-proc-macro2-1.0.107-agentos",
+      "versionInfo": "1.0.107",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/proc-macro2@1.0.107"
+        }
+      ]
+    },
+    {
+      "name": "quote",
+      "SPDXID": "SPDXRef-Package-quote-1.0.47-agentos",
+      "versionInfo": "1.0.47",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/quote@1.0.47"
+        }
+      ]
+    },
+    {
+      "name": "rand_core",
+      "SPDXID": "SPDXRef-Package-rand-core-0.6.4-agentos",
+      "versionInfo": "0.6.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/rand_core@0.6.4"
+        }
+      ]
+    },
+    {
+      "name": "rustc_version",
+      "SPDXID": "SPDXRef-Package-rustc-version-0.4.1-agentos",
+      "versionInfo": "0.4.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/rustc_version@0.4.1"
+        }
+      ]
+    },
+    {
+      "name": "semver",
+      "SPDXID": "SPDXRef-Package-semver-1.0.28-agentos",
+      "versionInfo": "1.0.28",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/semver@1.0.28"
+        }
+      ]
+    },
+    {
+      "name": "serde",
+      "SPDXID": "SPDXRef-Package-serde-1.0.229-agentos",
+      "versionInfo": "1.0.229",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/serde@1.0.229"
+        }
+      ]
+    },
+    {
+      "name": "serde_core",
+      "SPDXID": "SPDXRef-Package-serde-core-1.0.229-agentos",
+      "versionInfo": "1.0.229",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/serde_core@1.0.229"
+        }
+      ]
+    },
+    {
+      "name": "serde_derive",
+      "SPDXID": "SPDXRef-Package-serde-derive-1.0.229-agentos",
+      "versionInfo": "1.0.229",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/serde_derive@1.0.229"
+        }
+      ]
+    },
+    {
+      "name": "serde_json",
+      "SPDXID": "SPDXRef-Package-serde-json-1.0.154-agentos",
+      "versionInfo": "1.0.154",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/serde_json@1.0.154"
+        }
+      ]
+    },
+    {
+      "name": "sha2",
+      "SPDXID": "SPDXRef-Package-sha2-0.10.9-agentos",
+      "versionInfo": "0.10.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/sha2@0.10.9"
+        }
+      ]
+    },
+    {
+      "name": "signature",
+      "SPDXID": "SPDXRef-Package-signature-2.2.0-agentos",
+      "versionInfo": "2.2.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/signature@2.2.0"
+        }
+      ]
+    },
+    {
+      "name": "spki",
+      "SPDXID": "SPDXRef-Package-spki-0.7.3-agentos",
+      "versionInfo": "0.7.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/spki@0.7.3"
+        }
+      ]
+    },
+    {
+      "name": "subtle",
+      "SPDXID": "SPDXRef-Package-subtle-2.6.1-agentos",
+      "versionInfo": "2.6.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/subtle@2.6.1"
+        }
+      ]
+    },
+    {
+      "name": "syn",
+      "SPDXID": "SPDXRef-Package-syn-2.0.119-agentos",
+      "versionInfo": "2.0.119",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/syn@2.0.119"
+        }
+      ]
+    },
+    {
+      "name": "syn",
+      "SPDXID": "SPDXRef-Package-syn-3.0.9-agentos",
+      "versionInfo": "3.0.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/syn@3.0.9"
+        }
+      ]
+    },
+    {
+      "name": "thox-agentos",
+      "SPDXID": "SPDXRef-Package-thox-agentos-0.1.0-agentos",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": []
+    },
+    {
+      "name": "typenum",
+      "SPDXID": "SPDXRef-Package-typenum-1.20.1-agentos",
+      "versionInfo": "1.20.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/typenum@1.20.1"
+        }
+      ]
+    },
+    {
+      "name": "unicode-ident",
+      "SPDXID": "SPDXRef-Package-unicode-ident-1.0.27-agentos",
+      "versionInfo": "1.0.27",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "(MIT OR Apache-2.0) AND Unicode-3.0",
+      "licenseDeclared": "(MIT OR Apache-2.0) AND Unicode-3.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/unicode-ident@1.0.27"
+        }
+      ]
+    },
+    {
+      "name": "version_check",
+      "SPDXID": "SPDXRef-Package-version-check-0.9.5-agentos",
+      "versionInfo": "0.9.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT/Apache-2.0",
+      "licenseDeclared": "MIT/Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/version_check@0.9.5"
+        }
+      ]
+    },
+    {
+      "name": "wasi",
+      "SPDXID": "SPDXRef-Package-wasi-0.11.1-wasi-snapshot-preview1-agentos",
+      "versionInfo": "0.11.1+wasi-snapshot-preview1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/wasi@0.11.1+wasi-snapshot-preview1"
+        }
+      ]
+    },
+    {
+      "name": "zeroize",
+      "SPDXID": "SPDXRef-Package-zeroize-1.9.1-agentos",
+      "versionInfo": "1.9.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR MIT",
+      "licenseDeclared": "Apache-2.0 OR MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/zeroize@1.9.1"
+        }
+      ]
+    },
+    {
+      "name": "zmij",
+      "SPDXID": "SPDXRef-Package-zmij-1.0.23-agentos",
+      "versionInfo": "1.0.23",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/zmij@1.0.23"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relatedSpdxElement": "SPDXRef-Package-thoxinux-ginux-efi-0.9.0",
+      "relationshipType": "DESCRIBES"
+    }
+  ]
+}
