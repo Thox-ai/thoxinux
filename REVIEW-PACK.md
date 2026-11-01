@@ -208,3 +208,32 @@ Appended under D16; the original pack above is not rewritten.
   Docker-dependent paths (Wave 2), physical hardware validation
   (founder gate: named spare SSD), Azure (founder gate: subscription),
   Phase 3 review (founder gate: firm and budget).
+
+
+## Addendum: Waves 2-4 of the D16 continuous program (2026-10-31)
+
+- **Section 9 gate 7 and section 7 (Docker-dependent paths):** CLOSED.
+  The daemon is up (server 29.1.3); the demo path runs end to end, the
+  SSD image builds, and the QEMU USB-disk bench passes all six checks.
+  The edition suite matches its baseline (171 passed, 2 skipped as
+  root). One correction to section 4's framing: the consolidated tree
+  has no test_host_image.py; the D14 failure attribution does not match
+  this tree. Full record: docs/WAVES.md, Wave 2. A consolidation defect
+  found by the wave (edition patch-directory rename left two consumers
+  pointing at the old path) was fixed and re-verified in the same wave.
+- **Section 10, F2:** CLOSED (Wave 3, merged in 1c06210; shutdown
+  regression suite 5 passed; live SIGTERM proof inside the Wave 3 guest
+  run).
+- **Section 10, reproducibility:** CLOSED as reproducible under named
+  controls (SOURCE_DATE_EPOCH from the pin, shared registry anchor,
+  fixed build path): two controlled builds are byte-identical and every
+  intermediate matches Payload U's. Payload U itself is not
+  after-the-fact reproducible (fresh build-time CA, wall-clock link
+  timestamp; 14-byte delta to the controlled build, fully accounted).
+- **Guest integration (section 6):** now PROVEN in the Docker demo
+  guest (container userspace, host kernel), with identity, grant, and
+  denial audit evidence. Still not claimed on the Ginux kernel; that is
+  Wave 5 work.
+- Remaining open after Waves 1-4: founder gates only (spare SSD, Azure
+  subscription, Phase 3 firm and budget, Secure Boot signing posture
+  for Phase 2) plus the engineering-owned Wave 5 list in docs/WAVES.md.

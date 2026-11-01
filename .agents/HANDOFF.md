@@ -5,7 +5,7 @@
 - Phase 0 (audit and consolidation): unified patch series built and verified (docs/RECONCILIATION-2026-10-31.md); syscall audit at docs/COMPATIBILITY.md; threat model at docs/THREAT-MODEL.md; thox-agentos adopted at userspace/agentos/.
 - Phase 1 (v0.9): unified EFI (Payload U) built on KnightHub and boot-tested in QEMU. Release v0.9.0 PUBLISHED on the public repo (pre-release, engineering preview) under D16. Correction of an earlier overstatement in this file: at D14 close the Docker demo was BLOCKED (daemon down) and the SSD bench was NOT RUN; their current state lives in docs/WAVES.md, Waves 1-2.
 - Phase 2 (agentic loop): demonstrated per REVIEW-PACK.md evidence scope; guest integration state is stated there and in docs/WAVES.md exactly.
-- Continuous waves: D16 (2026-10-31) authorizes wave-after-wave work with push and merge to public main when exits pass. The wave ledger is docs/WAVES.md; read it before starting any lane.
+- Continuous waves: D16 (2026-10-31) authorizes wave-after-wave work with push and merge to public main when exits pass. The wave ledger is docs/WAVES.md; read it before starting any lane. Waves 1-4 are complete (v0.9.0 published and lifecycle-proven on Payload U; Docker demo and SSD bench proven; reproducibility proven under named controls; F2 fixed; SBOM and security review scope in docs/). Wave 5 is defined at the end of docs/WAVES.md.
 
 ## Key files and roles
 - kernel/ginux/patches/series: the ONLY sanctioned form of THOX changes to upstream. Regenerate patches; never edit the prepared source.
@@ -30,4 +30,4 @@
 - Live wave state (Docker, reproducibility, F2, guest integration): docs/WAVES.md.
 
 ## Last verified
-2026-10-31, by the ThoxInux D16 wave program (Sadie). Evidence: REVIEW-PACK.md (with its Wave 1 addendum), docs/WAVES.md, and the run logs archived with the plan at ~/workspace/thoxinux-plan-20261031/evidence/ (fleet-internal path).
+2026-10-31, by the ThoxInux D16 wave program (Sadie). Evidence: REVIEW-PACK.md (with its Wave 1 and Waves 2-4 addenda), docs/WAVES.md, and the run logs archived with the plan at ~/workspace/thoxinux-plan-20261031/evidence/ (fleet-internal path).
