@@ -80,3 +80,17 @@ This repository is private during staging. Public publishing (social posts, webs
 ## License
 
 Apache-2.0. See LICENSE and NOTICE.md. Ginux upstream is Apache-2.0 (gmkurtzer/ginux); upstream copyright and notices are preserved throughout. MeshStack, ThoxKey firmware and ThoxWork are proprietary THOX technologies and are not licensed by anything in this repository.
+
+---
+
+## Legal
+
+Copyright (c) 2024-2026 THOX.ai LLC. All rights reserved.
+
+**THOX.ai LLC**
+- CTO: Tommy Xaypanya
+- CEO: Craig Ross
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
+
+Unauthorized copying, modification, merger, publication, distribution, sublicensing, and/or selling of this software, via any medium, is strictly prohibited without prior written consent from THOX.ai LLC.
